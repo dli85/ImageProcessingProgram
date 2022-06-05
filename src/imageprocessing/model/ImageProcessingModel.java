@@ -1,4 +1,4 @@
 package imageprocessing.model;
 
-public class ImageProcessingModel {
+public interface ImageProcessingModel extends ImageProcessingModelState {
 }
