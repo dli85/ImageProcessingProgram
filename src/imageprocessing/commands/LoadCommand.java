@@ -19,6 +19,7 @@ public class LoadCommand implements UserCommand {
 
   @Override
   public void doCommand(ImageProcessingModel model) {
-    System.out.println("Load command" + " " + path + " " + imageName);
+    model.loadImage(this.path, this.imageName);
+    //System.out.println("Load command" + " " + path + " " + imageName);
   }
 }

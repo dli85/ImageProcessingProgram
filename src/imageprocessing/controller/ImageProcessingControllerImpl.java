@@ -98,13 +98,21 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
 
     switch (userInput) {
       case "load":
-        //fillPipeline(scanner, 2);
         String path = scanner.next();
         String imgName = scanner.next();
         command = new LoadCommand(path, imgName);
         break;
+      case "save":
+        break;
       case "brighten":
         break;
+      case "vertical-flip":
+        break;
+      case "horizontal-flip":
+        break;
+      case "value-component":
+        break;
+
       case "menu":
         this.displayMenu();
         break;
@@ -119,12 +127,13 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
 
   //Displays the menu
   private void displayMenu() throws IllegalStateException {
+    this.transmitMessage("\n");
     this.transmitMessage("load [image-path] [image-name]: Load an image from the specified path" +
             " and refer it to henceforth in the program by the given image name.\n");
     this.transmitMessage("save [image-path] [image-name]: Save the image with the given name to " +
             "the specified path which should include the name of the file.\n");
     this.transmitMessage("red-component [image-name] [dest-image-name]: Create a greyscale image " +
-            "with the red-component of the image with the given name, and refer to it " +
+            "with the red-component of the image with the given name,\n  and refer to it " +
             "henceforth in the program by the given destination name.\n");
     this.transmitMessage("horizontal-flip [image-name] [dest-image-name]: Flip an image " +
             "horizontally to create a new image, referred to henceforth by the given " +
@@ -133,34 +142,14 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
             "vertically to create a new image, referred to henceforth " +
             "by the given destination name.\n");
     this.transmitMessage("brighten [increment] [image-name] [dest-image-name]: brighten the image" +
-            " by the given increment to create a new image, referred to henceforth by" +
+            " by the given increment to create a new image,\n  referred to henceforth by" +
             " the given destination name. The increment may be positive (brightening)" +
             " or negative (darkening)\n");
+    this.transmitMessage("\n");
 
 
   }
 
-  /* Depricated code: alternate to doing scanner.next();
-  //Asks the user to input until the required number of inputs are reached.
-  private void fillPipeline(Scanner scanner, int amt) throws IllegalStateException {
-    try {
-      while(this.inputPipeline.size() < amt) {
-        String line = scanner.nextLine();
-        this.addToPipeline(line);
-      }
-    } catch (NoSuchElementException e) {
-      throw new IllegalStateException("Failed to read from input");
-    }
-
-  }
-
-  //Adds a userInput to the pipeline (separates everything by spaces)
-  private void addToPipeline(String userInput) {
-    String[] split = userInput.split("\\s+");
-    this.inputPipeline.addAll(Arrays.asList(split));
-  }
-
-   */
   private void transmitMessage(String message) throws IllegalStateException {
     try {
       this.view.renderMessage(message);

@@ -56,20 +56,20 @@ public class ImageUtil {
             int r = sc.nextInt();
             int g = sc.nextInt();
             int b = sc.nextInt();
-            System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
+            //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
         }
     }
   }
 
   //demo main
   public static void main(String []args) {
-      String filename;
+      String filename = "C:/Users/dali7/IdeaProjects/Assignment4/src/imageprocessing/images/Koala.ppm";
       
       if (args.length>0) {
-          filename = args[0];
+          //filename = args[0];
       }
       else {
-          filename = "sample.ppm";
+          //filename = "sample.ppm";
       }
       
       ImageUtil.readPPM(filename);
