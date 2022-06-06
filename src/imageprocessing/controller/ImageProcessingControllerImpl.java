@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import imageprocessing.commands.LoadCommand;
+import imageprocessing.commands.SaveCommand;
 import imageprocessing.commands.UserCommand;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.SimpleImageProcessingModel;
@@ -15,7 +16,9 @@ import imageprocessing.view.ImageProcessingViewImpl;
 
 /*
 TODO:
-  Expand switch statement to all other commands
+  Check that the exceptions are thrown correctly:
+    start() should only throw an IllegalStateException if reading from input/output fails.
+    If any other error is thrown during start, it should handle it appropriately
   Add commands to the commands shit
   Everything model related
 
@@ -96,32 +99,57 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
 
     userInput = userInput.toLowerCase();
 
-    switch (userInput) {
-      case "load":
-        String path = scanner.next();
-        String imgName = scanner.next();
-        command = new LoadCommand(path, imgName);
-        break;
-      case "save":
-        break;
-      case "brighten":
-        break;
-      case "vertical-flip":
-        break;
-      case "horizontal-flip":
-        break;
-      case "value-component":
-        break;
-
-      case "menu":
-        this.displayMenu();
-        break;
-      default:
-        transmitMessage("Input not recognized" + System.lineSeparator());
+    String path;
+    String imgName;
+    try {
+      switch (userInput) {
+        case "load":
+          path = scanner.next();
+          imgName = scanner.next();
+          command = new LoadCommand(path, imgName);
+          break;
+        case "save":
+          path = scanner.next();
+          imgName = scanner.next();
+          command = new SaveCommand(path, imgName);
+          transmitMessage("Please wait, your image is being saved \n");
+          break;
+        case "brighten":
+          break;
+        case "vertical-flip":
+          break;
+        case "horizontal-flip":
+          break;
+        case "red-component":
+          break;
+        case "green-component":
+          break;
+        case "blue-component":
+          break;
+        case "intensity-component":
+          break;
+        case "luma-component":
+          break;
+        case "value-component":
+          break;
+        case "menu":
+          this.displayMenu();
+          break;
+        default:
+          transmitMessage("Input not recognized" + System.lineSeparator());
+      }
+    } catch (NoSuchElementException e) {
+      throw new IllegalStateException("Failed to read from input");
     }
 
-    if(command != null) {
-      command.doCommand(this.model);
+    try {
+      if (command != null) {
+        //Throws an IllegalStateException if the command failed to execute.
+        command.doCommand(this.model);
+      }
+    } catch (IllegalStateException e) {
+      this.transmitMessage("Command failed to execute");
+      this.transmitMessage(System.lineSeparator());
     }
   }
 
@@ -129,22 +157,24 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
   private void displayMenu() throws IllegalStateException {
     this.transmitMessage("\n");
     this.transmitMessage("load [image-path] [image-name]: Load an image from the specified path" +
-            " and refer it to henceforth in the program by the given image name.\n");
+            " and refer it to henceforth in the program by the given image name.\n\n");
     this.transmitMessage("save [image-path] [image-name]: Save the image with the given name to " +
-            "the specified path which should include the name of the file.\n");
+            "the specified path which should include the name of the file.\n\n");
     this.transmitMessage("red-component [image-name] [dest-image-name]: Create a greyscale image " +
             "with the red-component of the image with the given name,\n  and refer to it " +
-            "henceforth in the program by the given destination name.\n");
+            "henceforth in the program by the given destination name. This command can also be" +
+            "done with the green component, \n  the blue component, the value component, the " +
+            "intensity component, or the luma component (e.g. \"intensity-component\")\n\n");
     this.transmitMessage("horizontal-flip [image-name] [dest-image-name]: Flip an image " +
             "horizontally to create a new image, referred to henceforth by the given " +
-            "destination name.\n");
+            "destination name.\n\n");
     this.transmitMessage("vertical-flip [image-name] [dest-image-name]: Flip an image " +
             "vertically to create a new image, referred to henceforth " +
-            "by the given destination name.\n");
+            "by the given destination name.\n\n");
     this.transmitMessage("brighten [increment] [image-name] [dest-image-name]: brighten the image" +
             " by the given increment to create a new image,\n  referred to henceforth by" +
             " the given destination name. The increment may be positive (brightening)" +
-            " or negative (darkening)\n");
+            " or negative (darkening)\n\n");
     this.transmitMessage("\n");
 
 

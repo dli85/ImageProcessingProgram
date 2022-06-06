@@ -18,8 +18,12 @@ public class LoadCommand implements UserCommand {
   }
 
   @Override
-  public void doCommand(ImageProcessingModel model) {
-    model.loadImage(this.path, this.imageName);
+  public void doCommand(ImageProcessingModel model) throws IllegalStateException {
+    try {
+      model.loadImage(this.path, this.imageName);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException("Command failed");
+    }
     //System.out.println("Load command" + " " + path + " " + imageName);
   }
 }
