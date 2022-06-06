@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import imageprocessing.commands.FlipCommand;
 import imageprocessing.commands.LoadCommand;
 import imageprocessing.commands.SaveCommand;
 import imageprocessing.commands.UserCommand;
@@ -99,6 +100,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
 
     String path;
     String imgName;
+    String newName;
     try {
       switch (userInput) {
         case "load":
@@ -115,8 +117,14 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         case "brighten":
           break;
         case "vertical-flip":
+          imgName = scanner.next();
+          newName = scanner.next();
+          command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Vertical);
           break;
         case "horizontal-flip":
+          imgName = scanner.next();
+          newName = scanner.next();
+          command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Horizontal);
           break;
         case "red-component":
           break;

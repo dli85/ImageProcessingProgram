@@ -20,7 +20,8 @@ can alter images are stored in the ImageProcessingModel interface.
 
 ### TODO LIST:
 1. Add grey scale commands, brighten commands, and flip commands
-2. TESTS
-3. Delete anything related to the koala (before submitting)
-4. Delete the utils folder (before submitting)
-5. Delete the main method in the controller (before submitting)
+2. Abstract the doCommand try statement?
+3. TESTS
+4. Delete anything related to the koala (before submitting)
+5. Delete the utils folder (before submitting)
+6. Delete the main method in the controller (before submitting)
