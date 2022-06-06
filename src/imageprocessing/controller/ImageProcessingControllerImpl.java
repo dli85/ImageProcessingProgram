@@ -21,9 +21,7 @@ TODO:
     If any other error is thrown during start, it should handle it appropriately
   Add commands to the commands shit
   Everything model related
-
-
- */
+*/
 
 /**
  * A controller for the image processing program. Has the capabilities to take in user
@@ -46,7 +44,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
   private final Readable input;
 
   /**
-   * Initalizes a new controller with all the given fields set.
+   * Initializes a new controller with all the given fields set.
    *
    * @param model The image processing model to use
    * @param view  The view to transmit to.

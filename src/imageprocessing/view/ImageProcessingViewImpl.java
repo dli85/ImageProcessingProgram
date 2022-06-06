@@ -20,7 +20,6 @@ public class ImageProcessingViewImpl implements ImageProcessingView {
   public ImageProcessingViewImpl(ImageProcessingModelState model) throws IllegalArgumentException {
     if (model == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
-
     }
 
     this.model = model;

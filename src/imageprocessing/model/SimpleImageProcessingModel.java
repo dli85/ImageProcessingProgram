@@ -80,7 +80,6 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     }
 
     this.imageCollection.put(imgName.toLowerCase(), pixelGrid);
-
   }
 
   @Override
@@ -117,6 +116,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
 
       out.close();
     } catch (IOException e) {
+      //TODO: delete file if writing failed at any point???
       throw new IllegalArgumentException("Failed to write to output");
     }
 
@@ -143,6 +143,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
 
   @Override
   public int getWidth(String imageName) throws IllegalArgumentException {
+    //TODO: use checkInBounds???
     if (this.imageCollection.containsKey(imageName.toLowerCase())) {
       return this.imageCollection.get(imageName)[0].length;
     } else {
@@ -152,6 +153,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
 
   @Override
   public int getHeight(String imageName) throws IllegalArgumentException {
+    //TODO: use checkInBounds???
     if (this.imageCollection.containsKey(imageName.toLowerCase())) {
       return this.imageCollection.get(imageName).length;
     } else {
@@ -178,7 +180,6 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
   // Checks if an image and row or col is valid, throws IllegalArgumentException otherwise.
   private void checkInBounds(String imageName, int row, int col) throws IllegalArgumentException {
     if (!this.imageCollection.containsKey(imageName.toLowerCase())) {
-      System.out.println("fuck1");
 
       throw new IllegalArgumentException("Image not found");
     }

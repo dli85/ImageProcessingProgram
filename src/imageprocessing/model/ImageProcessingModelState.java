@@ -4,7 +4,6 @@ import java.util.Map;
 
 public interface ImageProcessingModelState {
 
-
   /**
    * Gets the width of the given image.
    *
