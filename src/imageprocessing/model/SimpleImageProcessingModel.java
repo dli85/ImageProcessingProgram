@@ -1,15 +1,11 @@
 package imageprocessing.model;
 
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -22,7 +18,7 @@ TODO:
 
 public class SimpleImageProcessingModel implements ImageProcessingModel {
 
-  Map<String, Pixel[][]> imageCollection;
+  private final Map<String, Pixel[][]> imageCollection;
 
   /**
    * Default constructor: Creates a default model. The image collection is initalized.
@@ -79,7 +75,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
       }
     }
 
-    this.imageCollection.put(imgName.toLowerCase(), pixelGrid);
+    this.addImageToLibrary(imgName, pixelGrid);
   }
 
   @Override
@@ -98,18 +94,18 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
       out.write((this.getWidth(imageName) + " " + this.getHeight(imageName)).getBytes());
       out.write(System.lineSeparator().getBytes());
       out.write(Integer.toString(this.getPixelInfo(imageName, 0, 0)
-              .get("maxVal")).getBytes());
+              .get(PixelProperty.MaxValue)).getBytes());
       out.write(System.lineSeparator().getBytes());
 
       for (int i = 0; i < this.getHeight(imageName); i++) {
         for (int j = 0; j < this.getWidth(imageName); j++) {
-          Map<String, Integer> colorVals = this.getPixelInfo(imageName, i, j);
+          Map<PixelProperty, Integer> colorVals = this.getPixelInfo(imageName, i, j);
 
-          out.write(Integer.toString(colorVals.get("red")).getBytes());
+          out.write(Integer.toString(colorVals.get(PixelProperty.Red)).getBytes());
           out.write(System.lineSeparator().getBytes());
-          out.write(Integer.toString(colorVals.get("green")).getBytes());
+          out.write(Integer.toString(colorVals.get(PixelProperty.Green)).getBytes());
           out.write(System.lineSeparator().getBytes());
-          out.write(Integer.toString(colorVals.get("blue")).getBytes());
+          out.write(Integer.toString(colorVals.get(PixelProperty.Blue)).getBytes());
           out.write(System.lineSeparator().getBytes());
         }
       }
@@ -119,62 +115,67 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
       //TODO: delete file if writing failed at any point???
       throw new IllegalArgumentException("Failed to write to output");
     }
-
   }
 
   @Override
-  public void setColors(String imgName, int row, int col, Map<String, Integer> values)
+  public void setColors(String imgName, int row, int col, Map<PixelProperty, Integer> values)
           throws IllegalArgumentException {
+
     checkInBounds(imgName, row, col);
+
 
     Pixel p = this.imageCollection.get(imgName)[row][col];
 
-    for(String key : values.keySet()) {
-      if(key.equalsIgnoreCase("red")) {
+    for(PixelProperty key : values.keySet()) {
+      if(key.equals(PixelProperty.Red)) {
         p.red = values.get(key);
-      } else if(key.equalsIgnoreCase("green")) {
+      } else if(key.equals(PixelProperty.Green)) {
         p.green = values.get(key);
-      } else if(key.equalsIgnoreCase("blue")) {
+      } else if(key.equals(PixelProperty.Blue)) {
         p.blue = values.get(key);
       }
     }
 
   }
 
+  //Creates a copy of the imgGrid and adds it.
+  @Override
+  public void addImageToLibrary(String imageName, Pixel[][] imgGrid) {
+    Pixel[][] temp = new Pixel[imgGrid.length][imgGrid[0].length];
+
+    for(int i = 0; i < imgGrid.length; i++) {
+      for(int j = 0; j < imgGrid[i].length; j++) {
+        Map<PixelProperty, Integer> values = imgGrid[i][j].getPixelInfo();
+        temp[i][j] = new Pixel(values.get(PixelProperty.Red), values.get(PixelProperty.Green),
+                values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue));
+      }
+    }
+
+    this.imageCollection.put(imageName.toLowerCase(), temp);
+  }
+
   @Override
   public int getWidth(String imageName) throws IllegalArgumentException {
-    //TODO: use checkInBounds???
-    if (this.imageCollection.containsKey(imageName.toLowerCase())) {
-      return this.imageCollection.get(imageName)[0].length;
-    } else {
-      throw new IllegalArgumentException("Failed to find image");
-    }
+    this.checkInBounds(imageName, 0, 0);
+
+    return this.imageCollection.get(imageName)[0].length;
   }
 
   @Override
   public int getHeight(String imageName) throws IllegalArgumentException {
-    //TODO: use checkInBounds???
-    if (this.imageCollection.containsKey(imageName.toLowerCase())) {
-      return this.imageCollection.get(imageName).length;
-    } else {
-      throw new IllegalArgumentException("Failed to find image");
-    }
+    this.checkInBounds(imageName, 0, 0);
+
+    return this.imageCollection.get(imageName).length;
+
   }
 
   @Override
-  public Map<String, Integer> getPixelInfo(String imageName, int row, int col)
+  public Map<PixelProperty, Integer> getPixelInfo(String imageName, int row, int col)
           throws IllegalArgumentException {
     //Checks if the specific "position" is accessible. Will throw an exception if not.
     checkInBounds(imageName, row, col);
 
-    HashMap<String, Integer> values = new HashMap<String, Integer>();
-    values.put("red", this.imageCollection.get(imageName)[row][col].red);
-    values.put("green", this.imageCollection.get(imageName)[row][col].green);
-    values.put("blue", this.imageCollection.get(imageName)[row][col].blue);
-    values.put("maxVal", this.imageCollection.get(imageName)[row][col].maxVal);
-
-    //May need to return more values.
-    return values;
+    return this.imageCollection.get(imageName)[row][col].getPixelInfo();
   }
 
   // Checks if an image and row or col is valid, throws IllegalArgumentException otherwise.
@@ -184,6 +185,8 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
       throw new IllegalArgumentException("Image not found");
     }
 
+    //This will NOT throw an exception if row and col == 0. So we use row, col = 0 when
+    // we only want to check that the image exists in the map.
     if (row < 0 || row >= this.imageCollection.get(imageName).length ||
             col < 0 || col >= this.imageCollection.get(imageName)[0].length) {
       throw new IllegalArgumentException("Row or col is out of bounds");
@@ -197,16 +200,28 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     /**
      * TODO: SHOULD THESE BE PRIVATE OR PROTECTED?
      */
-    protected int red;
-    protected int green;
-    protected int blue;
-    protected int maxVal;
+    private int red;
+    private int green;
+    private int blue;
+    private final int maxVal;
 
-    protected Pixel(int red, int green, int blue, int maxVal) {
+    public Pixel(int red, int green, int blue, int maxVal) {
       this.red = red;
       this.green = green;
       this.blue = blue;
       this.maxVal = maxVal;
     }
+
+    public Map<PixelProperty, Integer> getPixelInfo() {
+      HashMap<PixelProperty, Integer> values = new HashMap<PixelProperty, Integer>();
+      values.put(PixelProperty.Red, this.red);
+      values.put(PixelProperty.Green, this.green);
+      values.put(PixelProperty.Blue, this.blue);
+      values.put(PixelProperty.MaxValue, this.maxVal);
+
+      return values;
+    }
   }
+
 }
+

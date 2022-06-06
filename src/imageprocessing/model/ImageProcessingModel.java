@@ -32,6 +32,17 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    * @param values The colors that should be changed and their new values.
    * @throws IllegalArgumentException If the image or image could not be found.
    */
-  void setColors(String imgName, int row, int col, Map<String, Integer> values)
+  void setColors(String imgName, int row, int col, Map<PixelProperty, Integer> values)
           throws IllegalArgumentException;
+
+  /**
+   * Adds an image to the library. Does this by adding a copy of the imgGrid. So the grid
+   * cannot be directly accessed afterwards.
+   *
+   * @param imageName The name of the image to add.
+   * @param imgGrid The pixel grid of the image.
+   * @throws IllegalArgumentException If the imgGrid is null.
+   */
+  void addImageToLibrary(String imageName, SimpleImageProcessingModel.Pixel[][] imgGrid)
+          throws IllegalArgumentException ;
 }

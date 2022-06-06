@@ -5,6 +5,12 @@ import java.util.Map;
 public interface ImageProcessingModelState {
 
   /**
+   * Represents various properties of a pixel. These all corrospond to numbers: i.e. how much
+   * red is in an image, the luma, etc.
+   */
+  enum PixelProperty {Red, Green, Blue, MaxValue, Value, Intensity, Luma}
+
+  /**
    * Gets the width of the given image.
    *
    * @param imageName The name of the image of which to get the width
@@ -31,6 +37,6 @@ public interface ImageProcessingModelState {
    * @return A map representing the pixel info
    * @throws IllegalArgumentException If the image name, row, col is invalid
    */
-  Map<String, Integer> getPixelInfo (String imageName, int row, int col)
+  Map<PixelProperty, Integer> getPixelInfo (String imageName, int row, int col)
           throws IllegalArgumentException;
 }
