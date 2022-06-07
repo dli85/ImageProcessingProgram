@@ -61,7 +61,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
   public Map<PixelProperty, Integer> getPixelInfo(String imageName, int row, int col)
           throws IllegalArgumentException {
     //Checks if the specific "position" is accessible. Will throw an exception if not.
-    checkInBounds(imageName, row, col);
+    this.checkInBounds(imageName, row, col);
 
     return this.imageCollection.get(imageName)[row][col].getPixelInfo();
   }
