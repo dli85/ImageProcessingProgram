@@ -46,8 +46,8 @@ the already existing fields of the class (which the user inputted).
 
 ### TODO LIST:
 1. Add grey scale commands, brighten commands, and flip commands
-2. Abstract the doCommand try statement?
-3. Remove all big try-catch statements (Do not have a lot of code inside a try statement)
+2. Remove the repeated variable initialization in command design pattern?
+3. Should the model load the image? and or save it?
 4. TESTS
    1. All invalid command type shit
    2. Brightening by more than 255, also brightening by less than -255

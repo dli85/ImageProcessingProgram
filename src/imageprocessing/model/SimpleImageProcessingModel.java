@@ -117,27 +117,6 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     }
   }
 
-  @Override
-  public void setColors(String imgName, int row, int col, Map<PixelProperty, Integer> values)
-          throws IllegalArgumentException {
-
-    checkInBounds(imgName, row, col);
-
-
-    Pixel p = this.imageCollection.get(imgName)[row][col];
-
-    for(PixelProperty key : values.keySet()) {
-      if(key.equals(PixelProperty.Red)) {
-        p.red = values.get(key);
-      } else if(key.equals(PixelProperty.Green)) {
-        p.green = values.get(key);
-      } else if(key.equals(PixelProperty.Blue)) {
-        p.blue = values.get(key);
-      }
-    }
-
-  }
-
   //Creates a copy of the imgGrid and adds it.
   @Override
   public void addImageToLibrary(String imageName, Pixel[][] imgGrid) {
@@ -204,11 +183,20 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     private int blue;
     private final int maxVal;
 
+    private int value;
+    private int intensity;
+    private int luma;
+
     public Pixel(int red, int green, int blue, int maxVal) {
       this.red = red;
       this.green = green;
       this.blue = blue;
+
       this.maxVal = maxVal;
+
+      this.value = Math.max(this.red, Math.max(this.green, this.blue));
+      this.intensity = (this.red + this.green + this.blue) / 3;
+      this.luma = (int) (0.216 * this.red + 0.7152 * this.green + 0.0722 * this.blue);
     }
 
     public Map<PixelProperty, Integer> getPixelInfo() {
@@ -217,6 +205,9 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
       values.put(PixelProperty.Green, this.green);
       values.put(PixelProperty.Blue, this.blue);
       values.put(PixelProperty.MaxValue, this.maxVal);
+      values.put(PixelProperty.Value, this.value);
+      values.put(PixelProperty.Intensity, this.intensity);
+      values.put(PixelProperty.Luma, this.luma);
 
       return values;
     }

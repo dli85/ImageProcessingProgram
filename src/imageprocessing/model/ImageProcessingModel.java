@@ -23,19 +23,6 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
   void saveImage(String savePath, String saveAsName) throws IllegalArgumentException;
 
   /**
-   * Sets color values for a pixel at a specific row and col using a map. (The map keys are
-   * the colors and the values are the new color-values).
-   *
-   * @param imgName The image to use.
-   * @param row The row of the pixel to set.
-   * @param col The col of the pixel to set.
-   * @param values The colors that should be changed and their new values.
-   * @throws IllegalArgumentException If the image or image could not be found.
-   */
-  void setColors(String imgName, int row, int col, Map<PixelProperty, Integer> values)
-          throws IllegalArgumentException;
-
-  /**
    * Adds an image to the library. Does this by adding a copy of the imgGrid. So the grid
    * cannot be directly accessed afterwards.
    *

@@ -7,8 +7,8 @@ import imageprocessing.model.ImageProcessingModelState;
 
 public class ImageProcessingViewImpl implements ImageProcessingView {
 
-  private ImageProcessingModelState model;
-  private Appendable output;
+  private final ImageProcessingModelState model;
+  private final Appendable output;
 
   /**
    * One argument constructor for a ImageProcessingViewImpl. Takes in the model, sets the

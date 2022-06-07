@@ -8,10 +8,12 @@ import java.util.Scanner;
 
 import imageprocessing.commands.BrightenCommand;
 import imageprocessing.commands.FlipCommand;
+import imageprocessing.commands.GrayScaleCommand;
 import imageprocessing.commands.LoadCommand;
 import imageprocessing.commands.SaveCommand;
 import imageprocessing.commands.UserCommand;
 import imageprocessing.model.ImageProcessingModel;
+import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.SimpleImageProcessingModel;
 import imageprocessing.view.ImageProcessingView;
 import imageprocessing.view.ImageProcessingViewImpl;
@@ -132,16 +134,34 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Horizontal);
         break;
       case "red-component":
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new GrayScaleCommand(PixelProperty.Red, imgName, newName);
         break;
       case "green-component":
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new GrayScaleCommand(PixelProperty.Green, imgName, newName);
         break;
       case "blue-component":
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new GrayScaleCommand(PixelProperty.Blue, imgName, newName);
         break;
       case "intensity-component":
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new GrayScaleCommand(PixelProperty.Intensity, imgName, newName);
         break;
       case "luma-component":
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new GrayScaleCommand(PixelProperty.Luma, imgName, newName);
         break;
       case "value-component":
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new GrayScaleCommand(PixelProperty.Value, imgName, newName);
         break;
       case "menu":
         this.displayMenu();
