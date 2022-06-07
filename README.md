@@ -48,17 +48,14 @@ the already existing fields of the class (which the user inputted).
 This application supports many commands to process images. 
 
 ### TODO LIST:
-1. Add grey scale commands, brighten commands, and flip commands
-2. Remove the repeated variable initialization in command design pattern?
-3. Should the model load the image? and or save it? (current the controller loads the image, model 
-saves it)
-4. TESTS
-   1. All invalid inputs/command type shit
-   2. Brightening by more than 255, also brightening by less than -255
-   3. Combinations of everything (flipping, brightening, etc.)
-5. Delete anything related to the koala (before submitting)
-6. Delete the utils folder (before submitting)
-7. Delete the main method in the controller (before submitting)
+1. Remove the repeated variable initialization in command design pattern?
+2. TESTS
+   1. All invalid inputs/commands
+   2. TEST EXCEPTIONS FOR EVERY METHOD WHICH THROWS THEM.
+   3. Test Brightening by more than 255, also brightening by less than -255
+   4. Combinations of everything (flipping, brightening, etc.)
+3. Delete anything related to the koala (before submitting)
+4. Delete the main method in the controller (before submitting)
 
 
 Our cute Mudkip:
