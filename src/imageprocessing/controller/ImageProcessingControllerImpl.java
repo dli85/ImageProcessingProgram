@@ -26,8 +26,6 @@ TODO:
   Check that the exceptions are thrown correctly:
     start() should only throw an IllegalStateException if reading from input/output fails.
     If any other error is thrown during start, it should handle it appropriately
-  Add commands to the commands shit
-  Everything model related
 
 
   TA QUESTIONS:
