@@ -40,9 +40,12 @@ IllegalStateExceptions if executing the command fails as the command is attempte
 the already existing fields of the class (which the user inputted). 
 
 
-## Usage (and possible commands)
+## Usage
 
+### Installation
 
+### Commands
+This application supports many commands to process images. 
 
 ### TODO LIST:
 1. Add grey scale commands, brighten commands, and flip commands
