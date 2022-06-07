@@ -2,7 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
@@ -34,7 +34,6 @@ public class SimpleImageProcessingModelTest {
   @Before
   public void init() {
     model1 = new SimpleImageProcessingModel();
-    //this.readFileIntoModel("test/images/mudkip.ppm", "mudkip");
   }
 
   @Test
