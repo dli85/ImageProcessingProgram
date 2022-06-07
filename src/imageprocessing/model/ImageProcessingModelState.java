@@ -5,7 +5,7 @@ import java.util.Map;
 public interface ImageProcessingModelState {
 
   /**
-   * Represents various properties of a pixel. These all corrospond to numbers: i.e. how much
+   * Represents various properties of a pixel. These all correspond to numbers: i.e. how much
    * red is in an image, the luma, etc.
    */
   enum PixelProperty {Red, Green, Blue, MaxValue, Value, Intensity, Luma}
@@ -32,11 +32,11 @@ public interface ImageProcessingModelState {
    * Obtains the information of a certain pixel in the given image.
    *
    * @param imageName The name of the image to use
-   * @param row The row of the pixel
-   * @param col The col of the pixel
+   * @param row       The row of the pixel
+   * @param col       The col of the pixel
    * @return A map representing the pixel info
    * @throws IllegalArgumentException If the image name, row, col is invalid
    */
-  Map<PixelProperty, Integer> getPixelInfo (String imageName, int row, int col)
+  Map<PixelProperty, Integer> getPixelInfo(String imageName, int row, int col)
           throws IllegalArgumentException;
 }

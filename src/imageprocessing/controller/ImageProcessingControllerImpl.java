@@ -1,17 +1,19 @@
 package imageprocessing.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import imageprocessing.commands.BrightenCommand;
 import imageprocessing.commands.FlipCommand;
 import imageprocessing.commands.GrayScaleCommand;
-import imageprocessing.commands.SaveCommand;
 import imageprocessing.commands.UserCommand;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
@@ -115,7 +117,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
       case "save":
         path = readFromInput(scanner);
         imageName = readFromInput(scanner);
-        command = new SaveCommand(path, imageName);
+        this.saveImageToFile(path, imageName);
         transmitMessage("Please wait, your image is being saved \n");
         break;
       case "brighten":
@@ -255,6 +257,44 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     }
 
     model.addImageToLibrary(imageName, pixelGrid);
+  }
+
+  private void saveImageToFile(String savePath, String imageName) {
+    File output = new File(savePath);
+    FileOutputStream out;
+    try {
+      out = new FileOutputStream(output);
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("Failed to save file");
+    }
+
+    try {
+
+      out.write(("P3" + System.lineSeparator()).getBytes());
+      out.write((model.getWidth(imageName) + " " + model.getHeight(imageName)).getBytes());
+      out.write(System.lineSeparator().getBytes());
+      out.write(Integer.toString(model.getPixelInfo(imageName, 0, 0)
+              .get(PixelProperty.MaxValue)).getBytes());
+      out.write(System.lineSeparator().getBytes());
+
+      for (int i = 0; i < model.getHeight(imageName); i++) {
+        for (int j = 0; j < model.getWidth(imageName); j++) {
+          Map<PixelProperty, Integer> colorVals = model.getPixelInfo(imageName, i, j);
+
+          out.write(Integer.toString(colorVals.get(PixelProperty.Red)).getBytes());
+          out.write(System.lineSeparator().getBytes());
+          out.write(Integer.toString(colorVals.get(PixelProperty.Green)).getBytes());
+          out.write(System.lineSeparator().getBytes());
+          out.write(Integer.toString(colorVals.get(PixelProperty.Blue)).getBytes());
+          out.write(System.lineSeparator().getBytes());
+        }
+      }
+
+      out.close();
+    } catch (IOException e) {
+      //TODO: delete file if writing failed at any point???
+      throw new IllegalArgumentException("Failed to write to output");
+    }
   }
 
   private void transmitMessage(String message) throws IllegalStateException {

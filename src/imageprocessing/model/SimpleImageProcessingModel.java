@@ -27,45 +27,6 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     imageCollection = new HashMap<String, Pixel[][]>();
   }
 
-  @Override
-  public void saveImage(String savePath, String imageName) throws IllegalArgumentException {
-    File output = new File(savePath);
-    FileOutputStream out;
-    try {
-      out = new FileOutputStream(output);
-    } catch (FileNotFoundException e) {
-      throw new IllegalArgumentException("Failed to save file");
-    }
-
-    try {
-
-      out.write(("P3" + System.lineSeparator()).getBytes());
-      out.write((this.getWidth(imageName) + " " + this.getHeight(imageName)).getBytes());
-      out.write(System.lineSeparator().getBytes());
-      out.write(Integer.toString(this.getPixelInfo(imageName, 0, 0)
-              .get(PixelProperty.MaxValue)).getBytes());
-      out.write(System.lineSeparator().getBytes());
-
-      for (int i = 0; i < this.getHeight(imageName); i++) {
-        for (int j = 0; j < this.getWidth(imageName); j++) {
-          Map<PixelProperty, Integer> colorVals = this.getPixelInfo(imageName, i, j);
-
-          out.write(Integer.toString(colorVals.get(PixelProperty.Red)).getBytes());
-          out.write(System.lineSeparator().getBytes());
-          out.write(Integer.toString(colorVals.get(PixelProperty.Green)).getBytes());
-          out.write(System.lineSeparator().getBytes());
-          out.write(Integer.toString(colorVals.get(PixelProperty.Blue)).getBytes());
-          out.write(System.lineSeparator().getBytes());
-        }
-      }
-
-      out.close();
-    } catch (IOException e) {
-      //TODO: delete file if writing failed at any point???
-      throw new IllegalArgumentException("Failed to write to output");
-    }
-  }
-
   //Creates a copy of the imgGrid and adds it.
   @Override
   public void addImageToLibrary(String imageName, Pixel[][] imgGrid) {
