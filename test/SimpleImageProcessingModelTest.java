@@ -30,17 +30,17 @@ public class SimpleImageProcessingModelTest {
   @Before
   public void init() {
     model1 = new SimpleImageProcessingModel();
-    this.readFileIntoModel("/Users/edwinliiiii/Desktop/OOD/Assignment4/test/images/mudkip.ppm",
+    this.readFileIntoModel("test/images/mudkip.ppm",
             "mudkip");
   }
 
   @Test
   public void testSaveImage() {
     // each time this test is run, testMudkip.ppm should be overwritten
-    model1.saveImage("/Users/edwinliiiii/Desktop/OOD/Assignment4/test/images/testMudkip.ppm",
+    model1.saveImage("test/images/mudkip.ppm",
             "mudkip");
-    File validMudkipPic = new File("/Users/edwinliiiii/Desktop/OOD/Assignment4/test/images/testMudkip.ppm");
-    File invalidMudkipPic = new File("/Users/edwinliiiii/Desktop/OOD/Assignment4/test/images/testMudkipasdad2.ppm");
+    File validMudkipPic = new File("test/images/testMudkip.ppm");
+    File invalidMudkipPic = new File("test/images/testMudkipasdad2.ppm");
 
     // check if the file is written as intended
     try {
