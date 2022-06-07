@@ -1,5 +1,7 @@
 package imageprocessing.controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -9,7 +11,6 @@ import java.util.Scanner;
 import imageprocessing.commands.BrightenCommand;
 import imageprocessing.commands.FlipCommand;
 import imageprocessing.commands.GrayScaleCommand;
-import imageprocessing.commands.LoadCommand;
 import imageprocessing.commands.SaveCommand;
 import imageprocessing.commands.UserCommand;
 import imageprocessing.model.ImageProcessingModel;
@@ -103,65 +104,65 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     userInput = userInput.toLowerCase();
 
     String path;
-    String imgName;
+    String imageName;
     String newName;
     switch (userInput) {
       case "load":
         path = readFromInput(scanner);
-        imgName = readFromInput(scanner);
-        command = new LoadCommand(path, imgName);
+        imageName = readFromInput(scanner);
+        this.readFileIntoModel(path, imageName);
         break;
       case "save":
         path = readFromInput(scanner);
-        imgName = readFromInput(scanner);
-        command = new SaveCommand(path, imgName);
+        imageName = readFromInput(scanner);
+        command = new SaveCommand(path, imageName);
         transmitMessage("Please wait, your image is being saved \n");
         break;
       case "brighten":
         int amount = readIntFromInput(scanner);
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new BrightenCommand(amount, imgName, newName);
+        command = new BrightenCommand(amount, imageName, newName);
         break;
       case "vertical-flip":
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Vertical);
+        command = new FlipCommand(imageName, newName, FlipCommand.FlipDirection.Vertical);
         break;
       case "horizontal-flip":
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Horizontal);
+        command = new FlipCommand(imageName, newName, FlipCommand.FlipDirection.Horizontal);
         break;
       case "red-component":
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Red, imgName, newName);
+        command = new GrayScaleCommand(PixelProperty.Red, imageName, newName);
         break;
       case "green-component":
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Green, imgName, newName);
+        command = new GrayScaleCommand(PixelProperty.Green, imageName, newName);
         break;
       case "blue-component":
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Blue, imgName, newName);
+        command = new GrayScaleCommand(PixelProperty.Blue, imageName, newName);
         break;
       case "intensity-component":
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Intensity, imgName, newName);
+        command = new GrayScaleCommand(PixelProperty.Intensity, imageName, newName);
         break;
       case "luma-component":
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Luma, imgName, newName);
+        command = new GrayScaleCommand(PixelProperty.Luma, imageName, newName);
         break;
       case "value-component":
-        imgName = readFromInput(scanner);
+        imageName = readFromInput(scanner);
         newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Value, imgName, newName);
+        command = new GrayScaleCommand(PixelProperty.Value, imageName, newName);
         break;
       case "menu":
         this.displayMenu();
@@ -204,8 +205,56 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
             " the given destination name. The increment may be positive (brightening)" +
             " or negative (darkening)\n\n");
     this.transmitMessage("\n");
+  }
 
+  private void readFileIntoModel(String path, String imageName) {
+    Scanner scanner;
+    try {
+      scanner = new Scanner(new FileInputStream(path));
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("File was not found");
+    }
 
+    StringBuilder builder = new StringBuilder();
+    while (scanner.hasNextLine()) {
+      String s = scanner.nextLine();
+      if (s.charAt(0) != '#') {
+        builder.append(s).append(System.lineSeparator());
+      }
+    }
+
+    scanner = new Scanner(builder.toString());
+
+    String token;
+
+    token = scanner.next();
+
+    if (!token.equals("P3")) {
+      throw new IllegalArgumentException("");
+    }
+
+    int width = scanner.nextInt();
+    //System.out.println("Width of image: "+width);
+    int height = scanner.nextInt();
+    //System.out.println("Height of image: "+height);
+    int maxValue = scanner.nextInt();
+    //System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
+
+    SimpleImageProcessingModel.Pixel[][] pixelGrid = new SimpleImageProcessingModel.Pixel[height][width];
+
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        int r = scanner.nextInt();
+        int g = scanner.nextInt();
+        int b = scanner.nextInt();
+
+        pixelGrid[i][j] = new SimpleImageProcessingModel.Pixel(r, g, b, maxValue);
+
+        //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
+      }
+    }
+
+    model.addImageToLibrary(imageName, pixelGrid);
   }
 
   private void transmitMessage(String message) throws IllegalStateException {

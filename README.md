@@ -47,9 +47,10 @@ the already existing fields of the class (which the user inputted).
 ### TODO LIST:
 1. Add grey scale commands, brighten commands, and flip commands
 2. Remove the repeated variable initialization in command design pattern?
-3. Should the model load the image? and or save it?
+3. Should the model load the image? and or save it? (current the controller loads the image, model 
+saves it)
 4. TESTS
-   1. All invalid command type shit
+   1. All invalid inputs/command type shit
    2. Brightening by more than 255, also brightening by less than -255
    3. Combinations of everything (flipping, brightening, etc.)
 5. Delete anything related to the koala (before submitting)
