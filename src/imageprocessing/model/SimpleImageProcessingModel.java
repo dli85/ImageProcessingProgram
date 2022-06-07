@@ -166,7 +166,6 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     this.checkInBounds(imageName, 0, 0);
 
     return this.imageCollection.get(imageName).length;
-
   }
 
   @Override

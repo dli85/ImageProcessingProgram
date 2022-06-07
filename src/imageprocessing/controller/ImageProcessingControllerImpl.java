@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import imageprocessing.commands.BrightenCommand;
 import imageprocessing.commands.FlipCommand;
 import imageprocessing.commands.LoadCommand;
 import imageprocessing.commands.SaveCommand;
@@ -22,6 +23,12 @@ TODO:
     If any other error is thrown during start, it should handle it appropriately
   Add commands to the commands shit
   Everything model related
+
+
+  TA QUESTIONS:
+    Big try catches?
+    brighten
+
 */
 
 /**
@@ -72,24 +79,19 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
             "Please input your command (type menu for a list of commands): \n");
 
     boolean programEnd = false;
-    try {
-      while (!programEnd) {
-        transmitMessage("Type your instruction: ");
-        //fillPipeline(scanner, 1);
-        String userInput = scanner.next();
-        if (userInput.equalsIgnoreCase("quit") ||
-                userInput.equalsIgnoreCase("q")) {
-          programEnd = true;
-        } else {
-          this.processCommand(userInput, scanner);
-        }
+    while (!programEnd) {
+      transmitMessage("Type your instruction: ");
+      //fillPipeline(scanner, 1);
+      String userInput = this.readFromInput(scanner);
+      if (userInput.equalsIgnoreCase("quit") ||
+              userInput.equalsIgnoreCase("q")) {
+        programEnd = true;
+      } else {
+        this.processCommand(userInput, scanner);
       }
-    } catch (NoSuchElementException e) {
-      throw new IllegalStateException("Failed to read from input");
     }
-
-
   }
+
 
   //Processes a user input.
   private void processCommand(String userInput, Scanner scanner) throws IllegalStateException {
@@ -101,51 +103,51 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     String path;
     String imgName;
     String newName;
-    try {
-      switch (userInput) {
-        case "load":
-          path = scanner.next();
-          imgName = scanner.next();
-          command = new LoadCommand(path, imgName);
-          break;
-        case "save":
-          path = scanner.next();
-          imgName = scanner.next();
-          command = new SaveCommand(path, imgName);
-          transmitMessage("Please wait, your image is being saved \n");
-          break;
-        case "brighten":
-          break;
-        case "vertical-flip":
-          imgName = scanner.next();
-          newName = scanner.next();
-          command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Vertical);
-          break;
-        case "horizontal-flip":
-          imgName = scanner.next();
-          newName = scanner.next();
-          command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Horizontal);
-          break;
-        case "red-component":
-          break;
-        case "green-component":
-          break;
-        case "blue-component":
-          break;
-        case "intensity-component":
-          break;
-        case "luma-component":
-          break;
-        case "value-component":
-          break;
-        case "menu":
-          this.displayMenu();
-          break;
-        default:
-          transmitMessage("Input not recognized" + System.lineSeparator());
-      }
-    } catch (NoSuchElementException e) {
-      throw new IllegalStateException("Failed to read from input");
+    switch (userInput) {
+      case "load":
+        path = readFromInput(scanner);
+        imgName = readFromInput(scanner);
+        command = new LoadCommand(path, imgName);
+        break;
+      case "save":
+        path = readFromInput(scanner);
+        imgName = readFromInput(scanner);
+        command = new SaveCommand(path, imgName);
+        transmitMessage("Please wait, your image is being saved \n");
+        break;
+      case "brighten":
+        int amount = readIntFromInput(scanner);
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new BrightenCommand(amount, imgName, newName);
+        break;
+      case "vertical-flip":
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Vertical);
+        break;
+      case "horizontal-flip":
+        imgName = readFromInput(scanner);
+        newName = readFromInput(scanner);
+        command = new FlipCommand(imgName, newName, FlipCommand.FlipDirection.Horizontal);
+        break;
+      case "red-component":
+        break;
+      case "green-component":
+        break;
+      case "blue-component":
+        break;
+      case "intensity-component":
+        break;
+      case "luma-component":
+        break;
+      case "value-component":
+        break;
+      case "menu":
+        this.displayMenu();
+        break;
+      default:
+        transmitMessage("Input not recognized" + System.lineSeparator());
     }
 
     try {
@@ -193,4 +195,20 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
       throw new IllegalStateException("Failed to transmit to output");
     }
   }
-}
+
+  private String readFromInput(Scanner scanner) throws IllegalStateException {
+    try {
+      return scanner.next();
+    } catch (NoSuchElementException e) {
+      throw new IllegalStateException("Failed to read from input");
+    }
+  }
+
+  private int readIntFromInput(Scanner scanner) throws IllegalStateException {
+    try {
+      return scanner.nextInt();
+    } catch (NoSuchElementException e) {
+      throw new IllegalStateException("Failed to read from input");
+    }
+  }
+ }

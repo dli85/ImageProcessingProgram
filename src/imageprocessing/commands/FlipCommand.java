@@ -8,7 +8,6 @@ import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
 public class FlipCommand implements UserCommand {
 
-  //TODO: This needs to be public?
   public enum FlipDirection {Vertical, Horizontal}
 
   String imageName;
@@ -30,8 +29,22 @@ public class FlipCommand implements UserCommand {
   @Override
   public void doCommand(ImageProcessingModel model) throws IllegalStateException {
 
-    try {
+    /*
+    This is a big try-catch statement. The reason this is here is that many model methods
+    may throw an IllegalArgument exception for whatever reason. (image does not exist, file path
+    does not exist, row/col out of bounds, etc.) Thus, the try-catch is used to catch any
+    IllegalArgumentExceptions that could be thrown because of model methods. If an
+    IllegalArgumentException is thrown, that means that the user gave a bad command resulting
+    in the command failing. This is caught by the catch statement and this method throws an
+    IllegalStateException to signal to the controller that the command failed.
 
+    This large try-catch statement is essentially a substitute to many small try-catch statements
+    around each model-method call. A large try-catch reduces redundant code and can be considered
+    good design in this context as an IllegalArgument exception should only be thrown inside the
+    code block if the user has provided bad inputs (which is exactly what the try-catch is looking
+    for and will report).
+     */
+    try {
       int width = model.getWidth(this.imageName);
       int height = model.getHeight(this.imageName);
 
@@ -63,8 +76,8 @@ public class FlipCommand implements UserCommand {
           }
         }
       }
+      //brighten image 10
       model.addImageToLibrary(this.newName, newImgGrid);
-
     } catch (IllegalArgumentException e) {
       throw new IllegalStateException("Command failed");
     }
