@@ -59,3 +59,8 @@ saves it)
 5. Delete anything related to the koala (before submitting)
 6. Delete the utils folder (before submitting)
 7. Delete the main method in the controller (before submitting)
+
+
+Our cute Mudkip:
+
+https://oyster.ignimgs.com/mediawiki/apis.ign.com/pokedex/c/ce/Brock_Mudkip.png?width=640
