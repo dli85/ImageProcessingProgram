@@ -65,4 +65,5 @@ Our cute Mudkip:
 ![image](https://user-images.githubusercontent.com/91173669/172420508-6c48594d-e49d-48df-986f-c9852c7d5313.png)
 
 https://oyster.ignimgs.com/mediawiki/apis.ign.com/pokedex/c/ce/Brock_Mudkip.png?width=640
+
 https://www.ign.com/wikis/pokedex/Mudkip
