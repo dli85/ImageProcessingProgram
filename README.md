@@ -24,7 +24,7 @@ creates new instances of the command-function-objects in order to execute these 
 ### Exceptions and Try-Catch
 
 Virtually every public method in the model can throw an IllegalArgumentException. This choice was 
-made so that errors could be properly handled. FOr instance. if the user tries to save a image
+made so that errors could be properly handled. For instance, if the user tries to save a image
 that does not exist, the application should not crash. Instead, the fact that the command
 failed to execute should be outputted, and the program should continue as normal. Thus, when 
 performing operations on images, many model methods are needed and there will be many places where
