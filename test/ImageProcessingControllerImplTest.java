@@ -138,4 +138,148 @@ public class ImageProcessingControllerImplTest {
     testTwoImagesAreTheSame(model1,
             "brightSquare1", "brightSquare2");
   }
+
+  @Test
+  public void testBrightnessOver255() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-brightby100.ppm brightSquare1 \n" +
+                    "brighten 100 square1 brightSquare2 q"));
+    controller.start();
+
+    // makes sure the brightened square's properties don't exceed 255.
+    testTwoImagesAreTheSame(model1,
+            "brightSquare1", "brightSquare2");
+  }
+
+  @Test
+  public void testNegativeBrightnessBy10() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-dimBy10.ppm dimSquare1 \n" +
+                    "brighten -10 square1 dimSquare2 q"));
+    controller.start();
+
+    // makes sure the brightened square's properties don't exceed 255.
+    testTwoImagesAreTheSame(model1,
+            "dimSquare1", "dimSquare2");
+  }
+
+  @Test
+  public void testNegativeBrightnessBy100() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-dimBy100.ppm dimSquare1 \n" +
+                    "brighten -100 square1 dimSquare2 q"));
+    controller.start();
+
+    // makes sure the brightened square's properties don't exceed below 0.
+    testTwoImagesAreTheSame(model1,
+            "dimSquare1", "dimSquare2");
+  }
+
+  @Test
+  public void testGreyscaleRed() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-205.ppm greySquare1 \n" +
+                    "red-component square1 greySquare2 q"));
+    controller.start();
+
+    // makes sure the square's pixels are all the respective Red value
+    testTwoImagesAreTheSame(model1,
+            "greySquare1", "greySquare2");
+  }
+
+  @Test
+  public void testGreyscaleGreen() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-41.ppm greySquare1 \n" +
+                    "green-component square1 greySquare2 q"));
+    controller.start();
+
+    // makes sure the square's pixels are all the respective Green value
+    testTwoImagesAreTheSame(model1,
+            "greySquare1", "greySquare2");
+  }
+
+  @Test
+  public void testGreyscaleBlue() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-205.ppm greySquare1 \n" +
+                    "blue-component square1 greySquare2 q"));
+    controller.start();
+
+    // makes sure the square's pixels are all the respective Blue value
+    testTwoImagesAreTheSame(model1,
+            "greySquare1", "greySquare2");
+  }
+
+  @Test
+  public void testGreyscaleLuma() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-87-byLuma.ppm greySquare1 \n" +
+                    "luma-component square1 greySquare2 q"));
+    controller.start();
+
+    // makes sure the square's pixels are all the respective Luma value
+    testTwoImagesAreTheSame(model1,
+            "greySquare1", "greySquare2");
+  }
+
+  @Test
+  public void testGreyscaleIntensity() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-150-byIntensity.ppm greySquare1 \n" +
+                    "intensity-component square1 greySquare2 q"));
+    controller.start();
+
+    // makes sure the square's pixels are all the respective Intensity value
+    testTwoImagesAreTheSame(model1,
+            "greySquare1", "greySquare2");
+  }
+
+  @Test
+  public void testGreyscaleValue() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-205.ppm greySquare1 \n" +
+                    "value-component square1 greySquare2 q"));
+    controller.start();
+
+    // makes sure the square's pixels are all the respective value
+    testTwoImagesAreTheSame(model1,
+            "greySquare1", "greySquare2");
+  }
 }

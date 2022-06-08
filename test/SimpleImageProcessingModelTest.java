@@ -47,8 +47,8 @@ public class SimpleImageProcessingModelTest {
     assertEquals(2, width);
     assertEquals(2, height);
 
-    for(int i = 0; i < 2; i++) {
-      for(int j = 0; j < 2; j++) {
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < 2; j++) {
         Map<PixelProperty, Integer> values = model1.getPixelInfo("testImage", i, j);
 
         int red = values.get(PixelProperty.Red);
@@ -65,8 +65,8 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image2 = new Pixel[100][100];
 
-    for(int i = 0; i < image2.length; i++) {
-      for(int j = 0; j < image2[i].length; j++) {
+    for (int i = 0; i < image2.length; i++) {
+      for (int j = 0; j < image2[i].length; j++) {
         image2[i][j] = new Pixel(10, 10, 10, 255);
       }
     }
@@ -87,8 +87,8 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image1 = new Pixel[150][100];
 
-    for(int i = 0; i < image1.length; i++) {
-      for(int j = 0; j < image1[i].length; j++) {
+    for (int i = 0; i < image1.length; i++) {
+      for (int j = 0; j < image1[i].length; j++) {
         image1[i][j] = new Pixel(100, 100, 100, 255);
       }
     }
@@ -112,8 +112,8 @@ public class SimpleImageProcessingModelTest {
   public void testGetHeight() {
     Pixel[][] image1 = new Pixel[150][100];
 
-    for(int i = 0; i < image1.length; i++) {
-      for(int j = 0; j < image1[i].length; j++) {
+    for (int i = 0; i < image1.length; i++) {
+      for (int j = 0; j < image1[i].length; j++) {
         image1[i][j] = new Pixel(100, 100, 100, 255);
       }
     }
@@ -155,7 +155,7 @@ public class SimpleImageProcessingModelTest {
             .get(ImageProcessingModelState.PixelProperty.Green));
     assertEquals(110, (int) this.model1.getPixelInfo("mudkip", 0, 0)
             .get(ImageProcessingModelState.PixelProperty.Blue));
-    assertEquals(192, (int) this.model1.getPixelInfo("mudkip", 0, 0)
+    assertEquals(191, (int) this.model1.getPixelInfo("mudkip", 0, 0)
             .get(ImageProcessingModelState.PixelProperty.Luma));
     assertEquals(175, (int) this.model1.getPixelInfo("mudkip", 0, 0)
             .get(ImageProcessingModelState.PixelProperty.Intensity));
@@ -190,7 +190,7 @@ public class SimpleImageProcessingModelTest {
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Red));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Green));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Blue));
-    assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Luma));
+    assertEquals(254, (int) info.get(ImageProcessingModelState.PixelProperty.Luma));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Intensity));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.MaxValue));
   }
