@@ -26,6 +26,10 @@ TODO:
   Check that the exceptions are thrown correctly:
     start() should only throw an IllegalStateException if reading from input/output fails.
     If any other error is thrown during start, it should handle it appropriately
+  HashMap for command design?
+    Reduce repeated inputs?
+  View having the model?
+  Model design?
 
 
   TA QUESTIONS:
