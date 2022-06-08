@@ -15,6 +15,7 @@ import imageprocessing.model.SimpleImageProcessingModel.Pixel;
 import imageprocessing.view.ImageProcessingViewImpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 /**
@@ -35,7 +36,7 @@ public class ImageProcessingControllerImplTest {
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         Map<PixelProperty, Integer> img1Values = model.getPixelInfo(image1Name, i, j);
-        Map<PixelProperty, Integer> img2Values = model.getPixelInfo(image1Name, i, j);
+        Map<PixelProperty, Integer> img2Values = model.getPixelInfo(image2Name, i, j);
 
         //We check that every pixel value is the same.
         for (PixelProperty p : img1Values.keySet()) {
@@ -101,11 +102,40 @@ public class ImageProcessingControllerImplTest {
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
             new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
-                    "load test/images/testMudkip.ppm mudkip2 \n" +
                     "load test/images/gimp-vertical-mudkip.ppm verticalMudkip1 \n" +
                     "vertical-flip mudkip1 verticalMudkip2 q"));
     controller.start();
 
-    testTwoImagesAreTheSame(model1, "verticalMudkip1", "mudkip2");
+    testTwoImagesAreTheSame(model1, "verticalMudkip1", "verticalMudkip2");
+  }
+
+  @Test
+  public void testHorizontalFlip() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
+                    "load test/images/gimp-horizontal-mudkip.ppm horizontalMudkip1 \n" +
+                    "horizontal-flip mudkip1 horizontalMudkip2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "horizontalMudkip1", "horizontalMudkip2");
+  }
+
+  @Test
+  public void testBrightnessUnder255() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-brightby10.ppm brightSquare1 \n" +
+                    "brighten 10 square1 brightSquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "brightSquare1", "brightSquare2");
   }
 }
