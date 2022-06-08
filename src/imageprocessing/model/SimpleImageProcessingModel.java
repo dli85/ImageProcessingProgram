@@ -32,8 +32,8 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
   public void addImageToLibrary(String imageName, Pixel[][] imgGrid) {
     Pixel[][] temp = new Pixel[imgGrid.length][imgGrid[0].length];
 
-    for(int i = 0; i < imgGrid.length; i++) {
-      for(int j = 0; j < imgGrid[i].length; j++) {
+    for (int i = 0; i < imgGrid.length; i++) {
+      for (int j = 0; j < imgGrid[i].length; j++) {
         Map<PixelProperty, Integer> values = imgGrid[i][j].getPixelInfo();
         temp[i][j] = new Pixel(values.get(PixelProperty.Red), values.get(PixelProperty.Green),
                 values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue));
@@ -104,7 +104,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
 
       this.value = Math.max(this.red, Math.max(this.green, this.blue));
       this.intensity = (this.red + this.green + this.blue) / 3;
-      this.luma = (int) (0.216 * this.red + 0.7152 * this.green + 0.0722 * this.blue);
+      this.luma = (int) (0.2126 * this.red + 0.7152 * this.green + 0.0722 * this.blue);
     }
 
     public Map<PixelProperty, Integer> getPixelInfo() {
