@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import java.io.StringReader;
 import java.util.Map;
+import java.util.Optional;
 
 import imageprocessing.controller.ImageProcessingController;
 import imageprocessing.controller.ImageProcessingControllerImpl;
@@ -22,8 +23,7 @@ import static org.junit.Assert.fail;
 public class SimpleImageProcessingModelTest {
   private SimpleImageProcessingModel model1;
 
-  @Before
-  public void init() {
+  private void init() {
     model1 = new SimpleImageProcessingModel();
   }
 
@@ -32,6 +32,7 @@ public class SimpleImageProcessingModelTest {
    */
   @Test
   public void testAddImageToLibrary() {
+    init();
     // loading invokes readFileIntoModel, which creates a 2D array of Pixels,
     // and then invokes addImageToLibrary using that 2D array of Pixels.
 
@@ -84,6 +85,7 @@ public class SimpleImageProcessingModelTest {
 
   @Test
   public void testGetWidth() {
+    init();
 
     Pixel[][] image1 = new Pixel[150][100];
 
@@ -110,6 +112,8 @@ public class SimpleImageProcessingModelTest {
 
   @Test
   public void testGetHeight() {
+    init();
+
     Pixel[][] image1 = new Pixel[150][100];
 
     for (int i = 0; i < image1.length; i++) {
@@ -137,55 +141,51 @@ public class SimpleImageProcessingModelTest {
     assertEquals(4, this.model1.getHeight("testImage2"));
   }
 
-  //TODO CHANGE THIS!!
   @Test
   public void testModelGetPixelInfo() {
-    ImageProcessingController controller = new ImageProcessingControllerImpl(
-            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip \n" +
-                    "vertical-flip mudkip newmud \n q"));
+    init();
 
-    controller.start();
+    Pixel[][] image = new Pixel[][]{
+            {new Pixel(1, 2, 3, 255),
+                    new Pixel(4, 5, 6, 255)},
+            {new Pixel(7, 8, 9, 255),
+                    new Pixel(10, 11, 12, 255)}};
 
-    // check that getPixelInfo returns the appropriate HashMap
-    // for a single pixel on regular mudkip
-    assertEquals(228, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Red));
-    assertEquals(189, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Green));
-    assertEquals(110, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Blue));
-    assertEquals(191, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Luma));
-    assertEquals(175, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Intensity));
-    assertEquals(255, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.MaxValue));
+    model1.addImageToLibrary("test", image);
 
-    // check that getPixelInfo returns the appropriate HashMap
-    // for a single pixel on vertical flipped mudkip
-    assertEquals(153, (int) this.model1.getPixelInfo("newmud", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Red));
-    assertEquals(90, (int) this.model1.getPixelInfo("newmud", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Green));
-    assertEquals(46, (int) this.model1.getPixelInfo("newmud", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Blue));
-    assertEquals(100, (int) this.model1.getPixelInfo("newmud", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Luma));
-    assertEquals(96, (int) this.model1.getPixelInfo("newmud", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Intensity));
-    assertEquals(255, (int) this.model1.getPixelInfo("newmud", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.MaxValue));
+    Map<PixelProperty, Integer> pixel1Values = model1.getPixelInfo("test", 0, 0);
+    Map<PixelProperty, Integer> pixel2Values = model1.getPixelInfo("test", 0, 1);
+    Map<PixelProperty, Integer> pixel3Values = model1.getPixelInfo("test", 1, 0);
+    Map<PixelProperty, Integer> pixel4Values = model1.getPixelInfo("test", 1, 1);
+
+    assertEquals(1, (int) pixel1Values.get(PixelProperty.Red));
+    assertEquals(2, (int) pixel1Values.get(PixelProperty.Green));
+    assertEquals(3, (int) pixel1Values.get(PixelProperty.Blue));
+
+    assertEquals(4, (int) pixel2Values.get(PixelProperty.Red));
+    assertEquals(5, (int) pixel2Values.get(PixelProperty.Green));
+    assertEquals(6, (int) pixel2Values.get(PixelProperty.Blue));
+
+    assertEquals(7, (int) pixel3Values.get(PixelProperty.Red));
+    assertEquals(8, (int) pixel3Values.get(PixelProperty.Green));
+    assertEquals(9, (int) pixel3Values.get(PixelProperty.Blue));
+
+    assertEquals(10, (int) pixel4Values.get(PixelProperty.Red));
+    assertEquals(11, (int) pixel4Values.get(PixelProperty.Green));
+    assertEquals(12, (int) pixel4Values.get(PixelProperty.Blue));
+
+    assertEquals(255, (int) pixel1Values.get(PixelProperty.MaxValue));
+    assertEquals(255, (int) pixel2Values.get(PixelProperty.MaxValue));
+    assertEquals(255, (int) pixel3Values.get(PixelProperty.MaxValue));
+    assertEquals(255, (int) pixel4Values.get(PixelProperty.MaxValue));
   }
 
 
-  //TODO: CHANGE THIS!!!
   @Test
   public void testPixelGetPixelInfo() {
-    SimpleImageProcessingModel.Pixel pixel =
-            new SimpleImageProcessingModel.Pixel(255, 255, 255, 255);
+    Pixel pixel = new SimpleImageProcessingModel.Pixel(255, 255, 255, 255);
 
-    Map<ImageProcessingModelState.PixelProperty, Integer> info = pixel.getPixelInfo();
+    Map<PixelProperty, Integer> info = pixel.getPixelInfo();
 
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Red));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Green));
@@ -197,9 +197,12 @@ public class SimpleImageProcessingModelTest {
 
   /**
    * Tests that all public model methods throw the appropriate exceptions.
+   * All these method calls should fail and throw an exception.
    */
   @Test
   public void testExceptions() {
+    init();
+
     // for getWidth
     try {
       this.model1.getWidth("notfound");
@@ -214,6 +217,39 @@ public class SimpleImageProcessingModelTest {
       fail("Exception should have been thrown");
     } catch (IllegalArgumentException e) {
       // let the test pass
+    }
+
+    //Add image to library exception
+    try {
+      this.model1.addImageToLibrary("",
+              new Pixel[][]{{new Pixel(0, 0, 0, 255)}});
+    } catch (IllegalArgumentException e) {
+      assertEquals("Parameters cannot be null", e.getMessage());
+    }
+
+    //Add image to library exception
+    try {
+      this.model1.addImageToLibrary(null,
+              new Pixel[][]{{new Pixel(0, 0, 0, 255)}});
+    } catch (IllegalArgumentException e) {
+      assertEquals("Parameters cannot be null", e.getMessage());
+
+    }
+
+    //Add image to library exception
+    try {
+      this.model1.addImageToLibrary("test", null);
+    } catch (IllegalArgumentException e) {
+      assertEquals("Parameters cannot be null", e.getMessage());
+
+    }
+
+    //Add image to library exception
+    try {
+      this.model1.addImageToLibrary("test", new Pixel[10][10]);
+    } catch (IllegalArgumentException e) {
+      assertEquals("imgGrid cannot contain null pixels", e.getMessage());
+
     }
 
     // for getPixelInfo

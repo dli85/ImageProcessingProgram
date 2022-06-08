@@ -10,7 +10,8 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    *
    * @param imageName The name of the image to add.
    * @param imgGrid   The pixel grid of the image.
-   * @throws IllegalArgumentException If the imgGrid is null.
+   * @throws IllegalArgumentException If the imgGrid is null or the imageName is empty or null or
+   *                                  if any pixel inside the imgGrid is null.
    */
   void addImageToLibrary(String imageName, SimpleImageProcessingModel.Pixel[][] imgGrid)
           throws IllegalArgumentException;

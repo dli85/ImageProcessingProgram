@@ -1,14 +1,7 @@
 package imageprocessing.model;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 /*
 TODO:
@@ -30,14 +23,25 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
 
   //Creates a copy of the imgGrid and adds it.
   @Override
-  public void addImageToLibrary(String imageName, Pixel[][] imgGrid) {
+  public void addImageToLibrary(String imageName, Pixel[][] imgGrid)
+          throws IllegalArgumentException {
+
+    if(imageName == null || imageName.equals("") || imgGrid == null) {
+      throw new IllegalArgumentException("Parameters cannot be null");
+    }
+
     Pixel[][] temp = new Pixel[imgGrid.length][imgGrid[0].length];
 
     for (int i = 0; i < imgGrid.length; i++) {
       for (int j = 0; j < imgGrid[i].length; j++) {
-        Map<PixelProperty, Integer> values = imgGrid[i][j].getPixelInfo();
-        temp[i][j] = new Pixel(values.get(PixelProperty.Red), values.get(PixelProperty.Green),
-                values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue));
+
+        if(imgGrid[i][j] == null) {
+          throw new IllegalArgumentException("imgGrid cannot contain null pixels");
+        } else {
+          Map<PixelProperty, Integer> values = imgGrid[i][j].getPixelInfo();
+          temp[i][j] = new Pixel(values.get(PixelProperty.Red), values.get(PixelProperty.Green),
+                  values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue));
+        }
       }
     }
 
