@@ -60,6 +60,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
   @Override
   public Map<PixelProperty, Integer> getPixelInfo(String imageName, int row, int col)
           throws IllegalArgumentException {
+
     //Checks if the specific "position" is accessible. Will throw an exception if not.
     this.checkInBounds(imageName, row, col);
 
@@ -85,9 +86,6 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
    * Represents a pixel on an image with some color values.
    */
   public static class Pixel {
-    /**
-     * TODO: SHOULD THESE BE PRIVATE OR PROTECTED?
-     */
     private int red;
     private int green;
     private int blue;

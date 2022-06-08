@@ -38,7 +38,12 @@ public class SimpleImageProcessingModelTest {
     // loading invokes readFileIntoModel, which creates a 2D array of Pixels,
     // and then invokes addImageToLibrary using that 2D array of Pixels.
 
-    SimpleImageProcessingModel.Pixel[][] image1 = new Pixel[][]{};
+    SimpleImageProcessingModel.Pixel[][] image1 = new Pixel[][]{
+            {new Pixel(255, 0, 204, 255),
+                    new Pixel(104, 2, 4, 255)},
+            {new Pixel(255, 0, 204, 255),
+                    new Pixel(104, 2, 4, 255)}
+    };
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),

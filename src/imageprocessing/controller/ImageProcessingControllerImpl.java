@@ -88,7 +88,6 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     boolean programEnd = false;
     while (!programEnd) {
       transmitMessage("Type your instruction: ");
-      //fillPipeline(scanner, 1);
       String userInput = this.readFromInput(scanner);
       if (userInput.equalsIgnoreCase("quit") ||
               userInput.equalsIgnoreCase("q")) {
@@ -112,61 +111,59 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     String newName;
     switch (userInput) {
       case "load":
-        path = readFromInput(scanner);
-        imageName = readFromInput(scanner);
-        this.readFileIntoModel(path, imageName);
+        //First input: path, second input: imageName
+        this.readFileIntoModel(readFromInput(scanner), readFromInput(scanner));
         break;
       case "save":
-        path = readFromInput(scanner);
-        imageName = readFromInput(scanner);
-        this.saveImageToFile(path, imageName);
+        //First input: path, second input: imageName
+        this.saveImageToFile(readFromInput(scanner), readFromInput(scanner));
         transmitMessage("Please wait, your image is being saved \n");
         break;
       case "brighten":
-        int amount = readIntFromInput(scanner);
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new BrightenCommand(amount, imageName, newName);
+        //First input: amount, second input: imageName, third input: new name
+        command = new BrightenCommand(readIntFromInput(scanner),
+                readFromInput(scanner), readFromInput(scanner));
         break;
       case "vertical-flip":
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new FlipCommand(imageName, newName, FlipCommand.FlipDirection.Vertical);
+        //First input: imageName, secondInput: newName
+        command = new FlipCommand(readFromInput(scanner), readFromInput(scanner),
+                FlipCommand.FlipDirection.Vertical);
         break;
       case "horizontal-flip":
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new FlipCommand(imageName, newName, FlipCommand.FlipDirection.Horizontal);
+        //First input: imageName, secondInput: newName
+        command = new FlipCommand(readFromInput(scanner), readFromInput(scanner),
+                FlipCommand.FlipDirection.Horizontal);
         break;
       case "red-component":
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Red, imageName, newName);
+        //First input: imageName, second input: newName
+        command = new GrayScaleCommand(PixelProperty.Red, readFromInput(scanner),
+                readFromInput(scanner));
         break;
       case "green-component":
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Green, imageName, newName);
+        //First input: imageName, second input: newName
+        command = new GrayScaleCommand(PixelProperty.Green, readFromInput(scanner),
+                readFromInput(scanner));
         break;
       case "blue-component":
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Blue, imageName, newName);
+
+        //First input: imageName, second input: newName
+        command = new GrayScaleCommand(PixelProperty.Blue, readFromInput(scanner),
+                readFromInput(scanner));
         break;
       case "intensity-component":
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Intensity, imageName, newName);
+        //First input: imageName, second input: newName
+        command = new GrayScaleCommand(PixelProperty.Intensity, readFromInput(scanner),
+                readFromInput(scanner));
         break;
       case "luma-component":
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Luma, imageName, newName);
+        //First input: imageName, second input: newName
+        command = new GrayScaleCommand(PixelProperty.Luma, readFromInput(scanner),
+                readFromInput(scanner));
         break;
       case "value-component":
-        imageName = readFromInput(scanner);
-        newName = readFromInput(scanner);
-        command = new GrayScaleCommand(PixelProperty.Value, imageName, newName);
+        //First input: imageName, second input: newName
+        command = new GrayScaleCommand(PixelProperty.Value, readFromInput(scanner),
+                readFromInput(scanner));
         break;
       case "menu":
         this.displayMenu();
