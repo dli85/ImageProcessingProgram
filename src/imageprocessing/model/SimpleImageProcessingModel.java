@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -47,14 +48,14 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
   public int getWidth(String imageName) throws IllegalArgumentException {
     this.checkInBounds(imageName, 0, 0);
 
-    return this.imageCollection.get(imageName)[0].length;
+    return this.imageCollection.get(imageName.toLowerCase())[0].length;
   }
 
   @Override
   public int getHeight(String imageName) throws IllegalArgumentException {
     this.checkInBounds(imageName, 0, 0);
 
-    return this.imageCollection.get(imageName).length;
+    return this.imageCollection.get(imageName.toLowerCase()).length;
   }
 
   @Override
@@ -64,7 +65,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     //Checks if the specific "position" is accessible. Will throw an exception if not.
     this.checkInBounds(imageName, row, col);
 
-    return this.imageCollection.get(imageName)[row][col].getPixelInfo();
+    return this.imageCollection.get(imageName.toLowerCase())[row][col].getPixelInfo();
   }
 
   // Checks if an image and row or col is valid, throws IllegalArgumentException otherwise.
@@ -76,8 +77,8 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
 
     //This will NOT throw an exception if row and col == 0. So we use row, col = 0 when
     // we only want to check that the image exists in the map.
-    if (row < 0 || row >= this.imageCollection.get(imageName).length ||
-            col < 0 || col >= this.imageCollection.get(imageName)[0].length) {
+    if (row < 0 || row >= this.imageCollection.get(imageName.toLowerCase()).length ||
+            col < 0 || col >= this.imageCollection.get(imageName.toLowerCase())[0].length) {
       throw new IllegalArgumentException("Row or col is out of bounds");
     }
   }

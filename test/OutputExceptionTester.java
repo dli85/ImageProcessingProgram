@@ -5,6 +5,9 @@ import java.io.IOException;
  */
 public class OutputExceptionTester implements Appendable {
 
+  /**
+   * Default constructor.
+   */
   public OutputExceptionTester() {
 
   }

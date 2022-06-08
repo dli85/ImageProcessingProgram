@@ -54,7 +54,8 @@ This application supports many commands to process images.
    2. TEST EXCEPTIONS FOR EVERY METHOD WHICH THROWS THEM.
    3. Test Brightening by more than 255, also brightening by less than -255
    4. Combinations of everything (flipping, brightening, etc.)
-   5. Anything on previous self-evals
+   5. Image name case sensitivity (case should not matter, "mudkip" == "muDkiP")
+   6. Anything on previous self-evals
 3. Delete anything related to the koala (before submitting)
 4. Delete the main method in the controller (before submitting)
 

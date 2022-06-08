@@ -1,16 +1,13 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.StringReader;
 import java.util.Map;
-import java.util.Scanner;
 
 import imageprocessing.controller.ImageProcessingController;
 import imageprocessing.controller.ImageProcessingControllerImpl;
 import imageprocessing.model.ImageProcessingModelState;
+import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.SimpleImageProcessingModel;
 import imageprocessing.model.SimpleImageProcessingModel.Pixel;
 import imageprocessing.view.ImageProcessingViewImpl;
@@ -38,67 +35,109 @@ public class SimpleImageProcessingModelTest {
     // loading invokes readFileIntoModel, which creates a 2D array of Pixels,
     // and then invokes addImageToLibrary using that 2D array of Pixels.
 
-    SimpleImageProcessingModel.Pixel[][] image1 = new Pixel[][]{
-            {new Pixel(255, 0, 204, 255),
-                    new Pixel(104, 2, 4, 255)},
-            {new Pixel(255, 0, 204, 255),
-                    new Pixel(104, 2, 4, 255)}
-    };
+    Pixel[][] image1 = new Pixel[][]{
+            {new Pixel(100, 100, 100, 255),
+                    new Pixel(100, 100, 100, 255)},
+            {new Pixel(100, 100, 100, 255),
+                    new Pixel(100, 100, 100, 255)}};
 
-    ImageProcessingController controller = new ImageProcessingControllerImpl(
-            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip \n" +
-                    "save test/images/testMudkip.ppm mudkip \n q"));
+    model1.addImageToLibrary("testImage", image1);
+    int width = model1.getWidth("testImage");
+    int height = model1.getHeight("testImage");
+    assertEquals(2, width);
+    assertEquals(2, height);
 
-    controller.start();
+    for(int i = 0; i < 2; i++) {
+      for(int j = 0; j < 2; j++) {
+        Map<PixelProperty, Integer> values = model1.getPixelInfo("testImage", i, j);
 
-    // check that the ppm file's pixel properties are initialized as intended
-    assertEquals(228, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Red));
-    assertEquals(189, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Green));
-    assertEquals(110, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Blue));
-    assertEquals(192, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Luma));
-    assertEquals(175, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.Intensity));
-    assertEquals(255, (int) this.model1.getPixelInfo("mudkip", 0, 0)
-            .get(ImageProcessingModelState.PixelProperty.MaxValue));
+        int red = values.get(PixelProperty.Red);
+        int green = values.get(PixelProperty.Green);
+        int blue = values.get(PixelProperty.Blue);
+
+        assertEquals(100, red);
+        assertEquals(100, green);
+        assertEquals(100, blue);
+      }
+    }
+
+    //Test that images can be overwritten if given the same name.
+
+    Pixel[][] image2 = new Pixel[100][100];
+
+    for(int i = 0; i < image2.length; i++) {
+      for(int j = 0; j < image2[i].length; j++) {
+        image2[i][j] = new Pixel(10, 10, 10, 255);
+      }
+    }
+
+    model1.addImageToLibrary("testImage", image2);
+
+
+    int width2 = model1.getWidth("testImage");
+    int height2 = model1.getHeight("testImage");
+
+    assertEquals(100, width2);
+    assertEquals(100, height2);
+
   }
 
   @Test
   public void testGetWidth() {
-    ImageProcessingController controller = new ImageProcessingControllerImpl(
-            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip \n" +
-                    "vertical-flip mudkip newmud \n q"));
 
-    controller.start();
+    Pixel[][] image1 = new Pixel[150][100];
+
+    for(int i = 0; i < image1.length; i++) {
+      for(int j = 0; j < image1[i].length; j++) {
+        image1[i][j] = new Pixel(100, 100, 100, 255);
+      }
+    }
+
+    Pixel[][] image2 = new Pixel[][]{
+            {new Pixel(100, 100, 100, 255),
+                    new Pixel(100, 100, 100, 255)},
+            {new Pixel(100, 100, 100, 255),
+                    new Pixel(100, 100, 100, 255)}};
+
+    model1.addImageToLibrary("testImage", image1);
+    model1.addImageToLibrary("testImage2", image2);
 
     // check that each image has the appropriate width and height, and that flipped images
     // have their width remaining constant
-    assertEquals(320, this.model1.getWidth("newmud"));
-    assertEquals(320, this.model1.getWidth("mudkip"));
+    assertEquals(100, this.model1.getWidth("testImage"));
+    assertEquals(2, this.model1.getWidth("testImage2"));
   }
 
   @Test
   public void testGetHeight() {
-    // loading invokes readFileIntoModel, which creates a 2D array of Pixels,
-    // and then invokes addImageToLibrary using that 2D array of Pixels.
-    ImageProcessingController controller = new ImageProcessingControllerImpl(
-            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip \n" +
-                    "vertical-flip mudkip newmud \n q"));
+    Pixel[][] image1 = new Pixel[150][100];
 
-    controller.start();
+    for(int i = 0; i < image1.length; i++) {
+      for(int j = 0; j < image1[i].length; j++) {
+        image1[i][j] = new Pixel(100, 100, 100, 255);
+      }
+    }
+
+    Pixel[][] image2 = new Pixel[][]{
+            {new Pixel(100, 100, 100, 255),
+                    new Pixel(100, 100, 100, 255)},
+            {new Pixel(100, 100, 100, 255),
+                    new Pixel(100, 100, 100, 255)},
+            {new Pixel(100, 100, 100, 255),
+                    new Pixel(100, 100, 100, 255)},
+            {new Pixel(100, 100, 100, 255),
+                    new Pixel(100, 100, 100, 255)}};
+
+    model1.addImageToLibrary("testImage", image1);
+    model1.addImageToLibrary("testImage2", image2);
 
     // check that each image has the appropriate width and height, and that flipped images
-    // have their height remaining constant
-    assertEquals(240, this.model1.getHeight("newmud"));
-    assertEquals(240, this.model1.getHeight("mudkip"));
+    // have their width remaining constant
+    assertEquals(150, this.model1.getHeight("testImage"));
+    assertEquals(4, this.model1.getHeight("testImage2"));
   }
 
+  //TODO CHANGE THIS!!
   @Test
   public void testModelGetPixelInfo() {
     ImageProcessingController controller = new ImageProcessingControllerImpl(
@@ -139,6 +178,8 @@ public class SimpleImageProcessingModelTest {
             .get(ImageProcessingModelState.PixelProperty.MaxValue));
   }
 
+
+  //TODO: CHANGE THIS!!!
   @Test
   public void testPixelGetPixelInfo() {
     SimpleImageProcessingModel.Pixel pixel =
