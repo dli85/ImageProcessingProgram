@@ -16,6 +16,7 @@ import imageprocessing.model.SimpleImageProcessingModel.Pixel;
 import imageprocessing.view.ImageProcessingViewImpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 
 /**
@@ -63,14 +64,19 @@ public class SimpleImageProcessingModelTest {
 
   @Test
   public void testGetWidth() {
-    // loading invokes readFileIntoModel, which creates a 2D array of Pixels,
-    // and then invokes addImageToLibrary using that 2D array of Pixels.
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
             new StringReader("load test/images/mudkip.ppm mudkip \n" +
                     "vertical-flip mudkip newmud \n q"));
 
     controller.start();
+
+    try {
+      this.model1.getWidth("notfound");
+      fail("Exception should have been thrown");
+    } catch (IllegalArgumentException e) {
+      // let the test pass
+    }
 
     // check that each image has the appropriate width and height, and that flipped images
     // have their width remaining constant
@@ -89,6 +95,13 @@ public class SimpleImageProcessingModelTest {
 
     controller.start();
 
+    try {
+      this.model1.getHeight("notfound");
+      fail("Exception should have been thrown");
+    } catch (IllegalArgumentException e) {
+      // let the test pass
+    }
+
     // check that each image has the appropriate width and height, and that flipped images
     // have their height remaining constant
     assertEquals(240, this.model1.getHeight("newmud"));
@@ -103,6 +116,31 @@ public class SimpleImageProcessingModelTest {
                     "vertical-flip mudkip newmud \n q"));
 
     controller.start();
+
+    try {
+      this.model1.getPixelInfo("notfound", 0, 0);
+      fail("Exception should have been thrown");
+    } catch (IllegalArgumentException e) {
+      // let the test pass
+    }
+    try {
+      this.model1.getPixelInfo("mudkip", -2, 0);
+      fail("Exception should have been thrown");
+    } catch (IllegalArgumentException e) {
+      // let the test pass
+    }
+    try {
+      this.model1.getPixelInfo("mudkip", 0, -2);
+      fail("Exception should have been thrown");
+    } catch (IllegalArgumentException e) {
+      // let the test pass
+    }
+    try {
+      this.model1.getPixelInfo("mudkip", 900, -50);
+      fail("Exception should have been thrown");
+    } catch (IllegalArgumentException e) {
+      // let the test pass
+    }
 
     // check that getPixelInfo returns the appropriate HashMap
     // for a single pixel on regular mudkip
