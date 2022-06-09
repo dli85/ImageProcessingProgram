@@ -1,1 +1,1 @@
-load res/gimp-solid-square.ppm square1 green-component square1 greySquare1 brighten 30 greySquare1 greySquare2 save res/test-gimp-solid-square-71.ppm greySquare2 q
+load res/mudkip.ppm mudkip green-component mudkip mudkipGray brighten 30 mudkipGray mudkipGrayBright horizontal-flip mudkipGrayBright mudkipGrayBrightFlip save res/mudkipGrayBrightFlip.ppm mudkipGrayBrightFlip q

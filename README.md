@@ -74,13 +74,11 @@ overwritten.
 
 ### The Script
 
-To run this script using the program, type the entire one-line script when prompted for inputs.
-
-The script executes the following:
-1. Load a magenta solid square image named 'square1'
-2. Create a Green-Component Greyscale version of 'square1' named as 'greySquare1'
-3. Brighten 'greySquare1' by 30 units, saved as a new image named 'greySquare2'
-4. Save 'greySquare2' as a ppm file, with path res/test-gimp-solid-square-71.ppm
+The /res folder has included a script.txt file which is a sample series of commands which will
+load an image (mudkip), grayscale it, brighten it, flip it horizontally, and then save it. 
+To run this script using the program, copy-paste the entire script (it is all contained
+in one line) into the program. Alternatively, you can run each command one
+by one.
 
 ### TODO LIST:
 1. TESTS
