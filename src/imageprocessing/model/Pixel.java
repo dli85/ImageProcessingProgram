@@ -25,7 +25,7 @@ public class Pixel {
 
     this.value = Math.max(this.red, Math.max(this.green, this.blue));
     this.intensity = (this.red + this.green + this.blue) / 3;
-    this.luma = (int) (0.2126 * this.red + 0.7152 * this.green + 0.0722 * this.blue);
+    this.luma = (int) Math.round(0.2126 * this.red + 0.7152 * this.green + 0.0722 * this.blue);
   }
 
   public Map<ImageProcessingModelState.PixelProperty, Integer> getPixelInfo() {

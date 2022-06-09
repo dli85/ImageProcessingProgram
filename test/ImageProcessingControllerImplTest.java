@@ -514,9 +514,9 @@ public class ImageProcessingControllerImplTest {
             "square2", "greySquare2");
   }
 
-  /**
+  /*
    * Loads a 2x2 pixel image and checks that it is correct with hardcode.
-   * <p>
+   *
    * ORIGINAL IMAGE:
    * (82, 212, 120)   (199, 34, 187)
    * (50, 241, 244)   (241, 222, 45)

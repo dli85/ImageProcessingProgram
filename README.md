@@ -8,7 +8,8 @@ that can flip, brighten, or greyscale an image.
 ## Design Overview
 ### MVC Design
 This application follows the Model-View-Controller (MVC) design pattern. For clarification, images 
-are stored in code as 2d Pixel Arrays.
+are stored in code as 2d Pixel Arrays. The pixel class contains the information values about
+every pixel. This class is stored in the model package.
 
 1. ImageProcessingController interface
    1. The image processing controller interface only contains the header for the start() method,

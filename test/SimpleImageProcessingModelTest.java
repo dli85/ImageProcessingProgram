@@ -184,7 +184,7 @@ public class SimpleImageProcessingModelTest {
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Red));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Green));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Blue));
-    assertEquals(254, (int) info.get(ImageProcessingModelState.PixelProperty.Luma));
+    assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Luma));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.Intensity));
     assertEquals(255, (int) info.get(ImageProcessingModelState.PixelProperty.MaxValue));
   }
