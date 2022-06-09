@@ -111,13 +111,21 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     String newName;
     switch (userInput) {
       case "load":
-        //First input: path, second input: imageName
-        this.readFileIntoModel(readFromInput(scanner), readFromInput(scanner));
+        try {
+          //First input: path, second input: imageName
+          this.readFileIntoModel(readFromInput(scanner), readFromInput(scanner));
+        } catch (IllegalArgumentException e) {
+          transmitMessage("File was unable to be loaded \n");
+        }
         break;
       case "save":
-        //First input: path, second input: imageName
-        this.saveImageToFile(readFromInput(scanner), readFromInput(scanner));
-        transmitMessage("Please wait, your image is being saved \n");
+        try {
+          //First input: path, second input: imageName
+          this.saveImageToFile(readFromInput(scanner), readFromInput(scanner));
+          transmitMessage("Please wait, your image is being saved \n");
+        } catch (IllegalArgumentException e) {
+          transmitMessage("Failed to save file \n");
+        }
         break;
       case "brighten":
         //First input: amount, second input: imageName, third input: new name
@@ -169,7 +177,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         this.displayMenu();
         break;
       default:
-        transmitMessage("Input not recognized" + System.lineSeparator());
+        transmitMessage("Input not recognized, please enter again: " + System.lineSeparator());
     }
 
     try {
@@ -208,12 +216,12 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     this.transmitMessage("\n");
   }
 
-  private void readFileIntoModel(String path, String imageName) {
+  private void readFileIntoModel(String path, String imageName) throws IllegalArgumentException {
     Scanner scanner;
     try {
       scanner = new Scanner(new FileInputStream(path));
     } catch (FileNotFoundException e) {
-      throw new IllegalArgumentException("File was not found");
+      throw new IllegalArgumentException("Unable to read from file");
     }
 
     StringBuilder builder = new StringBuilder();
@@ -231,7 +239,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     token = scanner.next();
 
     if (!token.equals("P3")) {
-      throw new IllegalArgumentException("");
+      throw new IllegalArgumentException("Unable to read from file");
     }
 
     int width = scanner.nextInt();
@@ -241,7 +249,8 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     int maxValue = scanner.nextInt();
     //System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
 
-    SimpleImageProcessingModel.Pixel[][] pixelGrid = new SimpleImageProcessingModel.Pixel[height][width];
+    SimpleImageProcessingModel.Pixel[][] pixelGrid =
+            new SimpleImageProcessingModel.Pixel[height][width];
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
@@ -258,7 +267,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     model.addImageToLibrary(imageName, pixelGrid);
   }
 
-  private void saveImageToFile(String savePath, String imageName) {
+  private void saveImageToFile(String savePath, String imageName) throws IllegalArgumentException {
     File output = new File(savePath);
     FileOutputStream out;
     try {

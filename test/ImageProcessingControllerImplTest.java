@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import imageprocessing.controller.ImageProcessingController;
 import imageprocessing.controller.ImageProcessingControllerImpl;
+import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.SimpleImageProcessingModel;
 import imageprocessing.model.SimpleImageProcessingModel.Pixel;
@@ -83,16 +84,56 @@ public class ImageProcessingControllerImplTest {
     }
   }
 
+  //Test that the model recieves the correct inputs when adding images
   @Test
-  public void testCheckTwoImagesAreTheSame() {
-    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+  public void confirmInputsTest() {
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingModel model1 = new ConfirmInputsToModel(log);
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
-                    "load test/images/mudkip.ppm mudkip2 q"));
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/nonexstigng.ppm doesNotExist " +
+                    "load test/images/gimp-solid-square-41.ppm square2 " +
+                    "q"));
+
     controller.start();
-    testTwoImagesAreTheSame(model1, "mudkip1", "mudkip2");
+
+    String expectedLog = "[imageName: square1, width: 8, height, 8]\n" +
+            "[imageName: square2, width: 8, height, 8]\n";
+
+    assertEquals(expectedLog, log.toString());
+  }
+
+  @Test
+  public void confirmOutputs() {
+    StringBuilder log = new StringBuilder();
+
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/nonexstigng.ppm doesNotExist " +
+                    "load test/images/gimp-solid-square-41.ppm square2 " +
+                    "save test/images/gimp-solid-square.ppm square1 q"));
+
+    controller.start();
+
+    String expectedTransmission = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction: " +
+            "Type your instruction: " +
+            "File was unable to be loaded \n" +
+            "Type your instruction: " +
+            "Type your instruction: " +
+            "Please wait, your image is being saved \n" +
+            "Type your instruction: ";
+
+    assertEquals(expectedTransmission, log.toString());
+
+
   }
 
   @Test
