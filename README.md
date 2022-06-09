@@ -3,7 +3,7 @@
 ## Program Description
 
 This is an application to process images. It supports many commands
-that can do certain 
+that can flip, brighten, or greyscale an image.
 
 ## Design Overview
 ### MVC Design
@@ -74,7 +74,7 @@ overwritten.
 
 ### The Script
 
-To run this script using the program, type the entire one-line script when promoted for inputs.
+To run this script using the program, type the entire one-line script when prompted for inputs.
 
 The script executes the following:
 1. Load a magenta solid square image named 'square1'
