@@ -2,7 +2,8 @@
 
 ## Program Description
 
-This is an application to process images.
+This is an application to process images. It supports many commands
+that can do certain 
 
 ## Design Overview
 ### MVC Design
@@ -42,22 +43,44 @@ the already existing fields of the class (which the user inputted).
 
 ## Usage
 
-### Installation
-
 ### Commands
-This application supports many commands to process images. 
+This application currently supports the following commands:
+1. Loading images  
+2. Saving images 
+3. Converting to grayscale using a pixel component (red, green blue, value, luma, intensity)
+4. horizontally flipping an image
+5. vertically flipping an image
+6. brightening an image by some amount (cannot exceed the max pixel value or go below 0)
+
+For the specific syntax of each command, type "menu". 
+
+### Inputs
+
+Inputs should be separated by spaces or newlines. You can enter multiple
+commands at once on the same line, and assuming the syntax is correct for all
+of them, they will all be executed. Similarly, you can enter partial commands
+will cause the program to wait until the rest of the inputs are provided before
+trying to execute the command. 
+
+If you enter an invalid command, the program will ask you to try again. If you
+enter an invalid command and a valid command on the same line, the valid
+command will still be executed. The same holds true for an invalid command and a partial
+command on the same line: the parameters of the partial command will still be
+received.
+
+The image names are NOT case-sensitive. For example, loading an image as "mudkip"
+then loading another image as "MUdkIP" will cause the first image to be
+overwritten. 
+
+### The Script
+
 
 ### TODO LIST:
-1. Remove the repeated variable initialization in command design pattern?
-2. TESTS
-   1. All invalid inputs/commands (Look at the switch list, )
-   2. TEST EXCEPTIONS FOR EVERY METHOD WHICH THROWS THEM.
-   3. Test Brightening by more than 255, also brightening by less than -255
+1. TESTS
    4. Combinations of everything (flipping, brightening, etc.)
    5. Image name case sensitivity (case should not matter, "mudkip" == "muDkiP")
    6. Anything on previous self-evals
-3. Delete anything related to the koala (before submitting)
-4. Delete the main method in the controller (before submitting)
+2. Delete the main method in the controller (before submitting)
 
 
 Our cute Mudkip:

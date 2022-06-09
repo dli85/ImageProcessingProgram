@@ -56,13 +56,13 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip \n" +
-                    "save test/images/testMudkip.ppm mudkip \n q"));
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save res/testMudkip.ppm mudkip \n q"));
 
     controller.start();
 
-    File validMudkipPic = new File("test/images/testMudkip.ppm");
-    File invalidMudkipPic = new File("test/images/testMudkipasdad2.ppm");
+    File validMudkipPic = new File("res/testMudkip.ppm");
+    File invalidMudkipPic = new File("res/testMudkipasdad2.ppm");
 
     // check if the file is written as intended
     try {
@@ -93,9 +93,9 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/nonexstigng.ppm doesNotExist " +
-                    "load test/images/gimp-solid-square-41.ppm square2 " +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/nonexstigng.ppm doesNotExist " +
+                    "load res/gimp-solid-square-41.ppm square2 " +
                     "q"));
 
     controller.start();
@@ -114,10 +114,10 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, log),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/nonexstigng.ppm doesNotExist " +
-                    "load test/images/gimp-solid-square-41.ppm square2 " +
-                    "save test/images/gimp-solid-square.ppm square1 q"));
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/nonexstigng.ppm doesNotExist " +
+                    "load res/gimp-solid-square-41.ppm square2 " +
+                    "save res/gimp-solid-square.ppm square1 q"));
 
     controller.start();
 
@@ -142,8 +142,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
-                    "load test/images/gimp-vertical-mudkip.ppm verticalMudkip1 \n" +
+            new StringReader("load res/mudkip.ppm mudkip1 \n" +
+                    "load res/gimp-vertical-mudkip.ppm verticalMudkip1 \n" +
                     "vertical-flip mudkip1 verticalMudkip2 q"));
     controller.start();
 
@@ -156,8 +156,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
-                    "load test/images/gimp-horizontal-mudkip.ppm horizontalMudkip1 \n" +
+            new StringReader("load res/mudkip.ppm mudkip1 \n" +
+                    "load res/gimp-horizontal-mudkip.ppm horizontalMudkip1 \n" +
                     "horizontal-flip mudkip1 horizontalMudkip2 q"));
     controller.start();
 
@@ -171,8 +171,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-brightby10.ppm brightSquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-brightby10.ppm brightSquare1 \n" +
                     "brighten 10 square1 brightSquare2 q"));
     controller.start();
 
@@ -186,8 +186,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-brightby100.ppm brightSquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-brightby100.ppm brightSquare1 \n" +
                     "brighten 100 square1 brightSquare2 q"));
     controller.start();
 
@@ -202,8 +202,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-dimBy10.ppm dimSquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-dimBy10.ppm dimSquare1 \n" +
                     "brighten -10 square1 dimSquare2 q"));
     controller.start();
 
@@ -217,8 +217,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-dimBy100.ppm dimSquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-dimBy100.ppm dimSquare1 \n" +
                     "brighten -100 square1 dimSquare2 q"));
     controller.start();
 
@@ -233,8 +233,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-205.ppm greySquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-205.ppm greySquare1 \n" +
                     "red-component square1 greySquare2 q"));
     controller.start();
 
@@ -249,8 +249,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-41.ppm greySquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-41.ppm greySquare1 \n" +
                     "green-component square1 greySquare2 q"));
     controller.start();
 
@@ -265,8 +265,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-205.ppm greySquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-205.ppm greySquare1 \n" +
                     "blue-component square1 greySquare2 q"));
     controller.start();
 
@@ -281,8 +281,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-87-byLuma.ppm greySquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-87-byLuma.ppm greySquare1 \n" +
                     "luma-component square1 greySquare2 q"));
     controller.start();
 
@@ -297,8 +297,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-150-byIntensity.ppm greySquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-150-byIntensity.ppm greySquare1 \n" +
                     "intensity-component square1 greySquare2 q"));
     controller.start();
 
@@ -313,8 +313,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-205.ppm greySquare1 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-205.ppm greySquare1 \n" +
                     "value-component square1 greySquare2 q"));
     controller.start();
 
@@ -329,7 +329,7 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
+            new StringReader("load res/mudkip.ppm mudkip1 \n" +
                     "vertical-flip mudkip1 flippedMudkip \n" +
                     "vertical-flip flippedMudkip doubleFlippedMudkip q"));
     controller.start();
@@ -345,7 +345,7 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
+            new StringReader("load res/mudkip.ppm mudkip1 \n" +
                     "horizontal-flip mudkip1 flippedMudkip \n" +
                     "horizontal-flip flippedMudkip doubleFlippedMudkip q"));
     controller.start();
@@ -361,8 +361,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
-                    "load test/images/gimp-vertical-horizontal-mudkip.ppm mudkip2 \n" +
+            new StringReader("load res/mudkip.ppm mudkip1 \n" +
+                    "load res/gimp-vertical-horizontal-mudkip.ppm mudkip2 \n" +
                     "vertical-flip mudkip1 flippedMudkip \n" +
                     "horizontal-flip flippedMudkip doubleFlippedMudkip q"));
     controller.start();
@@ -377,8 +377,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
-                    "load test/images/gimp-vertical-horizontal-mudkip.ppm mudkip2 \n" +
+            new StringReader("load res/mudkip.ppm mudkip1 \n" +
+                    "load res/gimp-vertical-horizontal-mudkip.ppm mudkip2 \n" +
                     "horizontal-flip mudkip1 flippedMudkip \n" +
                     "vertical-flip flippedMudkip doubleFlippedMudkip q"));
     controller.start();
@@ -393,8 +393,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-71.ppm square2 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-71.ppm square2 \n" +
                     "green-component square1 greySquare1 \n" +
                     "brighten 30 greySquare1 greySquare2 q"));
     controller.start();
@@ -409,8 +409,8 @@ public class ImageProcessingControllerImplTest {
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
-                    "load test/images/gimp-solid-square-11.ppm square2 \n" +
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/gimp-solid-square-11.ppm square2 \n" +
                     "green-component square1 greySquare1 \n" +
                     "brighten -30 greySquare1 greySquare2 q"));
     controller.start();
