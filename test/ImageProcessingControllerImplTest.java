@@ -15,7 +15,6 @@ import imageprocessing.model.SimpleImageProcessingModel;
 import imageprocessing.view.ImageProcessingViewImpl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 /**
@@ -412,6 +411,102 @@ public class ImageProcessingControllerImplTest {
                     "load res/gimp-solid-square-11.ppm square2 \n" +
                     "green-component square1 greySquare1 \n" +
                     "brighten -30 greySquare1 greySquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "square2", "greySquare2");
+  }
+
+  @Test
+  public void testVerticalFlipThenBright30() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.ppm square1 \n" +
+                    "load res/gimp-vertical-horizontal-brightBy30-2x2.ppm square2 \n" +
+                    "vertical-flip square1 brightSquare1 \n" +
+                    "brighten 30 brightSquare1 brightSquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "square2", "brightSquare2");
+  }
+
+  @Test
+  public void testHorizontalFlipThenBright30() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.ppm square1 \n" +
+                    "load res/gimp-vertical-horizontal-brightBy30-2x2.ppm square2 \n" +
+                    "horizontal-flip square1 brightSquare1 \n" +
+                    "brighten 30 brightSquare1 brightSquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "square2", "brightSquare2");
+  }
+
+  @Test
+  public void testVerticalFlipThenDim30() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.ppm square1 \n" +
+                    "load res/gimp-vertical-horizontal-DimBy30-2x2.ppm square2 \n" +
+                    "vertical-flip square1 brightSquare1 \n" +
+                    "brighten -30 brightSquare1 brightSquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "square2", "brightSquare2");
+  }
+
+  @Test
+  public void testHorizontalFlipThenDim30() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.ppm square1 \n" +
+                    "load res/gimp-vertical-horizontal-DimBy30-2x2.ppm square2 \n" +
+                    "horizontal-flip square1 brightSquare1 \n" +
+                    "brighten -30 brightSquare1 brightSquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "square2", "brightSquare2");
+  }
+
+  @Test
+  public void testVerticalFlipThenGreyscale() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.ppm square1 \n" +
+                    "load res/gimp-vertical-horizontal-GreyByGreen-2x2.ppm square2 \n" +
+                    "vertical-flip square1 greySquare1 \n" +
+                    "green-component greySquare1 greySquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "square2", "greySquare2");
+  }
+
+  @Test
+  public void testHorizontalFlipThenGreyscale() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.ppm square1 \n" +
+                    "load res/gimp-vertical-horizontal-GreyByGreen-2x2.ppm square2 \n" +
+                    "horizontal-flip square1 greySquare1 \n" +
+                    "green-component greySquare1 greySquare2 q"));
     controller.start();
 
     testTwoImagesAreTheSame(model1,
