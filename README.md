@@ -74,6 +74,13 @@ overwritten.
 
 ### The Script
 
+To run this script using the program, type the entire one-line script when promoted for inputs.
+
+The script should
+1. Load a magenta solid square image named 'square1'
+2. Create a Green-Component Greyscale version of 'square1' named as 'greySquare1'
+3. Brighten 'greySquare1' by 30 units, saved as a new image named 'greySquare2'
+4. Save 'greySquare2' as a ppm file, with path res/test-gimp-solid-square-71.ppm
 
 ### TODO LIST:
 1. TESTS
