@@ -166,7 +166,6 @@ public class ImageProcessingControllerImplTest {
                     "brighten -10 square1 dimSquare2 q"));
     controller.start();
 
-    // makes sure the brightened square's properties don't exceed 255.
     testTwoImagesAreTheSame(model1,
             "dimSquare1", "dimSquare2");
   }
@@ -281,5 +280,101 @@ public class ImageProcessingControllerImplTest {
     // makes sure the square's pixels are all the respective value
     testTwoImagesAreTheSame(model1,
             "greySquare1", "greySquare2");
+  }
+
+  @Test
+  public void testVerticalFlipThenVerticalFlip() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
+                    "vertical-flip mudkip1 flippedMudkip \n" +
+                    "vertical-flip flippedMudkip doubleFlippedMudkip q"));
+    controller.start();
+
+    // makes sure a double flipped mudkip in the same direction is the same as the original
+    testTwoImagesAreTheSame(model1,
+            "mudkip1", "doubleFlippedMudkip");
+  }
+
+  @Test
+  public void testHorizontalFlipThenHorizontalFlip() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
+                    "horizontal-flip mudkip1 flippedMudkip \n" +
+                    "horizontal-flip flippedMudkip doubleFlippedMudkip q"));
+    controller.start();
+
+    // makes sure a double flipped mudkip in the same direction is the same as the original
+    testTwoImagesAreTheSame(model1,
+            "mudkip1", "doubleFlippedMudkip");
+  }
+
+  @Test
+  public void testVerticalFlipThenHorizontalFlip() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
+                    "load test/images/gimp-vertical-horizontal-mudkip.ppm mudkip2 \n" +
+                    "vertical-flip mudkip1 flippedMudkip \n" +
+                    "horizontal-flip flippedMudkip doubleFlippedMudkip q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "mudkip2", "doubleFlippedMudkip");
+  }
+
+  @Test
+  public void testHorizontalFlipThenVerticalFlip() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/mudkip.ppm mudkip1 \n" +
+                    "load test/images/gimp-vertical-horizontal-mudkip.ppm mudkip2 \n" +
+                    "horizontal-flip mudkip1 flippedMudkip \n" +
+                    "vertical-flip flippedMudkip doubleFlippedMudkip q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "mudkip2", "doubleFlippedMudkip");
+  }
+
+  @Test
+  public void testGreyscaleThenBrighten30() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-71.ppm square2 \n" +
+                    "green-component square1 greySquare1 \n" +
+                    "brighten 30 greySquare1 greySquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "square2", "greySquare2");
+  }
+
+  @Test
+  public void testGreyscaleThenDim30() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load test/images/gimp-solid-square.ppm square1 \n" +
+                    "load test/images/gimp-solid-square-11.ppm square2 \n" +
+                    "green-component square1 greySquare1 \n" +
+                    "brighten -30 greySquare1 greySquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "square2", "greySquare2");
   }
 }
