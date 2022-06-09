@@ -95,3 +95,6 @@ Our cute Mudkip:
 https://oyster.ignimgs.com/mediawiki/apis.ign.com/pokedex/c/ce/Brock_Mudkip.png?width=640
 
 https://www.ign.com/wikis/pokedex/Mudkip
+
+
+Our solid-square and 2x2 square images are self-made intended for testing.
