@@ -76,7 +76,7 @@ overwritten.
 
 To run this script using the program, type the entire one-line script when promoted for inputs.
 
-The script should
+The script executes the following:
 1. Load a magenta solid square image named 'square1'
 2. Create a Green-Component Greyscale version of 'square1' named as 'greySquare1'
 3. Brighten 'greySquare1' by 30 units, saved as a new image named 'greySquare2'
