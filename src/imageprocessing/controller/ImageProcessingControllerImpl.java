@@ -43,17 +43,6 @@ TODO:
  * commands.
  */
 public class ImageProcessingControllerImpl implements ImageProcessingController {
-
-  public static void main(String[] args) {
-    ImageProcessingModel model = new SimpleImageProcessingModel();
-    ImageProcessingView view = new ImageProcessingViewImpl(model, System.out);
-
-    ImageProcessingController controller = new ImageProcessingControllerImpl(model, view,
-            new InputStreamReader(System.in));
-
-    controller.start();
-  }
-
   private final ImageProcessingModel model;
   private final ImageProcessingView view;
   private final Readable input;
@@ -87,7 +76,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
 
     boolean programEnd = false;
     while (!programEnd) {
-      transmitMessage("Type your instruction: ");
+      transmitMessage("Type your instruction:\n");
       String userInput = this.readFromInput(scanner);
       if (userInput.equalsIgnoreCase("quit") ||
               userInput.equalsIgnoreCase("q")) {
@@ -109,7 +98,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     String path;
     String imageName;
     String newName;
-    switch (userInput) {
+    switch (userInput.toLowerCase()) {
       case "load":
         try {
           //First input: path, second input: imageName
@@ -121,8 +110,8 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
       case "save":
         try {
           //First input: path, second input: imageName
-          this.saveImageToFile(readFromInput(scanner), readFromInput(scanner));
           transmitMessage("Please wait, your image is being saved \n");
+          this.saveImageToFile(readFromInput(scanner), readFromInput(scanner));
         } catch (IllegalArgumentException e) {
           transmitMessage("Failed to save file \n");
         }
@@ -300,7 +289,6 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
 
       out.close();
     } catch (IOException e) {
-      //TODO: delete file if writing failed at any point???
       throw new IllegalArgumentException("Failed to write to output");
     }
   }

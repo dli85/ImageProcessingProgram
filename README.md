@@ -7,20 +7,65 @@ that can flip, brighten, or greyscale an image.
 
 ## Design Overview
 ### MVC Design
-This application follows the Model-View-Controller (MVC) design pattern. 
-It also employs the command design pattern to process inputs from the user. 
+This application follows the Model-View-Controller (MVC) design pattern. For clarification, images 
+are stored in code as 2d Pixel Arrays.
 
-The ImageProcessingModel, the ImageProcessingModelState, and their implementations contain
-all the methods and fields needed to load an image, operate on an image, and save an image.
-Methods that can access but cannot change the information in the model are housed in the
-ImageProcessingModelState interface (Getting pixels at a position, ). Meanwhile, methods that can 
-can alter images are stored in the ImageProcessingModel interface.
+1. ImageProcessingController interface
+   1. The image processing controller interface only contains the header for the start() method,
+   which starts the program and run it. The start() method throws an IllegalStateException if 
+   reading from the input or transmitting to the output fails.
+   2. The controller has the ability to read user commands and transmit messages to the output. It
+   processes user commands using the command design pattern.
+   3. This interface is implemented in ImageProcessingControllerImpl class. This class also contains
+   private methods for reading images from a .ppm file (into the model) and saving images 
+   to a .ppm file. 
+2. ImageProcessingModelState interface
+   1. This interface is one part of the model design. The ImageProcessingModelState interface 
+   is the "parent" to the ImageProcessingView interface. Thus, the method headers in this interface
+   can only access information from the model. (getWidth, getHeight, etc.) The methods in this
+   interface CANNOT change the model in any way. More so, the methods will also 
+   throw IllegalArgumentExceptions if bad inputs are provided (image does not exist, etc.)
+   2. This interface is extended by the ImageProcessingModel. 
+3. ImageProcessingModel interface
+   1. This interface is the second part of the model design. This interface only contains one 
+   method header, which adds a given image to the model to be referred to by a given name. An
+   existing image can be overwritten by adding a new image to the model with the same name as 
+   the image to be overwritten. This is the only way that images can be changed or added to the
+   model. This method also throws an IllegalArgumentException if the inputs are "bad" (like if
+   the provided image has any null pixels)
+   2. This interface is implemented by the SimpleImageProcessingModel class. The collections of
+   images (represented as a hashmap) is private.
+4. ImageProcessingView interface
+   1. This interface contains all the method headers needed for the view. This includes
+   the transmitMessage() method.
+   2. This method is implemented in the ImageProcessingViewImpl class.
 
-### Command Design Pattern NEEDS EDITS
-The controller for this application follows the command design pattern. All the code
-to actually execute commands is housed in separate package. The model only provides the bare
-minimum needed to edit the image pixels (in addition to saving and loading images). The controller
-creates new instances of the command-function-objects in order to execute these commands.
+### Command and Model Design Philosophy
+
+We have decided to design this application with the following philosophy: 
+When it comes to image modification, the model should only provide the bare
+minimum that is needed. In our case, the model only provides one method to add/modify images:
+addImageToLibrary(). 
+
+Thus, commands like brighten will obtain information about images from the model using
+methods like getWidth, getHeight, and getPixelInfo. The commands will create a new "image"
+and apply the appropriate operations. Finally, the command will add the new image to the model
+using the aforementioned method.
+
+We chose this design pattern to allow more flexibility for future 
+implementations. There may be many more macros beyond just brightening, grayscaling, etc.
+So by not hardcoding each macro into the model itself and instead by creating commands
+to carry them out, we can more easily allow for more expansion.
+
+
+### Command Design Pattern
+
+In order to process the user commands to apply the given effects on the images, the controller
+employs the command design pattern.
+
+The UserCommand interface contains the outline for each command. Each command has a constructor
+which takes in the necessary user inputs to needed to execute it. Each command only has one method:
+doCommand(). This takes in a ImageProcessingModel which the command attempts to execute itself on.
 
 ### Exceptions and Try-Catch
 
@@ -43,16 +88,27 @@ the already existing fields of the class (which the user inputted).
 
 ## Usage
 
+### Running the program
+
+To execute the program, open the ImageProcessingProgram file and press the
+green arrow on the left side near the line numbers. Alternatively, you can create
+a run configuration to execute the program. An example of said configuration is included
+in the res/ folder.
+
 ### Commands
 This application currently supports the following commands:
-1. Loading images  
-2. Saving images 
-3. Converting to grayscale using a pixel component (red, green blue, value, luma, intensity)
-4. horizontally flipping an image
-5. vertically flipping an image
-6. brightening an image by some amount (cannot exceed the max pixel value or go below 0)
+1. Loading images: load {image-path} {imageName} 
+2. Saving images: save {save-path} {imageName}
+3. Converting to grayscale using a pixel component (red, green blue, value, luma, intensity):
+   {component-name}-component {imageName} {newName}
+4. horizontally flipping an image: horizontal-flip {imageName} {newName}
+5. vertically flipping an image: vertical-flip {imageName} {newName}
+6. brightening an image by some amount (cannot exceed the max pixel value or go below 0):
+   brighten {amount} {imageName} {newName}
 
-For the specific syntax of each command, type "menu". 
+For the specific syntax of each command, type "menu". If newName is the same as imageName,
+then the old image will be overwritten. The save path must include the name of the image
+that you want to save it as. For example, res/imageName.ppm
 
 ### Inputs
 
@@ -75,18 +131,17 @@ overwritten.
 ### The Script
 
 The /res folder has included a script.txt file which is a sample series of commands which will
-load an image (mudkip), grayscale it, brighten it, flip it horizontally, and then save it. 
-To run this script using the program, copy-paste the entire script (it is all contained
-in one line) into the program. Alternatively, you can run each command one
-by one.
+load an image (mudkip), grayscale it, brighten it, flip it horizontally, flip it vertically,
+and then save it. 
+To run this script using the program, copy-paste the entire script into the program. 
+Alternatively, you can run each line/command one by one.
 
 ### TODO LIST:
-1. TESTS
+1. Add script runner
+2. TESTS
    4. Combinations of everything (flipping, brightening, etc.)
    5. Image name case sensitivity (case should not matter, "mudkip" == "muDkiP")
    6. Anything on previous self-evals
-2. Delete the main method in the controller (before submitting)
-
 
 Our cute Mudkip:
    

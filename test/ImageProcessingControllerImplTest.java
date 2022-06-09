@@ -12,6 +12,7 @@ import imageprocessing.controller.ImageProcessingControllerImpl;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.SimpleImageProcessingModel;
+import imageprocessing.model.SimpleImageProcessingModel.Pixel;
 import imageprocessing.view.ImageProcessingViewImpl;
 
 import static org.junit.Assert.assertEquals;
@@ -121,13 +122,13 @@ public class ImageProcessingControllerImplTest {
 
     String expectedTransmission = "Welcome to the image processing program. " +
             "Please input your command (type menu for a list of commands): \n" +
-            "Type your instruction: " +
-            "Type your instruction: " +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
             "File was unable to be loaded \n" +
-            "Type your instruction: " +
-            "Type your instruction: " +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
             "Please wait, your image is being saved \n" +
-            "Type your instruction: ";
+            "Type your instruction:\n";
 
     assertEquals(expectedTransmission, log.toString());
 
@@ -504,12 +505,39 @@ public class ImageProcessingControllerImplTest {
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
             new StringReader("load res/gimp-2x2.ppm square1 \n" +
-                    "load res/gimp-vertical-horizontal-GreyByGreen-2x2.ppm square2 \n" +
-                    "horizontal-flip square1 greySquare1 \n" +
-                    "green-component greySquare1 greySquare2 q"));
+                    "q"));
     controller.start();
-
     testTwoImagesAreTheSame(model1,
             "square2", "greySquare2");
+  }
+
+  /**
+   * Loads a 2x2 pixel image and checks that it is correct with hardcode.
+   * <p>
+   * ORIGINAL IMAGE:
+   * (82, 212, 120)   (199, 34, 187)
+   * (50, 241, 244)   (241, 222, 45)
+   */
+  @Test
+  public void testLoadImage() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/2x2david.ppm 2x2 q"));
+
+    controller.start();
+
+    Pixel[][] expectedImage = new Pixel[][]{
+            {new Pixel(82, 212, 120, 255),
+                    new Pixel(199, 34, 187, 255)},
+            {new Pixel(50, 241, 244, 255),
+                    new Pixel(241, 222, 45, 255)}};
+
+    model1.addImageToLibrary("expected", expectedImage);
+
+    testTwoImagesAreTheSame(model1, "expected", "2x2");
+
+
   }
 }
