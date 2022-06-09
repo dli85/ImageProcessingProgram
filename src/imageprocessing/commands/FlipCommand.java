@@ -3,8 +3,8 @@ package imageprocessing.commands;
 import java.util.Map;
 
 import imageprocessing.model.ImageProcessingModel;
-import imageprocessing.model.SimpleImageProcessingModel.Pixel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
+import imageprocessing.model.Pixel;
 
 public class FlipCommand implements UserCommand {
 

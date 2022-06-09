@@ -4,7 +4,7 @@ import java.util.Map;
 
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
-import imageprocessing.model.SimpleImageProcessingModel.Pixel;
+import imageprocessing.model.Pixel;
 
 /**
  * The brighten command. Brightens an image by increasing each rgb value (capped at 255) by

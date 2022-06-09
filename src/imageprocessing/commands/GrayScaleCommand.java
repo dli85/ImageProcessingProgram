@@ -2,7 +2,7 @@ package imageprocessing.commands;
 
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
-import imageprocessing.model.SimpleImageProcessingModel.Pixel;
+import imageprocessing.model.Pixel;
 
 public class GrayScaleCommand implements UserCommand {
   PixelProperty component;

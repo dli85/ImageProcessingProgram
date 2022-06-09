@@ -87,44 +87,5 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     }
   }
 
-  /**
-   * Represents a pixel on an image with some color values.
-   */
-  public static class Pixel {
-    private int red;
-    private int green;
-    private int blue;
-    private final int maxVal;
-
-    private int value;
-    private int intensity;
-    private int luma;
-
-    public Pixel(int red, int green, int blue, int maxVal) {
-      this.red = red;
-      this.green = green;
-      this.blue = blue;
-
-      this.maxVal = maxVal;
-
-      this.value = Math.max(this.red, Math.max(this.green, this.blue));
-      this.intensity = (this.red + this.green + this.blue) / 3;
-      this.luma = (int) (0.2126 * this.red + 0.7152 * this.green + 0.0722 * this.blue);
-    }
-
-    public Map<PixelProperty, Integer> getPixelInfo() {
-      HashMap<PixelProperty, Integer> values = new HashMap<PixelProperty, Integer>();
-      values.put(PixelProperty.Red, this.red);
-      values.put(PixelProperty.Green, this.green);
-      values.put(PixelProperty.Blue, this.blue);
-      values.put(PixelProperty.MaxValue, this.maxVal);
-      values.put(PixelProperty.Value, this.value);
-      values.put(PixelProperty.Intensity, this.intensity);
-      values.put(PixelProperty.Luma, this.luma);
-
-      return values;
-    }
-  }
-
 }
 

@@ -1,17 +1,11 @@
-import org.junit.Before;
 import org.junit.Test;
 
-import java.io.StringReader;
 import java.util.Map;
-import java.util.Optional;
 
-import imageprocessing.controller.ImageProcessingController;
-import imageprocessing.controller.ImageProcessingControllerImpl;
 import imageprocessing.model.ImageProcessingModelState;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
+import imageprocessing.model.Pixel;
 import imageprocessing.model.SimpleImageProcessingModel;
-import imageprocessing.model.SimpleImageProcessingModel.Pixel;
-import imageprocessing.view.ImageProcessingViewImpl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -183,7 +177,7 @@ public class SimpleImageProcessingModelTest {
 
   @Test
   public void testPixelGetPixelInfo() {
-    Pixel pixel = new SimpleImageProcessingModel.Pixel(255, 255, 255, 255);
+    Pixel pixel = new Pixel(255, 255, 255, 255);
 
     Map<PixelProperty, Integer> info = pixel.getPixelInfo();
 

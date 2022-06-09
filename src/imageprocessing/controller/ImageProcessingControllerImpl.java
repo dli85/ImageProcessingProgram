@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -17,9 +16,8 @@ import imageprocessing.commands.GrayScaleCommand;
 import imageprocessing.commands.UserCommand;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
-import imageprocessing.model.SimpleImageProcessingModel;
+import imageprocessing.model.Pixel;
 import imageprocessing.view.ImageProcessingView;
-import imageprocessing.view.ImageProcessingViewImpl;
 
 /*
 TODO:
@@ -238,8 +236,8 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     int maxValue = scanner.nextInt();
     //System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
 
-    SimpleImageProcessingModel.Pixel[][] pixelGrid =
-            new SimpleImageProcessingModel.Pixel[height][width];
+    Pixel[][] pixelGrid =
+            new Pixel[height][width];
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
@@ -247,7 +245,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         int g = scanner.nextInt();
         int b = scanner.nextInt();
 
-        pixelGrid[i][j] = new SimpleImageProcessingModel.Pixel(r, g, b, maxValue);
+        pixelGrid[i][j] = new Pixel(r, g, b, maxValue);
 
         //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
       }

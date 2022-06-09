@@ -11,8 +11,8 @@ import imageprocessing.controller.ImageProcessingController;
 import imageprocessing.controller.ImageProcessingControllerImpl;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
+import imageprocessing.model.Pixel;
 import imageprocessing.model.SimpleImageProcessingModel;
-import imageprocessing.model.SimpleImageProcessingModel.Pixel;
 import imageprocessing.view.ImageProcessingViewImpl;
 
 import static org.junit.Assert.assertEquals;
@@ -505,8 +505,11 @@ public class ImageProcessingControllerImplTest {
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
             new StringReader("load res/gimp-2x2.ppm square1 \n" +
-                    "q"));
+                    "load res/gimp-vertical-horizontal-GreyByGreen-2x2.ppm square2 \n" +
+                    "horizontal-flip square1 greySquare1 \n" +
+                    "green-component greySquare1 greySquare2 q"));
     controller.start();
+
     testTwoImagesAreTheSame(model1,
             "square2", "greySquare2");
   }

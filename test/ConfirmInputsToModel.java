@@ -1,7 +1,7 @@
 import java.util.Map;
 
 import imageprocessing.model.ImageProcessingModel;
-import imageprocessing.model.SimpleImageProcessingModel;
+import imageprocessing.model.Pixel;
 
 /**
  * Class for testing that the model receives the correct inputs.
@@ -15,7 +15,7 @@ public class ConfirmInputsToModel implements ImageProcessingModel {
   }
 
   @Override
-  public void addImageToLibrary(String imageName, SimpleImageProcessingModel.Pixel[][] imgGrid)
+  public void addImageToLibrary(String imageName, Pixel[][] imgGrid)
           throws IllegalArgumentException {
     log.append(String.format("[imageName: %s, width: %d, height, %d]\n", imageName,
             imgGrid[0].length, imgGrid.length));
