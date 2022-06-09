@@ -328,4 +328,4 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
       throw new IllegalStateException("Failed to read from input");
     }
   }
- }
+}

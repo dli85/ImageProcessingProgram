@@ -11,6 +11,7 @@ public class OutputExceptionTester implements Appendable {
   public OutputExceptionTester() {
 
   }
+
   @Override
   public Appendable append(CharSequence csq) throws IOException {
     throw new IOException();

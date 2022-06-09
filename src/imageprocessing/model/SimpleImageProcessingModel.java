@@ -26,7 +26,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
   public void addImageToLibrary(String imageName, Pixel[][] imgGrid)
           throws IllegalArgumentException {
 
-    if(imageName == null || imageName.equals("") || imgGrid == null) {
+    if (imageName == null || imageName.equals("") || imgGrid == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
 
@@ -35,7 +35,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     for (int i = 0; i < imgGrid.length; i++) {
       for (int j = 0; j < imgGrid[i].length; j++) {
 
-        if(imgGrid[i][j] == null) {
+        if (imgGrid[i][j] == null) {
           throw new IllegalArgumentException("imgGrid cannot contain null pixels");
         } else {
           Map<PixelProperty, Integer> values = imgGrid[i][j].getPixelInfo();

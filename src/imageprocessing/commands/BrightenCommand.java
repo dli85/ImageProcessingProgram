@@ -20,8 +20,8 @@ public class BrightenCommand implements UserCommand {
    * Creates a new brighten command.
    *
    * @param imageName The image to brighten.
-   * @param newName The name that the new image should be known as.
-   * @param amount The amount to brighten.
+   * @param newName   The name that the new image should be known as.
+   * @param amount    The amount to brighten.
    */
   public BrightenCommand(int amount, String imageName, String newName) {
     this.imageName = imageName;
@@ -35,8 +35,8 @@ public class BrightenCommand implements UserCommand {
       Pixel[][] imgGrid =
               new Pixel[model.getHeight(this.imageName)][model.getWidth(this.imageName)];
 
-      for(int i = 0; i < imgGrid.length; i++) {
-        for(int j = 0; j < imgGrid[i].length; j++) {
+      for (int i = 0; i < imgGrid.length; i++) {
+        for (int j = 0; j < imgGrid[i].length; j++) {
           Map<PixelProperty, Integer> values = model.getPixelInfo(this.imageName, i, j);
 
           int red = values.get(PixelProperty.Red) + this.amount;

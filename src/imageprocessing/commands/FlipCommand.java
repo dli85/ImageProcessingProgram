@@ -52,7 +52,7 @@ public class FlipCommand implements UserCommand {
 
       Pixel[][] newImgGrid = new Pixel[height][width];
 
-      if(this.flip.equals(FlipDirection.Vertical)) {
+      if (this.flip.equals(FlipDirection.Vertical)) {
 
         for (int i = 0; i < height; i++) {
           for (int j = 0; j < width; j++) {
@@ -64,7 +64,7 @@ public class FlipCommand implements UserCommand {
           }
         }
 
-      } else if(this.flip.equals(FlipDirection.Horizontal)) {
+      } else if (this.flip.equals(FlipDirection.Horizontal)) {
 
         for (int i = 0; i < height; i++) {
           for (int j = 0; j < width; j++) {

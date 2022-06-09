@@ -5,7 +5,6 @@ import imageprocessing.model.SimpleImageProcessingModel;
 
 /**
  * Class for testing that the model receives the correct inputs.
- *
  */
 public class ConfirmInputsToModel implements ImageProcessingModel {
 

@@ -12,7 +12,6 @@ import imageprocessing.controller.ImageProcessingControllerImpl;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.SimpleImageProcessingModel;
-import imageprocessing.model.SimpleImageProcessingModel.Pixel;
 import imageprocessing.view.ImageProcessingViewImpl;
 
 import static org.junit.Assert.assertEquals;
