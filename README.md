@@ -92,9 +92,12 @@ the already existing fields of the class (which the user inputted).
 ### Running the program
 
 To execute the program, open the ImageProcessingProgram file and press the
-green arrow on the left side near the line numbers. Alternatively, you can create
-a run configuration to execute the program. An example of said configuration is included
-in the res/ folder.
+green arrow on the left side near the line numbers. 
+
+Alternatively, you can create a run configuration to execute the program. 
+An example of said configuration is included in the res/ folder. 
+
+
 
 ### Commands
 This application currently supports the following commands:
@@ -134,15 +137,16 @@ overwritten.
 The /res folder has included a script.txt file which is a sample series of commands which will
 load an image (mudkip), grayscale it, brighten it, flip it horizontally, flip it vertically,
 and then save it. 
-To run this script using the program, copy-paste the entire script into the program. 
-Alternatively, you can run each line/command one by one.
 
-### TODO LIST:
-1. Add script runner
-2. TESTS
-   4. Combinations of everything (flipping, brightening, etc.)
-   5. Image name case sensitivity (case should not matter, "mudkip" == "muDkiP")
-   6. Anything on previous self-evals
+To run this script, create a new run configuration that runs the main method in
+the ImageProcessingProgram and add the path to the script as a command line argument 
+(res/script.txt). An example of said configuration can be found in the res folder (run_config.PNG)
+
+NOTE: If you to run the script.txt file by adding it's path as a command line input, the program 
+will close after the script is done running. 
+
+
+# Image Sources
 
 Our cute Mudkip:
    
@@ -153,4 +157,4 @@ https://oyster.ignimgs.com/mediawiki/apis.ign.com/pokedex/c/ce/Brock_Mudkip.png?
 https://www.ign.com/wikis/pokedex/Mudkip
 
 
-Our solid-square and 2x2 square images are self-made intended for testing.
+Our solid-square and 2x2 square images are self-made using gimp and intended for testing.

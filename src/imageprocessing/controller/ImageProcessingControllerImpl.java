@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import imageprocessing.commands.BrightenCommand;
-import imageprocessing.commands.FlipCommand;
-import imageprocessing.commands.GrayScaleCommand;
-import imageprocessing.commands.UserCommand;
+import imageprocessing.controller.commands.BrightenCommand;
+import imageprocessing.controller.commands.FlipCommand;
+import imageprocessing.controller.commands.GrayScaleCommand;
+import imageprocessing.controller.commands.UserCommand;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.Pixel;
@@ -22,11 +22,8 @@ import imageprocessing.view.ImageProcessingView;
 /*
 TODO:
   Check that the exceptions are thrown correctly:
-    start() should only throw an IllegalStateException if reading from input/output fails.
     If any other error is thrown during start, it should handle it appropriately
   HashMap for command design?
-    Reduce repeated inputs?
-  View having the model?
   Model design?
 
 

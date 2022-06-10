@@ -1,4 +1,4 @@
-package imageprocessing.commands;
+package imageprocessing.controller.commands;
 
 import imageprocessing.model.ImageProcessingModel;
 
