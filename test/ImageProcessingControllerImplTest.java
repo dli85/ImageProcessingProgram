@@ -543,4 +543,20 @@ public class ImageProcessingControllerImplTest {
 
 
   }
+
+  @Test
+  public void testCaseSensitivity() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.ppm square1 \n" +
+                    "load res/gimp-vertical-horizontal-GreyByGreen-2x2.ppm square2 \n" +
+                    "horizontal-flip square1 greySquare1 \n" +
+                    "green-component greySquare1 greySquare2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1,
+            "squAre2", "GREYSQUARE2");
+  }
 }
