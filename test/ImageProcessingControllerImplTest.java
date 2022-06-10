@@ -7,6 +7,7 @@ import java.io.StringReader;
 import java.util.Map;
 import java.util.Scanner;
 
+import imageprocessing.ImageProcessingProgram;
 import imageprocessing.controller.ImageProcessingController;
 import imageprocessing.controller.ImageProcessingControllerImpl;
 import imageprocessing.model.ImageProcessingModel;
@@ -512,6 +513,29 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "greySquare2");
+  }
+
+  /**
+   * Test reading from script and the exception if the file does not exist or it failed.
+   */
+  @Test
+  public void testReadFromScript() {
+    String expected = "load res/mudkip.ppm mudkip" + System.lineSeparator() +
+            "green-component mudkip mudkipGray" + System.lineSeparator() +
+            "brighten 30 mudkipGray mudkipGrayBright" + System.lineSeparator() +
+            "horizontal-flip mudkipGrayBright mudkipGrayBrightFlip" + System.lineSeparator() +
+            "vertical-flip mudkipGrayBrightFlip mudkipGrayBrightFlip" + System.lineSeparator() +
+            "save res/mudkipGrayBrightFlip.ppm mudkipGrayBrightFlip q" + System.lineSeparator();
+    String actual = ImageProcessingProgram.readScript("res/script.txt");
+
+    assertEquals(expected, actual);
+
+    try {
+      String fail = ImageProcessingProgram.readScript("res/doesNotExist.txt");
+      fail("Expected to throw an exception");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Unable to read from script file", e.getMessage());
+    }
   }
 
   /*

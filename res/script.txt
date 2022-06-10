@@ -1,6 +1,6 @@
-    load res/mudkip.ppm mudkip
-    green-component mudkip mudkipGray
-    brighten 30 mudkipGray mudkipGrayBright
-    horizontal-flip mudkipGrayBright mudkipGrayBrightFlip
-    vertical-flip mudkipGrayBrightFlip mudkipGrayBrightFlip
-    save res/mudkipGrayBrightFlip.ppm mudkipGrayBrightFlip q
+load res/mudkip.ppm mudkip
+green-component mudkip mudkipGray
+brighten 30 mudkipGray mudkipGrayBright
+horizontal-flip mudkipGrayBright mudkipGrayBrightFlip
+vertical-flip mudkipGrayBrightFlip mudkipGrayBrightFlip
+save res/mudkipGrayBrightFlip.ppm mudkipGrayBrightFlip q
