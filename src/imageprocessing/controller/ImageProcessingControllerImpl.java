@@ -19,20 +19,6 @@ import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.Pixel;
 import imageprocessing.view.ImageProcessingView;
 
-/*
-TODO:
-  Check that the exceptions are thrown correctly:
-    If any other error is thrown during start, it should handle it appropriately
-  HashMap for command design?
-  Model design?
-
-
-  TA QUESTIONS:
-    Big try catches?
-    brighten
-
-*/
-
 /**
  * A controller for the image processing program. Has the capabilities to take in user
  * commands.

@@ -148,6 +148,8 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "verticalMudkip1", "verticalMudkip2");
+
+    assertEquals(240, model1.getHeight("mudkip1"));
   }
 
   @Test
@@ -163,6 +165,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "horizontalMudkip1", "horizontalMudkip2");
+
+    assertEquals(240, model1.getHeight("mudkip1"));
   }
 
   @Test
@@ -178,6 +182,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "brightSquare1", "brightSquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -194,6 +200,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure the brightened square's properties don't exceed 255.
     testTwoImagesAreTheSame(model1,
             "brightSquare1", "brightSquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -209,6 +217,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "dimSquare1", "dimSquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -225,6 +235,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure the brightened square's properties don't exceed below 0.
     testTwoImagesAreTheSame(model1,
             "dimSquare1", "dimSquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -241,6 +253,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure the square's pixels are all the respective Red value
     testTwoImagesAreTheSame(model1,
             "greySquare1", "greySquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -257,6 +271,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure the square's pixels are all the respective Green value
     testTwoImagesAreTheSame(model1,
             "greySquare1", "greySquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -273,6 +289,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure the square's pixels are all the respective Blue value
     testTwoImagesAreTheSame(model1,
             "greySquare1", "greySquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -289,6 +307,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure the square's pixels are all the respective Luma value
     testTwoImagesAreTheSame(model1,
             "greySquare1", "greySquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -305,6 +325,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure the square's pixels are all the respective Intensity value
     testTwoImagesAreTheSame(model1,
             "greySquare1", "greySquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -321,6 +343,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure the square's pixels are all the respective value
     testTwoImagesAreTheSame(model1,
             "greySquare1", "greySquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -337,6 +361,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure a double flipped mudkip in the same direction is the same as the original
     testTwoImagesAreTheSame(model1,
             "mudkip1", "doubleFlippedMudkip");
+
+    assertEquals(240, model1.getHeight("muDKip1"));
   }
 
   @Test
@@ -353,6 +379,8 @@ public class ImageProcessingControllerImplTest {
     // makes sure a double flipped mudkip in the same direction is the same as the original
     testTwoImagesAreTheSame(model1,
             "mudkip1", "doubleFlippedMudkip");
+
+    assertEquals(240, model1.getHeight("mudkip1"));
   }
 
   @Test
@@ -369,6 +397,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "mudkip2", "doubleFlippedMudkip");
+
+    assertEquals(240, model1.getHeight("mudkip1"));
   }
 
   @Test
@@ -385,6 +415,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "mudkip2", "doubleFlippedMudkip");
+
+    assertEquals(240, model1.getHeight("mudkip1"));
   }
 
   @Test
@@ -401,6 +433,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "greySquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -417,6 +451,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "greySquare2");
+
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -433,6 +469,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "brightSquare2");
+
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   @Test
@@ -449,6 +487,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "brightSquare2");
+
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   @Test
@@ -465,6 +505,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "brightSquare2");
+
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   @Test
@@ -481,6 +523,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "brightSquare2");
+
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   @Test
@@ -497,6 +541,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "greySquare2");
+
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   @Test
@@ -513,6 +559,8 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "square2", "greySquare2");
+
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   /**
@@ -557,15 +605,15 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(82, 212, 120, 255),
-                    new Pixel(199, 34, 187, 255)},
+                new Pixel(199, 34, 187, 255)},
             {new Pixel(50, 241, 244, 255),
-                    new Pixel(241, 222, 45, 255)}};
+                new Pixel(241, 222, 45, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
     testTwoImagesAreTheSame(model1, "expected", "2x2");
 
-
+    assertEquals(2, model1.getHeight("2X2"));
   }
 
   @Test
@@ -582,5 +630,7 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1,
             "squAre2", "GREYSQUARE2");
+
+    assertEquals(2, model1.getHeight("square2"));
   }
 }

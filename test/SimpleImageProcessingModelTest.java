@@ -32,9 +32,9 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image1 = new Pixel[][]{
             {new Pixel(100, 100, 100, 255),
-                    new Pixel(100, 100, 100, 255)},
+                new Pixel(100, 100, 100, 255)},
             {new Pixel(100, 100, 100, 255),
-                    new Pixel(100, 100, 100, 255)}};
+                new Pixel(100, 100, 100, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     int width = model1.getWidth("testImage");
@@ -91,9 +91,9 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image2 = new Pixel[][]{
             {new Pixel(100, 100, 100, 255),
-                    new Pixel(100, 100, 100, 255)},
+                new Pixel(100, 100, 100, 255)},
             {new Pixel(100, 100, 100, 255),
-                    new Pixel(100, 100, 100, 255)}};
+                new Pixel(100, 100, 100, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     model1.addImageToLibrary("testImage2", image2);
@@ -118,13 +118,13 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image2 = new Pixel[][]{
             {new Pixel(100, 100, 100, 255),
-                    new Pixel(100, 100, 100, 255)},
+                new Pixel(100, 100, 100, 255)},
             {new Pixel(100, 100, 100, 255),
-                    new Pixel(100, 100, 100, 255)},
+                new Pixel(100, 100, 100, 255)},
             {new Pixel(100, 100, 100, 255),
-                    new Pixel(100, 100, 100, 255)},
+                new Pixel(100, 100, 100, 255)},
             {new Pixel(100, 100, 100, 255),
-                    new Pixel(100, 100, 100, 255)}};
+                new Pixel(100, 100, 100, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     model1.addImageToLibrary("testImage2", image2);
@@ -141,9 +141,9 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image = new Pixel[][]{
             {new Pixel(1, 2, 3, 255),
-                    new Pixel(4, 5, 6, 255)},
+                new Pixel(4, 5, 6, 255)},
             {new Pixel(7, 8, 9, 255),
-                    new Pixel(10, 11, 12, 255)}};
+                new Pixel(10, 11, 12, 255)}};
 
     model1.addImageToLibrary("test", image);
 

@@ -13,7 +13,15 @@ import imageprocessing.model.SimpleImageProcessingModel;
 import imageprocessing.view.ImageProcessingView;
 import imageprocessing.view.ImageProcessingViewImpl;
 
+/**
+ * A class for running the application.
+ */
 public class ImageProcessingProgram {
+  /**
+   * The main method.
+   *
+   * @param args Command line arguments.
+   */
   public static void main(String[] args) {
     //The default input is system.in unless a suitable script path was found and read.
     Readable input = new InputStreamReader(System.in);

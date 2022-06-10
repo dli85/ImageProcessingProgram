@@ -16,6 +16,13 @@ public class Pixel {
   private int intensity;
   private int luma;
 
+  /**
+   * The pixel constructor. Takes in the values and sets the red/green/blue/luma accordingly.
+   * @param red The amount of red.
+   * @param green The amount of green.
+   * @param blue The amount of blue.
+   * @param maxVal The max amount.
+   */
   public Pixel(int red, int green, int blue, int maxVal) {
     this.red = red;
     this.green = green;
@@ -28,8 +35,14 @@ public class Pixel {
     this.luma = (int) Math.round(0.2126 * this.red + 0.7152 * this.green + 0.0722 * this.blue);
   }
 
+  /**
+   * Returns a HashMap representing the pixel values.
+   * @return A hashmap representing the pixel values.
+   */
   public Map<ImageProcessingModelState.PixelProperty, Integer> getPixelInfo() {
-    HashMap<ImageProcessingModelState.PixelProperty, Integer> values = new HashMap<ImageProcessingModelState.PixelProperty, Integer>();
+
+    HashMap<ImageProcessingModelState.PixelProperty, Integer> values =
+            new HashMap<ImageProcessingModelState.PixelProperty, Integer>();
     values.put(ImageProcessingModelState.PixelProperty.Red, this.red);
     values.put(ImageProcessingModelState.PixelProperty.Green, this.green);
     values.put(ImageProcessingModelState.PixelProperty.Blue, this.blue);

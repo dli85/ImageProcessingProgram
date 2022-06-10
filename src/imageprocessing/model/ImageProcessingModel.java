@@ -1,7 +1,8 @@
 package imageprocessing.model;
 
-import java.util.Map;
-
+/**
+ * Represents a model to perform actions on an image.
+ */
 public interface ImageProcessingModel extends ImageProcessingModelState {
 
   /**

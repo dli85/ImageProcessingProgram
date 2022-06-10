@@ -2,9 +2,11 @@ package imageprocessing.view;
 
 import java.io.IOException;
 
-import imageprocessing.controller.ImageProcessingController;
 import imageprocessing.model.ImageProcessingModelState;
 
+/**
+ * Represents an implementation for an view.
+ */
 public class ImageProcessingViewImpl implements ImageProcessingView {
 
   private final ImageProcessingModelState model;

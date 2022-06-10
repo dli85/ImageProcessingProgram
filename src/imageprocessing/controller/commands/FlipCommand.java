@@ -6,9 +6,14 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.Pixel;
 
+/**
+ * Represents a command that can flip an image horizontally or vertically.
+ */
 public class FlipCommand implements UserCommand {
-
-  public enum FlipDirection {Vertical, Horizontal}
+  /**
+   * Represents which direction you want to flip.
+   */
+  public enum FlipDirection { Vertical, Horizontal }
 
   String imageName;
   String newName;

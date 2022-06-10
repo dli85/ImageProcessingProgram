@@ -2,13 +2,16 @@ package imageprocessing.model;
 
 import java.util.Map;
 
+/**
+ * Represents the model state for an image processing model. These methods cannot modify the model.
+ */
 public interface ImageProcessingModelState {
 
   /**
    * Represents various properties of a pixel. These all correspond to numbers: i.e. how much
    * red is in an image, the luma, etc.
    */
-  enum PixelProperty {Red, Green, Blue, MaxValue, Value, Intensity, Luma}
+  enum PixelProperty { Red, Green, Blue, MaxValue, Value, Intensity, Luma }
 
   /**
    * Gets the width of the given image.

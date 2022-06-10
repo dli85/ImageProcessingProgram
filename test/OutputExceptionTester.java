@@ -9,7 +9,7 @@ public class OutputExceptionTester implements Appendable {
    * Default constructor.
    */
   public OutputExceptionTester() {
-
+    //Empty, throws an exception for every method.
   }
 
   @Override

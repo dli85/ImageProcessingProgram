@@ -3,13 +3,9 @@ package imageprocessing.model;
 import java.util.HashMap;
 import java.util.Map;
 
-/*
-TODO:
-  Finish save
-  getPixelInfo
-  All other commands
+/**
+ * Represents an implementation for an image processing model.
  */
-
 public class SimpleImageProcessingModel implements ImageProcessingModel {
 
   private final Map<String, Pixel[][]> imageCollection;
