@@ -117,16 +117,44 @@ public class ImageProcessingControllerImplTest {
             new StringReader("load res/gimp-solid-square.ppm square1 \n" +
                     "load res/nonexstigng.ppm doesNotExist " +
                     "load res/gimp-solid-square-41.ppm square2 " +
+                    "menu " +
                     "save res/gimp-solid-square.ppm square1 q"));
 
     controller.start();
 
-    String expectedTransmission = "Welcome to the image processing program. " +
-            "Please input your command (type menu for a list of commands): \n" +
+    String expectedTransmission = "Welcome to the image processing program. Please input your " +
+            "command (type menu for a list of commands): \n" +
             "Type your instruction:\n" +
             "Type your instruction:\n" +
             "File was unable to be loaded \n" +
             "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "\n" +
+            "load [image-path] [image-name]: Load an image from the specified path " +
+            "and refer it to henceforth in the program by the given image name.\n" +
+            "\n" +
+            "save [image-path] [image-name]: Save the image with the given name to " +
+            "the specified path which should include the name of the file.\n" +
+            "\n" +
+            "red-component [image-name] [dest-image-name]: Create a greyscale image " +
+            "with the red-component of the image with the given name,\n" +
+            "  and refer to it henceforth in the program by the given destination name. " +
+            "This command can also bedone with the green component, \n" +
+            "  the blue component, the value component, the intensity component, or the " +
+            "luma component (e.g. \"intensity-component\")\n" +
+            "\n" +
+            "horizontal-flip [image-name] [dest-image-name]: Flip an image horizontally " +
+            "to create a new image, referred to henceforth by the given destination name.\n" +
+            "\n" +
+            "vertical-flip [image-name] [dest-image-name]: Flip an image vertically to " +
+            "create a new image, referred to henceforth by the given destination name.\n" +
+            "\n" +
+            "brighten [increment] [image-name] [dest-image-name]: brighten the image by " +
+            "the given increment to create a new image,\n" +
+            "  referred to henceforth by the given destination name. The increment may be " +
+            "positive (brightening) or negative (darkening)\n" +
+            "\n" +
+            "\n" +
             "Type your instruction:\n" +
             "Please wait, your image is being saved \n" +
             "Type your instruction:\n";
@@ -592,6 +620,8 @@ public class ImageProcessingControllerImplTest {
    * ORIGINAL IMAGE:
    * (82, 212, 120)   (199, 34, 187)
    * (50, 241, 244)   (241, 222, 45)
+   *
+
    */
   @Test
   public void testLoadImage() {
@@ -608,6 +638,41 @@ public class ImageProcessingControllerImplTest {
                 new Pixel(199, 34, 187, 255)},
             {new Pixel(50, 241, 244, 255),
                 new Pixel(241, 222, 45, 255)}};
+
+    model1.addImageToLibrary("expected", expectedImage);
+
+    testTwoImagesAreTheSame(model1, "expected", "2x2");
+
+    assertEquals(2, model1.getHeight("2X2"));
+  }
+
+  /*
+   * flip vertical, flip horizontal, grayscale luma
+   * NEW IMAGE:
+   * (241, 222, 45) (50, 241, 244)
+   * (199, 34, 187) (82, 212, 120)
+   */
+  @Test
+  public void testAllCommands() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/2x2davidallcommands.ppm 2x2 " +
+                    "flip-vertical 2x2 2x2 " +
+                    "flip-horizontal 2x2 2x2 " +
+                    "brighten 10 2x2 2x2 " +
+                    "brighten -10 2x2 2x2 " +
+                    "luma-component 2x2 2x2 " +
+                    "q"));
+
+    controller.start();
+
+    Pixel[][] expectedImage = new Pixel[][]{
+            {new Pixel(213, 213, 213, 255),
+                new Pixel(201, 201, 201, 255)},
+            {new Pixel(80, 80, 80, 255),
+                new Pixel(178, 178, 178, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
