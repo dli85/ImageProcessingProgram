@@ -126,7 +126,7 @@ public class ImageProcessingControllerImplTest {
             "command (type menu for a list of commands): \n" +
             "Type your instruction:\n" +
             "Type your instruction:\n" +
-            "File was unable to be loaded \n" +
+            "Command failed to execute\n" +
             "Type your instruction:\n" +
             "Type your instruction:\n" +
             "\n" +

@@ -13,10 +13,13 @@ import java.util.Scanner;
 import imageprocessing.controller.commands.BrightenCommand;
 import imageprocessing.controller.commands.FlipCommand;
 import imageprocessing.controller.commands.GrayScaleCommand;
+import imageprocessing.controller.commands.SimpleLoadCommand;
+import imageprocessing.controller.commands.SimpleSaveCommand;
 import imageprocessing.controller.commands.UserCommand;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.model.Pixel;
+import imageprocessing.model.SimpleImageProcessingModel;
 import imageprocessing.view.ImageProcessingView;
 
 /**
@@ -81,21 +84,13 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     String newName;
     switch (userInput.toLowerCase()) {
       case "load":
-        try {
-          //First input: path, second input: imageName
-          this.readFileIntoModel(readFromInput(scanner), readFromInput(scanner));
-        } catch (IllegalArgumentException e) {
-          transmitMessage("File was unable to be loaded \n");
-        }
+        //First input: path, second input: imageName
+        command = new SimpleLoadCommand(readFromInput(scanner), readFromInput(scanner));
         break;
       case "save":
-        try {
-          //First input: path, second input: imageName
-          transmitMessage("Please wait, your image is being saved \n");
-          this.saveImageToFile(readFromInput(scanner), readFromInput(scanner));
-        } catch (IllegalArgumentException e) {
-          transmitMessage("Failed to save file \n");
-        }
+        //First input: path, second input: imageName
+        transmitMessage("Please wait, your image is being saved \n");
+        command = new SimpleSaveCommand(readFromInput(scanner), readFromInput(scanner));
         break;
       case "brighten":
         //First input: amount, second input: imageName, third input: new name
@@ -184,94 +179,6 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
             " the given destination name. The increment may be positive (brightening)" +
             " or negative (darkening)\n\n");
     this.transmitMessage("\n");
-  }
-
-  private void readFileIntoModel(String path, String imageName) throws IllegalArgumentException {
-    Scanner scanner;
-    try {
-      scanner = new Scanner(new FileInputStream(path));
-    } catch (FileNotFoundException e) {
-      throw new IllegalArgumentException("Unable to read from file");
-    }
-
-    StringBuilder builder = new StringBuilder();
-    while (scanner.hasNextLine()) {
-      String s = scanner.nextLine();
-      if (s.charAt(0) != '#') {
-        builder.append(s).append(System.lineSeparator());
-      }
-    }
-
-    scanner = new Scanner(builder.toString());
-
-    String token;
-
-    token = scanner.next();
-
-    if (!token.equals("P3")) {
-      throw new IllegalArgumentException("Unable to read from file");
-    }
-
-    int width = scanner.nextInt();
-    //System.out.println("Width of image: "+width);
-    int height = scanner.nextInt();
-    //System.out.println("Height of image: "+height);
-    int maxValue = scanner.nextInt();
-    //System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
-
-    Pixel[][] pixelGrid =
-            new Pixel[height][width];
-
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        int r = scanner.nextInt();
-        int g = scanner.nextInt();
-        int b = scanner.nextInt();
-
-        pixelGrid[i][j] = new Pixel(r, g, b, maxValue);
-
-        //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
-      }
-    }
-
-    model.addImageToLibrary(imageName, pixelGrid);
-  }
-
-  private void saveImageToFile(String savePath, String imageName) throws IllegalArgumentException {
-    File output = new File(savePath);
-    FileOutputStream out;
-    try {
-      out = new FileOutputStream(output);
-    } catch (FileNotFoundException e) {
-      throw new IllegalArgumentException("Failed to save file");
-    }
-
-    try {
-
-      out.write(("P3" + System.lineSeparator()).getBytes());
-      out.write((model.getWidth(imageName) + " " + model.getHeight(imageName)).getBytes());
-      out.write(System.lineSeparator().getBytes());
-      out.write(Integer.toString(model.getPixelInfo(imageName, 0, 0)
-              .get(PixelProperty.MaxValue)).getBytes());
-      out.write(System.lineSeparator().getBytes());
-
-      for (int i = 0; i < model.getHeight(imageName); i++) {
-        for (int j = 0; j < model.getWidth(imageName); j++) {
-          Map<PixelProperty, Integer> colorVals = model.getPixelInfo(imageName, i, j);
-
-          out.write(Integer.toString(colorVals.get(PixelProperty.Red)).getBytes());
-          out.write(System.lineSeparator().getBytes());
-          out.write(Integer.toString(colorVals.get(PixelProperty.Green)).getBytes());
-          out.write(System.lineSeparator().getBytes());
-          out.write(Integer.toString(colorVals.get(PixelProperty.Blue)).getBytes());
-          out.write(System.lineSeparator().getBytes());
-        }
-      }
-
-      out.close();
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Failed to write to output");
-    }
   }
 
   private void transmitMessage(String message) throws IllegalStateException {
