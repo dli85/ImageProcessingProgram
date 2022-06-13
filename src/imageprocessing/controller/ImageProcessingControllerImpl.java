@@ -83,6 +83,11 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     String imageName;
     String newName;
     switch (userInput.toLowerCase()) {
+      /**
+       * Load and save commands have been refactored into separate Function objects to adhere to
+       * the command design pattern while allowing for more complicated load and save commands for
+       * complex images. (justification for changes from Assignment4)
+       */
       case "load":
         //First input: path, second input: imageName
         command = new SimpleLoadCommand(readFromInput(scanner), readFromInput(scanner));
