@@ -11,9 +11,9 @@ import imageprocessing.model.Pixel;
  * the same constant amount.
  */
 public class BrightenCommand implements UserCommand {
-  int amount;
-  String imageName;
-  String newName;
+  private int amount;
+  private String imageName;
+  private String newName;
 
 
   /**

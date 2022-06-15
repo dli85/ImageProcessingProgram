@@ -15,9 +15,9 @@ public class FlipCommand implements UserCommand {
    */
   public enum FlipDirection { Vertical, Horizontal }
 
-  String imageName;
-  String newName;
-  FlipDirection flip;
+  private String imageName;
+  private String newName;
+  private FlipDirection flip;
 
   /**
    * Creates a new FlipVerticalCommand.

@@ -8,9 +8,9 @@ import imageprocessing.model.Pixel;
  * Represents a command to convert an image to grayscale.
  */
 public class GrayScaleCommand implements UserCommand {
-  PixelProperty component;
-  String imageName;
-  String newName;
+  private PixelProperty component;
+  private String imageName;
+  private String newName;
 
   /**
    * GrayScale command constructor. Initializes the necessary fields.

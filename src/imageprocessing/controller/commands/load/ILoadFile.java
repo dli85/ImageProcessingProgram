@@ -1,4 +1,4 @@
-package imageprocessing.controller.commands;
+package imageprocessing.controller.commands.load;
 
 import imageprocessing.model.ImageProcessingModel;
 
@@ -14,5 +14,6 @@ public interface ILoadFile {
    * @param model the inputted Image Processing model
    * @param path  the inputted path name
    */
-  void loadFile(ImageProcessingModel model, String path, String imageName);
+  void loadFile(ImageProcessingModel model, String path, String imageName)
+          throws IllegalArgumentException;
 }

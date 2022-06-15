@@ -13,8 +13,8 @@ import imageprocessing.model.ImageProcessingModelState;
  * Represents a command to save an image to a specified location.
  */
 public class SimpleSaveCommand implements UserCommand {
-  String savePath;
-  String imageName;
+  private String savePath;
+  private String imageName;
 
   /**
    * Save command constructor. Initializes the necessary fields.

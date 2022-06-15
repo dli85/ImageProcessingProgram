@@ -1,18 +1,23 @@
 package imageprocessing.controller.commands;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import imageprocessing.controller.commands.load.ILoadFile;
+import imageprocessing.controller.commands.load.LoadImageJPG;
+import imageprocessing.controller.commands.load.LoadImagePPM;
 import imageprocessing.model.ImageProcessingModel;
-import imageprocessing.model.Pixel;
 
 /**
  * Represents a command to load an image into the Image Processing Model.
  */
 public class SimpleLoadCommand implements UserCommand {
-  String path;
-  String imageName;
+  private String path;
+  private String imageName;
+
+  private Map<String, ILoadFile> loadCommands;
+
 
   /**
    * Load command constructor. Initializes the necessary fields.
@@ -23,10 +28,29 @@ public class SimpleLoadCommand implements UserCommand {
   public SimpleLoadCommand(String path, String imageName) {
     this.path = path;
     this.imageName = imageName;
+    this.loadCommands = new HashMap<String, ILoadFile>();
+
+    this.populateLoadCommands();
+  }
+
+
+  // Initializes the map.
+  private void populateLoadCommands() {
+    this.loadCommands.put(".ppm", new LoadImagePPM());
+    this.loadCommands.put(".jpg", new LoadImageJPG());
+    this.loadCommands.put(".jpeg", new LoadImageJPG());
   }
 
   @Override
   public void doCommand(ImageProcessingModel model) throws IllegalStateException {
+    String fileExtension = "";
 
+    //TODO get the file extension
+
+    if (this.loadCommands.containsKey(fileExtension)) {
+      this.loadCommands.get(fileExtension).loadFile(model, this.path, this.imageName);
+    } else {
+      throw new IllegalStateException("File not recognized");
+    }
   }
 }

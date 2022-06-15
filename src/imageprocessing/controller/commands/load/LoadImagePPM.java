@@ -1,4 +1,4 @@
-package imageprocessing.controller.commands;
+package imageprocessing.controller.commands.load;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
