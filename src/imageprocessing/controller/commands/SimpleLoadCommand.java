@@ -15,7 +15,6 @@ import imageprocessing.model.ImageProcessingModel;
 public class SimpleLoadCommand implements UserCommand {
   private String path;
   private String imageName;
-
   private Map<String, ILoadFile> loadCommands;
 
 
@@ -45,12 +44,6 @@ public class SimpleLoadCommand implements UserCommand {
   public void doCommand(ImageProcessingModel model) throws IllegalStateException {
     String fileExtension = "";
 
-    int i = this.path.lastIndexOf('.');
-    if (i > 0) {
-      fileExtension = this.path.substring(i);
-    } else {
-      throw new IllegalStateException("File not recognized");
-    }
 
     if (this.loadCommands.containsKey(fileExtension)) {
       this.loadCommands.get(fileExtension).loadFile(model, this.path, this.imageName);

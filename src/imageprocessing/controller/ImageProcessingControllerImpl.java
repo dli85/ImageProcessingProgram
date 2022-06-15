@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import imageprocessing.controller.commands.ApplyFilterCommand;
 import imageprocessing.controller.commands.BrightenCommand;
 import imageprocessing.controller.commands.FlipCommand;
 import imageprocessing.controller.commands.GrayScaleCommand;
@@ -143,6 +144,11 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         command = new GrayScaleCommand(PixelProperty.Value, readFromInput(scanner),
                 readFromInput(scanner));
         break;
+      case "blur":
+        //First input: imageName, second input: newName
+        command = new ApplyFilterCommand(ApplyFilterCommand.blur, readFromInput(scanner),
+                readFromInput(scanner));
+        break;
       case "menu":
         this.displayMenu();
         break;
@@ -183,6 +189,8 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
             " by the given increment to create a new image,\n  referred to henceforth by" +
             " the given destination name. The increment may be positive (brightening)" +
             " or negative (darkening)\n\n");
+    this.transmitMessage("blur [image-name] [dest-image-name]: blurs the image using a kernel" +
+            ", henceforth referred to as the given destionation name\n\n");
     this.transmitMessage("\n");
   }
 
