@@ -68,6 +68,23 @@ The UserCommand interface contains the outline for each command. Each command ha
 which takes in the necessary user inputs to needed to execute it. Each command only has one method:
 doCommand(). This takes in a ImageProcessingModel which the command attempts to execute itself on.
 
+### Saving and Loading Images
+
+Saving and loading images have been refactored (from the first assignment).
+Instead of only supporting saving and loading .ppm files through hardcoded methods in the command 
+design pattern, 
+each distinct type of file extension has been given its own class (each class is an implementation
+of either ILoadFile or ISaveFile). Each class then defines how that certain file types should
+be loaded from or saved to. When the user asks the program to save or load a specific file type, 
+the controller will delegate saving/loading to the appropriate save/load class (using a Map). 
+
+This design promotes much better organization for loading/saving different file types. It also allows
+for near unlimited flexibility when it comes to adding support for new file types. You only have to change very 
+little existing code to add support for a new file type.
+
+While loading from a .png may be the same as a .jpg, this design is still preferable as it
+allows for any future implementations of loading or saving more file types.
+
 ### Exceptions and Try-Catch
 
 Virtually every public method in the model can throw an IllegalArgumentException. This choice was 
@@ -98,7 +115,6 @@ Alternatively, you can create a run configuration to execute the program.
 An example of said configuration is included in the res/ folder. 
 
 
-
 ### Commands
 This application currently supports the following commands:
 1. Loading images: load {image-path} {imageName} 
@@ -109,8 +125,12 @@ This application currently supports the following commands:
 5. vertically flipping an image: vertical-flip {imageName} {newName}
 6. brightening an image by some amount (cannot exceed the max pixel value or go below 0):
    brighten {amount} {imageName} {newName}
-
-For the specific syntax of each command, type "menu". If newName is the same as imageName,
+7. blur an image: blur {imageName} {newName}
+8. sharpen an image: sharpen {imageName} {newName}
+ 
+For the specific syntax of each command, type "menu". imageName is the name of the image
+that was set in the application. newName is the name you want the new image to be referred to 
+as. If newName is the same as imageName,
 then the old image will be overwritten. The save path must include the name of the image
 that you want to save it as. For example, res/imageName.ppm
 
@@ -145,6 +165,15 @@ the ImageProcessingProgram and add the path to the script as a command line argu
 NOTE: If you to run the script.txt file by adding it's path as a command line input, the program 
 will close after the script is done running. 
 
+TODO:
+1. Tests
+   1. Test blur, sharpen, and all color transformation commands
+   2. Test loading from .jpg/.jpeg/.png/.bmp
+   3. Test saving to a .jpg/.jpeg/.png/.bmp
+   4. Combinations + tests from previous self eval
+2. Color transformation
+3. Saving
+4. Include new commands on the script
 
 # Image Sources
 

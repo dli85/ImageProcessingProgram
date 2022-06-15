@@ -14,7 +14,7 @@ public interface ILoadFile {
    * @param model     the inputted Image Processing model
    * @param path      the inputted path name
    * @param imageName the inputted imageName
-   * @throws IllegalStateException when loading the file fails
+   * @throws IllegalStateException If loading the file fails
    */
   void loadFile(ImageProcessingModel model, String path, String imageName)
           throws IllegalStateException;
