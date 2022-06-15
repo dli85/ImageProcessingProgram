@@ -11,12 +11,16 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.Pixel;
 
 /**
- * Represents the functionality to load a PNG image.
+ * Represents a function object that loads a conventional extension image
+ * to the Image Processing Model. This includes .jpg, .jpeg, .png, and .bmp extension types.
  */
-public class LoadImagePNG implements ILoadFile {
+public class LoadImageConventional implements ILoadFile {
 
-  public LoadImagePNG() {
-    //Empty constructor.
+  /**
+   * Empty constructor, purposed solely to override default constructor.
+   */
+  public LoadImageConventional() {
+    //Empty constructor
   }
 
   @Override

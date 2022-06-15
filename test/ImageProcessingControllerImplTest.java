@@ -778,4 +778,17 @@ public class ImageProcessingControllerImplTest {
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
   }
+
+  @Test
+  public void testLoadBMP() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.bmp square1 \n" +
+                    "load res/gimp-2x2.ppm square2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
 }

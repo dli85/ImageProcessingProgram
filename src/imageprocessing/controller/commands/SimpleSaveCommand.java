@@ -1,20 +1,12 @@
 package imageprocessing.controller.commands;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import imageprocessing.controller.commands.load.ILoadFile;
-import imageprocessing.controller.commands.load.LoadImageJPG;
-import imageprocessing.controller.commands.load.LoadImagePPM;
 import imageprocessing.controller.commands.save.ISaveFile;
 import imageprocessing.controller.commands.save.SaveImageJPG;
 import imageprocessing.controller.commands.save.SaveImagePPM;
 import imageprocessing.model.ImageProcessingModel;
-import imageprocessing.model.ImageProcessingModelState;
 
 /**
  * Represents a command to save an image to a specified location.
@@ -34,11 +26,11 @@ public class SimpleSaveCommand implements UserCommand {
     this.path = path;
     this.imageName = imageName;
     this.saveCommands = new HashMap<String, ISaveFile>();
-    this.populateLoadCommands();
+    this.populateSaveCommands();
   }
 
   // Initializes the map.
-  private void populateLoadCommands() {
+  private void populateSaveCommands() {
     this.saveCommands.put(".ppm", new SaveImagePPM());
     this.saveCommands.put(".jpg", new SaveImageJPG());
     this.saveCommands.put(".jpeg", new SaveImageJPG());

@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import imageprocessing.controller.commands.load.ILoadFile;
-import imageprocessing.controller.commands.load.LoadImageJPG;
-import imageprocessing.controller.commands.load.LoadImagePNG;
+import imageprocessing.controller.commands.load.LoadImageConventional;
 import imageprocessing.controller.commands.load.LoadImagePPM;
 import imageprocessing.model.ImageProcessingModel;
 
@@ -29,7 +28,6 @@ public class SimpleLoadCommand implements UserCommand {
     this.path = path;
     this.imageName = imageName;
     this.loadCommands = new HashMap<String, ILoadFile>();
-
     this.populateLoadCommands();
   }
 
@@ -37,9 +35,10 @@ public class SimpleLoadCommand implements UserCommand {
   // Initializes the map.
   private void populateLoadCommands() {
     this.loadCommands.put(".ppm", new LoadImagePPM());
-    this.loadCommands.put(".jpg", new LoadImageJPG());
-    this.loadCommands.put(".jpeg", new LoadImageJPG());
-    this.loadCommands.put(".png", new LoadImagePNG());
+    this.loadCommands.put(".jpg", new LoadImageConventional());
+    this.loadCommands.put(".jpeg", new LoadImageConventional());
+    this.loadCommands.put(".png", new LoadImageConventional());
+    this.loadCommands.put(".bmp", new LoadImageConventional());
   }
 
   @Override
