@@ -717,6 +717,20 @@ public class ImageProcessingControllerImplTest {
   }
 
   @Test
+  public void testSharpen() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/mudkip.ppm mudkip1 \n" +
+                    "load res/gimp-sharpenMudkip.ppm mudkip2 \n" +
+                    "sharpen mudkip1 mudkip1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "mudkip1", "mudkip2");
+  }
+
+  @Test
   public void testLoadJGP() {
     SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
 
@@ -726,7 +740,30 @@ public class ImageProcessingControllerImplTest {
                     "load res/gimp-2x2.ppm mudkip2 q"));
     controller.start();
 
-    testTwoImagesAreTheSame(model1, "mudkip1", "mudkip2");
+    // since JPG uses lossy compression, some RGB components will be skewed/lost.
+    // to test JPG equivalence, we will assert what we know for sure will remain constant.
+    // after, we will test if the values are within roughly 10%, ensuring that
+    // the image is still the same to the naked eye
+    assertEquals(0, model1.getWidth("mudkip1")
+            - model1.getWidth("mudkip2"));
+    assertEquals(0, model1.getHeight("mudkip1")
+            - model1.getHeight("mudkip2"));
+
+    assertEquals(255, (int) model1.getPixelInfo("mudkip1", 1, 1)
+            .get(PixelProperty.MaxValue));
+
+    for (int i = 0; i < model1.getHeight("mudkip1"); i++) {
+      for (int j = 0; j < model1.getWidth("mudkip1"); j++) {
+        Map<PixelProperty, Integer> img1Values = model1.getPixelInfo("mudkip1", i, j);
+        Map<PixelProperty, Integer> img2Values = model1.getPixelInfo("mudkip2", i, j);
+
+        // We check that every pixel value is within 10%
+        for (PixelProperty p : img1Values.keySet()) {
+          assertEquals(true, ((int) img1Values.get(p) - (int) img2Values.get(p))
+                  * 1.0 / (img2Values.get(p)) < .1);
+        }
+      }
+    }
   }
 
   @Test

@@ -10,11 +10,14 @@ import javax.imageio.ImageIO;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.Pixel;
 
+/**
+ * Represents a function object that loads a PNG extension image into the Image Processing Model.
+ */
 public class LoadImagePNG implements ILoadFile {
   @Override
   public void loadFile(ImageProcessingModel model, String path, String imageName)
           throws IllegalStateException {
-    
+
     BufferedImage image;
 
     try {
