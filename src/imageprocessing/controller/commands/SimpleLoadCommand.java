@@ -45,7 +45,12 @@ public class SimpleLoadCommand implements UserCommand {
   public void doCommand(ImageProcessingModel model) throws IllegalStateException {
     String fileExtension = "";
 
-    //TODO get the file extension
+    int i = this.path.lastIndexOf('.');
+    if (i > 0) {
+      fileExtension = this.path.substring(i);
+    } else {
+      throw new IllegalStateException("File not recognized");
+    }
 
     if (this.loadCommands.containsKey(fileExtension)) {
       this.loadCommands.get(fileExtension).loadFile(model, this.path, this.imageName);
