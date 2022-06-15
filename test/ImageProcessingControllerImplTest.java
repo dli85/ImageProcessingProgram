@@ -122,7 +122,8 @@ public class ImageProcessingControllerImplTest {
 
     controller.start();
 
-    String expectedTransmission = "Welcome to the image processing program. Please input your command (type menu for a list of commands): \n" +
+    String expectedTransmission = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
             "Type your instruction:\n" +
             "Type your instruction:\n" +
             "Command failed to execute\n" +

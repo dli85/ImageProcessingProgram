@@ -62,15 +62,17 @@ public class ApplyFilterCommand implements UserCommand {
     double sum = 0.0;
 
     int offset = this.kernel.length / 2;
+    for(int i = row - offset; i < row + offset + 1; i++) {
+      for(int j = col - offset; j < col + offset + 1; j++) {
 
-    for(int i = row - offset; i < row + offset; i++) {
-      for(int j = col - offset; j < col + offset; j++) {
-        if(i < 0 || i >= imgGrid.length || j < 0 || j > imgGrid[i].length) {
+        if(i < 0 || i >= imgGrid.length || j < 0 || j >= imgGrid[i].length) {
           //Don't add anything because we're out of bounds
         } else {
           Map<PixelProperty, Integer> pixelInfo = model.getPixelInfo(this.imageName, i, j);
-          sum += pixelInfo.get(p) * this.kernel[i - row + offset][j - col + offset];
+          sum += pixelInfo.get(p) * 1.0 * this.kernel[i - row + offset][j - col + offset];
+          //System.out.println((i - row + offset) + " " + (j - col + offset));
         }
+
       }
     }
 
