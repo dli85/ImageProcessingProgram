@@ -34,6 +34,8 @@ public class SimpleSaveCommand implements UserCommand {
     this.path = path;
     this.imageName = imageName;
     this.saveCommands = new HashMap<String, ISaveFile>();
+
+    this.populateLoadCommands();
   }
 
   // Initializes the map.
@@ -48,6 +50,8 @@ public class SimpleSaveCommand implements UserCommand {
     String fileExtension = "";
 
     int i = this.path.lastIndexOf('.');
+
+
     if (i > 0) {
       fileExtension = this.path.substring(i);
     } else {

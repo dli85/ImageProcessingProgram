@@ -122,37 +122,39 @@ public class ImageProcessingControllerImplTest {
 
     controller.start();
 
-    String expectedTransmission = "Welcome to the image processing program. Please input your " +
-            "command (type menu for a list of commands): \n" +
+    String expectedTransmission = "Welcome to the image processing program. Please input your command (type menu for a list of commands): \n" +
             "Type your instruction:\n" +
             "Type your instruction:\n" +
             "Command failed to execute\n" +
             "Type your instruction:\n" +
             "Type your instruction:\n" +
             "\n" +
-            "load [image-path] [image-name]: Load an image from the specified path " +
-            "and refer it to henceforth in the program by the given image name.\n" +
+            "load [image-path] [image-name]: Load an image from the specified path" +
+            " and refer it to henceforth in the program by the given image name.\n" +
             "\n" +
             "save [image-path] [image-name]: Save the image with the given name to " +
             "the specified path which should include the name of the file.\n" +
             "\n" +
             "red-component [image-name] [dest-image-name]: Create a greyscale image " +
             "with the red-component of the image with the given name,\n" +
-            "  and refer to it henceforth in the program by the given destination name. " +
-            "This command can also bedone with the green component, \n" +
-            "  the blue component, the value component, the intensity component, or the " +
-            "luma component (e.g. \"intensity-component\")\n" +
+            "  and refer to it henceforth in the program by the given destination" +
+            " name. This command can also bedone with the green component, \n" +
+            "  the blue component, the value component, the intensity component, or " +
+            "the luma component (e.g. \"intensity-component\")\n" +
             "\n" +
             "horizontal-flip [image-name] [dest-image-name]: Flip an image horizontally " +
             "to create a new image, referred to henceforth by the given destination name.\n" +
             "\n" +
-            "vertical-flip [image-name] [dest-image-name]: Flip an image vertically to " +
-            "create a new image, referred to henceforth by the given destination name.\n" +
+            "vertical-flip [image-name] [dest-image-name]: Flip an image vertically" +
+            " to create a new image, referred to henceforth by the given destination name.\n" +
             "\n" +
-            "brighten [increment] [image-name] [dest-image-name]: brighten the image by " +
-            "the given increment to create a new image,\n" +
-            "  referred to henceforth by the given destination name. The increment may be " +
-            "positive (brightening) or negative (darkening)\n" +
+            "brighten [increment] [image-name] [dest-image-name]: brighten the image " +
+            "by the given increment to create a new image,\n" +
+            "  referred to henceforth by the given destination name. The increment may " +
+            "be positive (brightening) or negative (darkening)\n" +
+            "\n" +
+            "blur [image-name] [dest-image-name]: blurs the image using a kernel, henceforth " +
+            "referred to as the given destionation name\n" +
             "\n" +
             "\n" +
             "Type your instruction:\n" +
