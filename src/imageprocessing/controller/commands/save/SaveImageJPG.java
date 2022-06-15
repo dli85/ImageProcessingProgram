@@ -9,7 +9,7 @@ public class SaveImageJPG implements ISaveFile {
   }
 
   @Override
-  public void saveFile(ImageProcessingModel model, String path, String imageName) throws IllegalArgumentException {
-
+  public void saveFile(ImageProcessingModel model, String path, String imageName)
+          throws IllegalArgumentException {
   }
 }
