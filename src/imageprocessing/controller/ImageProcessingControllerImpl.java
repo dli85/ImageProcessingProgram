@@ -149,11 +149,16 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         command = new ApplyFilterCommand(ApplyFilterCommand.blur, readFromInput(scanner),
                 readFromInput(scanner));
         break;
+      case "sharpen":
+        //First input: imageName, second input: newName
+        command = new ApplyFilterCommand(ApplyFilterCommand.sharpen, readFromInput(scanner),
+                readFromInput(scanner));
+        break;
       case "menu":
         this.displayMenu();
         break;
       default:
-        transmitMessage("Input not recognized, please enter again: " + System.lineSeparator());
+        transmitMessage("Input not recognized, please enter again: \n");
     }
 
     try {
@@ -190,7 +195,9 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
             " the given destination name. The increment may be positive (brightening)" +
             " or negative (darkening)\n\n");
     this.transmitMessage("blur [image-name] [dest-image-name]: blurs the image using a kernel" +
-            ", henceforth referred to as the given destionation name\n\n");
+            ", henceforth referred to as the given destination name\n\n");
+    this.transmitMessage("sharpen [image-name] [dest-image-name]: sharpens the image using a " +
+            "kernel, henceforth referred to as the destination name\n\n");
     this.transmitMessage("\n");
   }
 

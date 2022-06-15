@@ -75,7 +75,7 @@ public class ApplyFilterCommand implements UserCommand {
 
       }
     }
-
-    return (int) Math.round(sum);
+    int result = (int) Math.round(sum);
+    return result < 0 ? 0 : Math.min(255, result);
   }
 }
