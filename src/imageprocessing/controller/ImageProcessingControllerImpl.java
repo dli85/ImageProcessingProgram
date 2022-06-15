@@ -1,17 +1,13 @@
 package imageprocessing.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import imageprocessing.controller.commands.ApplyFilterCommand;
 import imageprocessing.controller.commands.BrightenCommand;
+import imageprocessing.controller.commands.ColorTransformationCommand;
 import imageprocessing.controller.commands.FlipCommand;
 import imageprocessing.controller.commands.GrayScaleCommand;
 import imageprocessing.controller.commands.SimpleLoadCommand;
@@ -19,8 +15,6 @@ import imageprocessing.controller.commands.SimpleSaveCommand;
 import imageprocessing.controller.commands.UserCommand;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
-import imageprocessing.model.Pixel;
-import imageprocessing.model.SimpleImageProcessingModel;
 import imageprocessing.view.ImageProcessingView;
 
 /**
@@ -146,13 +140,22 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         break;
       case "blur":
         //First input: imageName, second input: newName
-        command = new ApplyFilterCommand(ApplyFilterCommand.blur, readFromInput(scanner),
+        command = new ApplyFilterCommand(Utils.blurKernel, readFromInput(scanner),
                 readFromInput(scanner));
         break;
       case "sharpen":
         //First input: imageName, second input: newName
-        command = new ApplyFilterCommand(ApplyFilterCommand.sharpen, readFromInput(scanner),
+        command = new ApplyFilterCommand(Utils.sharpenKernel, readFromInput(scanner),
                 readFromInput(scanner));
+        break;
+      case "sepia-tone":
+        //First input: imageName, second input: newName
+        command = new ColorTransformationCommand(Utils.sepiaToneTransformation,
+                readFromInput(scanner), readFromInput(scanner));
+        break;
+      case "color-transform-luma_grayscale":
+        command = new ColorTransformationCommand(Utils.lumaTransformation,
+                readFromInput(scanner), readFromInput(scanner));
         break;
       case "menu":
         this.displayMenu();
@@ -198,6 +201,11 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
             ", henceforth referred to as the given destination name\n\n");
     this.transmitMessage("sharpen [image-name] [dest-image-name]: sharpens the image using a " +
             "kernel, henceforth referred to as the destination name\n\n");
+    this.transmitMessage("sepia-tone [image-name] [dest-image-name]: Create a sepia toned" +
+            " version of the image, henceforth referred to as the given destination name\n\n");
+    this.transmitMessage("color-transform-{linear system type} [image-name] [dest-image-name]:" +
+            " Performs a color transformation on an image using a linear system.\nSupported linear"
+            + " systems are luma_grayscale (e.g. color-transform-luma_grayscale)\n\n");
     this.transmitMessage("\n");
   }
 

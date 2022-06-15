@@ -8,20 +8,6 @@ import imageprocessing.model.Pixel;
 
 public class ApplyFilterCommand implements UserCommand {
 
-  public static final double[][] blur = new double[][]{
-          {0.0625, 0.125, 0.0625},
-          {0.125, 0.25, 0.125},
-          {0.0625, 0.125, 0.0625}
-  };
-
-  public static final double[][] sharpen = new double[][]{
-          {-0.125, -0.125, -0.125, -0.125, -0.125},
-          {-0.125, 0.25, 0.25, 0.25, -0.125},
-          {-0.125, 0.25, 1.0, 0.25, -0.125},
-          {-0.125, 0.25, 0.25, 0.25, -0.125},
-          {-0.125, -0.125, -0.125, -0.125, -0.125}
-  };
-
   private final double[][] kernel;
   private String imageName;
   private String newName;
