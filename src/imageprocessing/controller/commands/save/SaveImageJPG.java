@@ -54,6 +54,7 @@ public class SaveImageJPG implements ISaveFile {
       throw new IllegalStateException("File not able to be written");
     }
 
+    /*
     FileOutputStream out;
 
     try {
@@ -66,6 +67,6 @@ public class SaveImageJPG implements ISaveFile {
       out.close();
     } catch (IOException e) {
       throw new IllegalStateException("File not able to be written");
-    }
+    } */
   }
 }
