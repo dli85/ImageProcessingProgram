@@ -44,10 +44,12 @@ public class ApplyFilterCommand implements UserCommand {
           int red = applyFilterAtPosition(model, PixelProperty.Red, imgGrid, i, j);
           int green = applyFilterAtPosition(model, PixelProperty.Green, imgGrid, i, j);
           int blue = applyFilterAtPosition(model, PixelProperty.Blue, imgGrid, i, j);
-          int max = imgGrid[i][j].getPixelInfo().get(PixelProperty.MaxValue);
+          int max = model.getPixelInfo(this.imageName, i, j).get(PixelProperty.MaxValue);
           imgGrid[i][j] = new Pixel(red, green, blue, max);
         }
       }
+
+      model.addImageToLibrary(this.newName, imgGrid);
 
     } catch (IllegalArgumentException e) {
       throw new IllegalStateException("Command failed");
