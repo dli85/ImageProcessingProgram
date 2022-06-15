@@ -20,7 +20,7 @@ public class SaveImagePPM implements ISaveFile {
 
   @Override
   public void saveFile(ImageProcessingModel model, String path, String imageName)
-          throws IllegalArgumentException {
+          throws IllegalStateException {
     try {
       File output = new File(path);
       FileOutputStream out;
