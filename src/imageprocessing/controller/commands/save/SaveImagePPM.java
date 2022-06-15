@@ -11,6 +11,9 @@ import imageprocessing.model.ImageProcessingModelState;
 
 public class SaveImagePPM implements ISaveFile {
 
+  /**
+   * Empty constructor, purposed solely to override default constructor.
+   */
   public SaveImagePPM() {
     // empty constructor;
   }

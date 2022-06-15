@@ -10,22 +10,11 @@ import javax.imageio.ImageIO;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.Pixel;
 
-/**
- * Represents a function object that loads a JPG extension image to the Image Processing Model.
- */
-public class LoadImageJPG implements ILoadFile {
-
-  /**
-   * Empty constructor, purposed solely to override default constructor.
-   */
-  public LoadImageJPG() {
-    //Empty constructor
-  }
-
+public class LoadImagePNG implements ILoadFile {
   @Override
   public void loadFile(ImageProcessingModel model, String path, String imageName)
           throws IllegalStateException {
-
+    
     BufferedImage image;
 
     try {

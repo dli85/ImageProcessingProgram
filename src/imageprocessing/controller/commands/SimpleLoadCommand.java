@@ -6,6 +6,7 @@ import java.util.Map;
 
 import imageprocessing.controller.commands.load.ILoadFile;
 import imageprocessing.controller.commands.load.LoadImageJPG;
+import imageprocessing.controller.commands.load.LoadImagePNG;
 import imageprocessing.controller.commands.load.LoadImagePPM;
 import imageprocessing.model.ImageProcessingModel;
 
@@ -38,6 +39,7 @@ public class SimpleLoadCommand implements UserCommand {
     this.loadCommands.put(".ppm", new LoadImagePPM());
     this.loadCommands.put(".jpg", new LoadImageJPG());
     this.loadCommands.put(".jpeg", new LoadImageJPG());
+    this.loadCommands.put(".png", new LoadImagePNG());
   }
 
   @Override

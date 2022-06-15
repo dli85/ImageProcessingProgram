@@ -11,7 +11,9 @@ import imageprocessing.model.Pixel;
  * Represents a function object that loads a PPM extension image into the Image Processing Model.
  */
 public class LoadImagePPM implements ILoadFile {
-
+  /**
+   * Empty constructor, purposed solely to override default constructor.
+   */
   public LoadImagePPM() {
     // empty constructor
   }

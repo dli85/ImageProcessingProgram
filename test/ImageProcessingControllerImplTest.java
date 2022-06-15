@@ -638,9 +638,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(82, 212, 120, 255),
-                new Pixel(199, 34, 187, 255)},
+                    new Pixel(199, 34, 187, 255)},
             {new Pixel(50, 241, 244, 255),
-                new Pixel(241, 222, 45, 255)}};
+                    new Pixel(241, 222, 45, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -673,9 +673,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(213, 213, 213, 255),
-                new Pixel(201, 201, 201, 255)},
+                    new Pixel(201, 201, 201, 255)},
             {new Pixel(80, 80, 80, 255),
-                new Pixel(178, 178, 178, 255)}};
+                    new Pixel(178, 178, 178, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -700,5 +700,32 @@ public class ImageProcessingControllerImplTest {
             "squAre2", "GREYSQUARE2");
 
     assertEquals(2, model1.getHeight("square2"));
+  }
+
+  @Test
+  public void testBlur() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/mudkip.ppm mudkip1 \n" +
+                    "load res/gimp-blurredMudkip.ppm mudkip2 \n" +
+                    "blur mudkip1 mudkip1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "mudkip1", "mudkip2");
+  }
+
+  @Test
+  public void testLoadJGP() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.jpg mudkip1 \n" +
+                    "load res/gimp-2x2.ppm mudkip2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "mudkip1", "mudkip2");
   }
 }

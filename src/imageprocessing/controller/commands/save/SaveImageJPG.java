@@ -4,6 +4,9 @@ import imageprocessing.model.ImageProcessingModel;
 
 public class SaveImageJPG implements ISaveFile {
 
+  /**
+   * Empty constructor, purposed solely to override default constructor.
+   */
   public SaveImageJPG() {
     // empty constructor;
   }
