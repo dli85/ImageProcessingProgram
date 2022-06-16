@@ -63,7 +63,8 @@ public class FlipCommand implements UserCommand {
           for (int j = 0; j < width; j++) {
             Map<PixelProperty, Integer> values = model.getPixelInfo(this.imageName, i, j);
             Pixel p = new Pixel(values.get(PixelProperty.Red), values.get(PixelProperty.Green),
-                    values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue));
+                    values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue),
+                    values.get(PixelProperty.Alpha));
 
             newImgGrid[height - i - 1][j] = p;
           }
@@ -75,7 +76,8 @@ public class FlipCommand implements UserCommand {
           for (int j = 0; j < width; j++) {
             Map<PixelProperty, Integer> values = model.getPixelInfo(this.imageName, i, j);
             Pixel p = new Pixel(values.get(PixelProperty.Red), values.get(PixelProperty.Green),
-                    values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue));
+                    values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue),
+                    values.get(PixelProperty.Alpha));
 
             newImgGrid[i][width - j - 1] = p;
           }

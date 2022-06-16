@@ -33,9 +33,11 @@ public class GrayScaleCommand implements UserCommand {
       for (int i = 0; i < imgGrid.length; i++) {
         for (int j = 0; j < imgGrid[i].length; j++) {
 
+          int alpha = model.getPixelInfo(this.imageName, i, j).get(PixelProperty.Alpha);
           int grayValue = model.getPixelInfo(this.imageName, i, j).get(this.component);
           imgGrid[i][j] = new Pixel(grayValue, grayValue, grayValue,
-                  model.getPixelInfo(this.imageName, i, j).get(PixelProperty.MaxValue));
+                  model.getPixelInfo(this.imageName, i, j).get(PixelProperty.MaxValue),
+                  alpha);
         }
       }
 

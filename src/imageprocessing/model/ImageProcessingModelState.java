@@ -11,7 +11,7 @@ public interface ImageProcessingModelState {
    * Represents various properties of a pixel. These all correspond to numbers: i.e. how much
    * red is in an image, the luma, etc.
    */
-  enum PixelProperty { Red, Green, Blue, MaxValue, Value, Intensity, Luma }
+  enum PixelProperty { Red, Green, Blue, MaxValue, Alpha, Value, Intensity, Luma }
 
   /**
    * Gets the width of the given image.

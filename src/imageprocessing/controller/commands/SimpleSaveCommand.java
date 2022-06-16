@@ -5,6 +5,7 @@ import java.util.Map;
 
 import imageprocessing.controller.commands.save.ISaveFile;
 import imageprocessing.controller.commands.save.SaveImageJPG;
+import imageprocessing.controller.commands.save.SaveImagePNG;
 import imageprocessing.controller.commands.save.SaveImagePPM;
 import imageprocessing.model.ImageProcessingModel;
 
@@ -34,6 +35,8 @@ public class SimpleSaveCommand implements UserCommand {
     this.saveCommands.put(".ppm", new SaveImagePPM());
     this.saveCommands.put(".jpg", new SaveImageJPG());
     this.saveCommands.put(".jpeg", new SaveImageJPG());
+    this.saveCommands.put(".png", new SaveImagePNG());
+    this.saveCommands.put(".bmp", new SaveImagePNG());
   }
 
   @Override
@@ -45,11 +48,12 @@ public class SimpleSaveCommand implements UserCommand {
     if (i > 0) {
       fileExtension = this.path.substring(i);
     } else {
-      throw new IllegalStateException("Unable to save file");
+      throw new IllegalStateException("Unrecognized file extension");
     }
 
     if (this.saveCommands.containsKey(fileExtension)) {
-      this.saveCommands.get(fileExtension).saveFile(model, this.path, this.imageName);
+      this.saveCommands.get(fileExtension).saveFile(model, this.path, this.imageName,
+              fileExtension.substring(1));
     } else {
       throw new IllegalStateException("Unable to save file");
     }

@@ -44,7 +44,7 @@ public class BrightenCommand implements UserCommand {
           int blue = values.get(PixelProperty.Blue) + this.amount;
 
           int max = values.get(PixelProperty.MaxValue);
-
+          int alpha = model.getPixelInfo(this.imageName, i, j).get(PixelProperty.Alpha);
 
           //Basically add this.amount to rgb values unless it would make they more than the max
           // value or less than 0.
@@ -52,7 +52,8 @@ public class BrightenCommand implements UserCommand {
                   new Pixel(red < 0 ? 0 : Math.min(red, max),
                           green < 0 ? 0 : Math.min(green, max),
                           blue < 0 ? 0 : Math.min(blue, max),
-                          max);
+                          max,
+                          alpha);
         }
       }
 

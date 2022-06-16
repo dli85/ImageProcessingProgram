@@ -36,7 +36,8 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
         } else {
           Map<PixelProperty, Integer> values = imgGrid[i][j].getPixelInfo();
           temp[i][j] = new Pixel(values.get(PixelProperty.Red), values.get(PixelProperty.Green),
-                  values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue));
+                  values.get(PixelProperty.Blue), values.get(PixelProperty.MaxValue),
+                  values.get(PixelProperty.Alpha));
         }
       }
     }

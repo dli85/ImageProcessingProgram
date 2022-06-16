@@ -11,26 +11,24 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
 /**
- * Represents a function that saves an image as a .jpg, .jpeg, or another similar image type
- * which DOES NOT SUPPORT TRANSPARENCY
+ * Represents a function that can save an image as a .png, .bmp, or another similar image type
+ * WHICH SUPPORTS TRANSPARENCY.
  */
-public class SaveImageJPG implements ISaveFile {
+public class SaveImagePNG implements ISaveFile {
 
   /**
    * Empty constructor, purposed solely to override default constructor.
    */
-  public SaveImageJPG() {
-    // empty constructor. We onlyneed to support save file.
+  public SaveImagePNG() {
+    //Empty constructor. We only need to support saveFile
   }
-
   @Override
-  public void saveFile(ImageProcessingModel model, String path, String imageName, String extension)
-          throws IllegalStateException {
-
+  public void saveFile(ImageProcessingModel model, String path,
+                       String imageName, String extension) throws IllegalStateException {
     int height = model.getHeight(imageName);
     int width = model.getWidth(imageName);
 
-    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
@@ -40,9 +38,10 @@ public class SaveImageJPG implements ISaveFile {
         int red = properties.get(PixelProperty.Red);
         int green = properties.get(PixelProperty.Green);
         int blue = properties.get(PixelProperty.Blue);
+        int alpha = properties.get(PixelProperty.Alpha);
 
-        int rgb = (red << 16) | (green << 8) | blue;
-        image.setRGB(j, i, rgb);
+        int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
+        image.setRGB(j, i, argb);
       }
     }
 

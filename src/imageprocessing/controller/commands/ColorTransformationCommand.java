@@ -35,7 +35,8 @@ public class ColorTransformationCommand implements UserCommand {
           int green = values.get(PixelProperty.Green);
           int blue = values.get(PixelProperty.Blue);
           int max = values.get(PixelProperty.MaxValue);
-          imgGrid[i][j] = this.applyTransformation(red, green, blue, max);
+          int alpha = model.getPixelInfo(this.imageName, i, j).get(PixelProperty.Alpha);
+          imgGrid[i][j] = this.applyTransformation(red, green, blue, max, alpha);
         }
       }
 
@@ -46,7 +47,7 @@ public class ColorTransformationCommand implements UserCommand {
     }
   }
 
-  private Pixel applyTransformation(int red, int green, int blue, int max) {
+  private Pixel applyTransformation(int red, int green, int blue, int max, int alpha) {
 
     double newRed = red * this.transformation[0][0] + green * this.transformation[0][1] +
             blue * this.transformation[0][2];
@@ -59,6 +60,7 @@ public class ColorTransformationCommand implements UserCommand {
     return new Pixel((int) Math.min(Math.max(Math.round(newRed), 0), 255),
             (int) Math.min(Math.max(Math.round(newGreen), 0), 255),
             (int) Math.min(Math.max(Math.round(newBlue), 0), 255),
-            max);
+            max,
+            alpha);
   }
 }

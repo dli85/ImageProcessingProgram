@@ -31,10 +31,10 @@ public class SimpleImageProcessingModelTest {
     // and then invokes addImageToLibrary using that 2D array of Pixels.
 
     Pixel[][] image1 = new Pixel[][]{
-            {new Pixel(100, 100, 100, 255),
-                new Pixel(100, 100, 100, 255)},
-            {new Pixel(100, 100, 100, 255),
-                new Pixel(100, 100, 100, 255)}};
+            {new Pixel(100, 100, 100, 255, 255),
+                new Pixel(100, 100, 100, 255, 255)},
+            {new Pixel(100, 100, 100, 255, 255),
+                new Pixel(100, 100, 100, 255, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     int width = model1.getWidth("testImage");
@@ -62,7 +62,7 @@ public class SimpleImageProcessingModelTest {
 
     for (int i = 0; i < image2.length; i++) {
       for (int j = 0; j < image2[i].length; j++) {
-        image2[i][j] = new Pixel(10, 10, 10, 255);
+        image2[i][j] = new Pixel(10, 10, 10, 255, 255);
       }
     }
 
@@ -85,15 +85,15 @@ public class SimpleImageProcessingModelTest {
 
     for (int i = 0; i < image1.length; i++) {
       for (int j = 0; j < image1[i].length; j++) {
-        image1[i][j] = new Pixel(100, 100, 100, 255);
+        image1[i][j] = new Pixel(100, 100, 100, 255, 255);
       }
     }
 
     Pixel[][] image2 = new Pixel[][]{
-            {new Pixel(100, 100, 100, 255),
-                new Pixel(100, 100, 100, 255)},
-            {new Pixel(100, 100, 100, 255),
-                new Pixel(100, 100, 100, 255)}};
+            {new Pixel(100, 100, 100, 255, 255),
+                new Pixel(100, 100, 100, 255, 255)},
+            {new Pixel(100, 100, 100, 255, 255),
+                new Pixel(100, 100, 100, 255, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     model1.addImageToLibrary("testImage2", image2);
@@ -112,19 +112,19 @@ public class SimpleImageProcessingModelTest {
 
     for (int i = 0; i < image1.length; i++) {
       for (int j = 0; j < image1[i].length; j++) {
-        image1[i][j] = new Pixel(100, 100, 100, 255);
+        image1[i][j] = new Pixel(100, 100, 100, 255, 255);
       }
     }
 
     Pixel[][] image2 = new Pixel[][]{
-            {new Pixel(100, 100, 100, 255),
-                new Pixel(100, 100, 100, 255)},
-            {new Pixel(100, 100, 100, 255),
-                new Pixel(100, 100, 100, 255)},
-            {new Pixel(100, 100, 100, 255),
-                new Pixel(100, 100, 100, 255)},
-            {new Pixel(100, 100, 100, 255),
-                new Pixel(100, 100, 100, 255)}};
+            {new Pixel(100, 100, 100, 255, 255),
+                new Pixel(100, 100, 100, 255, 255)},
+            {new Pixel(100, 100, 100, 255, 255),
+                new Pixel(100, 100, 100, 255, 255)},
+            {new Pixel(100, 100, 100, 255, 255),
+                new Pixel(100, 100, 100, 255, 255)},
+            {new Pixel(100, 100, 100, 255, 255),
+                new Pixel(100, 100, 100, 255, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     model1.addImageToLibrary("testImage2", image2);
@@ -140,10 +140,10 @@ public class SimpleImageProcessingModelTest {
     init();
 
     Pixel[][] image = new Pixel[][]{
-            {new Pixel(1, 2, 3, 255),
-                new Pixel(4, 5, 6, 255)},
-            {new Pixel(7, 8, 9, 255),
-                new Pixel(10, 11, 12, 255)}};
+            {new Pixel(1, 2, 3, 255, 255),
+                new Pixel(4, 5, 6, 255, 255)},
+            {new Pixel(7, 8, 9, 255, 255),
+                new Pixel(10, 11, 12, 255, 255)}};
 
     model1.addImageToLibrary("test", image);
 
@@ -177,7 +177,7 @@ public class SimpleImageProcessingModelTest {
 
   @Test
   public void testPixelGetPixelInfo() {
-    Pixel pixel = new Pixel(255, 255, 255, 255);
+    Pixel pixel = new Pixel(255, 255, 255, 255, 255);
 
     Map<PixelProperty, Integer> info = pixel.getPixelInfo();
 
@@ -216,7 +216,7 @@ public class SimpleImageProcessingModelTest {
     //Add image to library exception
     try {
       this.model1.addImageToLibrary("",
-              new Pixel[][]{{new Pixel(0, 0, 0, 255)}});
+              new Pixel[][]{{new Pixel(0, 0, 0, 255, 255)}});
     } catch (IllegalArgumentException e) {
       assertEquals("Parameters cannot be null", e.getMessage());
     }
@@ -224,7 +224,7 @@ public class SimpleImageProcessingModelTest {
     //Add image to library exception
     try {
       this.model1.addImageToLibrary(null,
-              new Pixel[][]{{new Pixel(0, 0, 0, 255)}});
+              new Pixel[][]{{new Pixel(0, 0, 0, 255, 255)}});
     } catch (IllegalArgumentException e) {
       assertEquals("Parameters cannot be null", e.getMessage());
 

@@ -15,11 +15,11 @@ public class SaveImagePPM implements ISaveFile {
    * Empty constructor, purposed solely to override default constructor.
    */
   public SaveImagePPM() {
-    // empty constructor;
+    // empty constructor. We only need to support saveFile.
   }
 
   @Override
-  public void saveFile(ImageProcessingModel model, String path, String imageName)
+  public void saveFile(ImageProcessingModel model, String path, String imageName, String extension)
           throws IllegalStateException {
     try {
       File output = new File(path);

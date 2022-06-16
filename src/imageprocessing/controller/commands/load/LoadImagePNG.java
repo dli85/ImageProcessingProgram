@@ -11,22 +11,18 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.Pixel;
 
 /**
- * Represents a function object that loads a conventional extension image
- * to the Image Processing Model. This includes .jpg, .jpeg, .png, and .bmp extension types.
+ * Represents a function object that loads a .png, .bmp or other similar image THAT SUPPORTS
+ * TRANSPARENCY
  */
-public class LoadImageConventional implements ILoadFile {
+public class LoadImagePNG implements ILoadFile {
 
-  /**
-   * Empty constructor, purposed solely to override default constructor.
-   */
-  public LoadImageConventional() {
+  public LoadImagePNG() {
     //Empty constructor
   }
 
   @Override
   public void loadFile(ImageProcessingModel model, String path, String imageName)
           throws IllegalStateException {
-
     BufferedImage image;
 
     try {
@@ -38,20 +34,14 @@ public class LoadImageConventional implements ILoadFile {
     Pixel[][] pixelGrid = new Pixel[image.getHeight()][image.getWidth()];
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
-        Color color = new Color(image.getRGB(i, j));
+        Color color = new Color(image.getRGB(j, i), true);
         int red = color.getRed();
         int green = color.getGreen();
         int blue = color.getBlue();
-        int max = color.getAlpha();
+        int alpha = color.getAlpha();
+        int max = 255;
 
-        /*
-        int color = image.getRGB(i, j);
-        int blue = color & 0xff;
-        int green = (color & 0xff00) >> 8;
-        int red = (color & 0xff0000) >> 16;
-        int max = (color & 0xff000000) >>> 24; */
-
-        pixelGrid[i][j] = new Pixel(red, green, blue, max);
+        pixelGrid[i][j] = new Pixel(red, green, blue, max, alpha);
       }
     }
 

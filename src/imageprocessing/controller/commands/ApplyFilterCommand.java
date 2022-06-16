@@ -31,7 +31,8 @@ public class ApplyFilterCommand implements UserCommand {
           int green = applyFilterAtPosition(model, PixelProperty.Green, imgGrid, i, j);
           int blue = applyFilterAtPosition(model, PixelProperty.Blue, imgGrid, i, j);
           int max = model.getPixelInfo(this.imageName, i, j).get(PixelProperty.MaxValue);
-          imgGrid[i][j] = new Pixel(red, green, blue, max);
+          int alpha = model.getPixelInfo(this.imageName, i, j).get(PixelProperty.Alpha);
+          imgGrid[i][j] = new Pixel(red, green, blue, max, alpha);
         }
       }
 

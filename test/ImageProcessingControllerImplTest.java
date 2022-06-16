@@ -637,10 +637,10 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     Pixel[][] expectedImage = new Pixel[][]{
-            {new Pixel(82, 212, 120, 255),
-                    new Pixel(199, 34, 187, 255)},
-            {new Pixel(50, 241, 244, 255),
-                    new Pixel(241, 222, 45, 255)}};
+            {new Pixel(82, 212, 120, 255, 255),
+                    new Pixel(199, 34, 187, 255, 255)},
+            {new Pixel(50, 241, 244, 255, 255),
+                    new Pixel(241, 222, 45, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -672,10 +672,10 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     Pixel[][] expectedImage = new Pixel[][]{
-            {new Pixel(213, 213, 213, 255),
-                    new Pixel(201, 201, 201, 255)},
-            {new Pixel(80, 80, 80, 255),
-                    new Pixel(178, 178, 178, 255)}};
+            {new Pixel(213, 213, 213, 255, 255),
+                    new Pixel(201, 201, 201, 255, 255)},
+            {new Pixel(80, 80, 80, 255, 255),
+                    new Pixel(178, 178, 178, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
