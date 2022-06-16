@@ -769,8 +769,8 @@ public class ImageProcessingControllerImplTest {
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
             new StringReader("load res/gimp-solid-square.ppm square1 \n" +
-                    "save res/test-square.jpg square1 \n " +
-                    "load res/test-square.jpg square2 q"));
+                    "save res/test-square-separate.jpg square1 \n " +
+                    "load res/test-square-separate.jpg square2 q"));
 
     controller.start();
 
@@ -807,8 +807,8 @@ public class ImageProcessingControllerImplTest {
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
             new StringReader("load res/gimp-solid-square.ppm square1 \n" +
-                    "save res/test-square.png square1 \n " +
-                    "load res/test-square.png square2 q"));
+                    "save res/test-square-separate.png square1 \n " +
+                    "load res/test-square-separate.png square2 q"));
 
     controller.start();
 
@@ -822,8 +822,8 @@ public class ImageProcessingControllerImplTest {
     ImageProcessingController controller = new ImageProcessingControllerImpl(
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
             new StringReader("load res/gimp-solid-square.ppm square1 \n" +
-                    "save res/test-square.bmp square1 \n " +
-                    "load res/test-square.bmp square2 q"));
+                    "save res/test-square-separate.bmp square1 \n " +
+                    "load res/test-square-separate.bmp square2 q"));
 
     controller.start();
 
@@ -1176,5 +1176,19 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testTransparentImage() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/hamster.bmp hamster1 \n" +
+                    "save res/hamster.png hamster1 \n" +
+                    "load res/hamster.png hamster2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "hamster1", "hamster2");
   }
 }
