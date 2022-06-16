@@ -645,9 +645,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(82, 212, 120, 255, 255),
-                    new Pixel(199, 34, 187, 255, 255)},
+                  new Pixel(199, 34, 187, 255, 255)},
             {new Pixel(50, 241, 244, 255, 255),
-                    new Pixel(241, 222, 45, 255, 255)}};
+                  new Pixel(241, 222, 45, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -680,9 +680,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(213, 213, 213, 255, 255),
-                    new Pixel(201, 201, 201, 255, 255)},
+                  new Pixel(201, 201, 201, 255, 255)},
             {new Pixel(80, 80, 80, 255, 255),
-                    new Pixel(178, 178, 178, 255, 255)}};
+                  new Pixel(178, 178, 178, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -756,6 +756,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   @Test
@@ -769,6 +770,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   @Test
@@ -822,6 +824,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -837,6 +840,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -851,6 +855,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -865,6 +870,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -879,6 +885,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -893,6 +900,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -907,6 +915,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -921,6 +930,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -935,6 +945,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -949,6 +960,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -963,6 +975,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -977,6 +990,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -991,6 +1005,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -1005,6 +1020,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -1170,6 +1186,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(8, model1.getHeight("square1"));
   }
 
   @Test
@@ -1185,6 +1202,7 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(2, model1.getHeight("square1"));
   }
 
   @Test
@@ -1199,5 +1217,6 @@ public class ImageProcessingControllerImplTest {
     controller.start();
 
     testTwoImagesAreTheSame(model1, "hamster1", "hamster2");
+    assertEquals(model1.getHeight("hamster1"), model1.getHeight("hamster2"));
   }
 }
