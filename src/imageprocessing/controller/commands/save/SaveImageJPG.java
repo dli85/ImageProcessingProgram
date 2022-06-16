@@ -11,7 +11,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import imageprocessing.model.ImageProcessingModel;
-import imageprocessing.model.ImageProcessingModelState;
+import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
 public class SaveImageJPG implements ISaveFile {
 
@@ -29,27 +29,29 @@ public class SaveImageJPG implements ISaveFile {
     int height = model.getHeight(imageName);
     int width = model.getWidth(imageName);
 
-    BufferedImage image = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        Map<ImageProcessingModelState.PixelProperty, Integer> properties =
+        Map<PixelProperty, Integer> properties =
                 model.getPixelInfo(imageName, i, j);
 
-        int red = properties.get(ImageProcessingModelState.PixelProperty.Red);
-        int green = properties.get(ImageProcessingModelState.PixelProperty.Green);
-        int blue = properties.get(ImageProcessingModelState.PixelProperty.Blue);
-        int alpha = properties.get(ImageProcessingModelState.PixelProperty.MaxValue);
+        int red = properties.get(PixelProperty.Red);
+        int green = properties.get(PixelProperty.Green);
+        int blue = properties.get(PixelProperty.Blue);
+        //int alpha = properties.get(PixelProperty.MaxValue);
 
-        int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
-        image.setRGB(i, j, argb);
+        int argb = (red << 16) | (green << 8) | blue;
+        System.out.println(argb);
+        image.setRGB(j, i, argb);
       }
     }
 
     File toBeWritten = new File(path);
 
     try {
-      ImageIO.write(image, "jpg", toBeWritten);
+      ImageIO.write(image, "JPG", toBeWritten);
+      System.out.println("hi");
     } catch (IOException e) {
       throw new IllegalStateException("File not able to be written");
     }
