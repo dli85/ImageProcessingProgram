@@ -12,7 +12,10 @@ import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
 /**
  * Represents a function that saves an image as a .jpg, .jpeg, or another similar image type
- * which DOES NOT SUPPORT TRANSPARENCY
+ * which DOES NOT SUPPORT TRANSPARENCY.
+ *
+ * .bmp currently uses this save method as transparency is not currently supported when saving
+ * .bmp images (See ReadME).
  */
 public class SaveImageJPG implements ISaveFile {
 

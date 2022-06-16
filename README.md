@@ -82,8 +82,20 @@ This design promotes much better organization for loading/saving different file 
 for near unlimited flexibility when it comes to adding support for new file types. You only have to change very 
 little existing code to add support for a new file type.
 
-While loading from a .png may be the same as a .jpg, this design is still preferable as it
-allows for any future implementations of loading or saving more file types.
+### Transparency
+
+For the file types that support transparency (.png and .bmp), the transparency value 
+is preserved when loading the image. To accommodate for this feature, the Pixel class has been
+changed so that it stores the alpha value as field.
+
+When saving an image to a .png, the transparency will still be preserved on all the pixels. 
+However, transparency is not currently supported when saving to a .bmp. This is due to 
+Java's BufferedImage limitations. When saving to a .bmp file, the image will be
+fully opaque.
+
+Transparency is not used in any image operation, it is only preserved during loading and saving.
+(except for saving a .bmp). Files that do not support transparency (.ppm, .jpg) are treated
+as fully opaque.
 
 ### Exceptions and Try-Catch
 
