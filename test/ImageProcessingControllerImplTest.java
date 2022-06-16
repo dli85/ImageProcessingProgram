@@ -51,7 +51,7 @@ public class ImageProcessingControllerImplTest {
    * Test that saving image through the controller works.
    */
   @Test
-  public void testSaveImage() {
+  public void testSavePPM() {
     SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
 
     ImageProcessingController controller = new ImageProcessingControllerImpl(
@@ -163,8 +163,6 @@ public class ImageProcessingControllerImplTest {
             "Type your instruction:\n";
 
     assertEquals(expectedTransmission, log.toString());
-
-
   }
 
   @Test
@@ -703,34 +701,6 @@ public class ImageProcessingControllerImplTest {
   }
 
   @Test
-  public void testBlur() {
-    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
-
-    ImageProcessingController controller = new ImageProcessingControllerImpl(
-            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load res/mudkip.ppm mudkip1 \n" +
-                    "load res/gimp-blurredMudkip.ppm mudkip2 \n" +
-                    "blur mudkip1 mudkip1 q"));
-    controller.start();
-
-    testTwoImagesAreTheSame(model1, "mudkip1", "mudkip2");
-  }
-
-  @Test
-  public void testSharpen() {
-    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
-
-    ImageProcessingController controller = new ImageProcessingControllerImpl(
-            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
-            new StringReader("load res/mudkip.ppm mudkip1 \n" +
-                    "load res/gimp-sharpenMudkip.ppm mudkip2 \n" +
-                    "sharpen mudkip1 mudkip1 q"));
-    controller.start();
-
-    testTwoImagesAreTheSame(model1, "mudkip1", "mudkip2");
-  }
-
-  @Test
   public void testLoadJGP() {
     SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
 
@@ -759,8 +729,8 @@ public class ImageProcessingControllerImplTest {
 
         // We check that every pixel value is within 10%
         for (PixelProperty p : img1Values.keySet()) {
-          assertEquals(true, ((int) img1Values.get(p) - (int) img2Values.get(p))
-                  * 1.0 / (img2Values.get(p)) < .1);
+          assertEquals(true, Math.abs(((int) img1Values.get(p)
+                  - (int) img2Values.get(p))) * 1.0 / (img2Values.get(p)) < .1);
         }
       }
     }
@@ -787,6 +757,407 @@ public class ImageProcessingControllerImplTest {
             model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
             new StringReader("load res/gimp-2x2.bmp square1 \n" +
                     "load res/gimp-2x2.ppm square2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testSaveJPG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "save res/test-square.jpg square1 \n " +
+                    "load res/test-square.jpg square2 q"));
+
+    controller.start();
+
+    // since JPG uses lossy compression, some RGB components will be skewed/lost.
+    // to test JPG equivalence, we will assert what we know for sure will remain constant.
+    // after, we will test if the values are within roughly 10%, ensuring that
+    // the image is still the same to the naked eye
+    assertEquals(0, model1.getWidth("square1")
+            - model1.getWidth("square2"));
+    assertEquals(0, model1.getHeight("square1")
+            - model1.getHeight("square2"));
+
+    assertEquals(255, (int) model1.getPixelInfo("square2", 1, 1)
+            .get(PixelProperty.MaxValue));
+
+    for (int i = 0; i < model1.getHeight("square2"); i++) {
+      for (int j = 0; j < model1.getWidth("square2"); j++) {
+        Map<PixelProperty, Integer> img1Values = model1.getPixelInfo("square1", i, j);
+        Map<PixelProperty, Integer> img2Values = model1.getPixelInfo("square2", i, j);
+
+        // We check that every pixel value is within 10%
+        for (PixelProperty p : img1Values.keySet()) {
+          assertEquals(true, Math.abs(((int) img1Values.get(p)
+                  - (int) img2Values.get(p))) * 1.0 / (img2Values.get(p)) < .1);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testSavePNG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "save res/test-square.png square1 \n " +
+                    "load res/test-square.png square2 q"));
+
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testSaveBMP() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "save res/test-square.bmp square1 \n " +
+                    "load res/test-square.bmp square2 q"));
+
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testBlurPPM() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/test-square-blur.ppm square2 \n" +
+                    "blur square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testSharpenPPM() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/test-square-sharpen.ppm square2 \n" +
+                    "sharpen square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testLumaTransformPPM() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/test-square-luma.ppm square2 \n" +
+                    "color-transform-luma_grayscale square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testSepiaTransformPPM() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/test-square-sepia.ppm square2 \n" +
+                    "sepia-tone square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testBlurPNG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.png square1 \n" +
+                    "load res/test-square-blur.png square2 \n" +
+                    "blur square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testSharpenPNG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.png square1 \n" +
+                    "load res/test-square-sharpen.png square2 \n" +
+                    "sharpen square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testLumaTransformPNG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.png square1 \n" +
+                    "load res/test-square-luma.png square2 \n" +
+                    "color-transform-luma_grayscale square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testSepiaTransformPNG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.png square1 \n" +
+                    "load res/test-square-sepia.png square2 \n" +
+                    "sepia-tone square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testBlurBMP() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.bmp square1 \n" +
+                    "load res/test-square-blur.bmp square2 \n" +
+                    "blur square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testSharpenBMP() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.bmp square1 \n" +
+                    "load res/test-square-sharpen.bmp square2 \n" +
+                    "sharpen square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testLumaTransformBMP() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.bmp square1 \n" +
+                    "load res/test-square-luma.bmp square2 \n" +
+                    "color-transform-luma_grayscale square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testSepiaTransformBMP() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.bmp square1 \n" +
+                    "load res/test-square-sepia.bmp square2 \n" +
+                    "sepia-tone square1 square1 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+  }
+
+  @Test
+  public void testBlurJPG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.jpg square1 \n" +
+                    "load res/test-square-blur.jpg square2 \n" +
+                    "blur square1 square1 q"));
+    controller.start();
+
+    // since JPG uses lossy compression, some RGB components will be skewed/lost.
+    // to test JPG equivalence, we will assert what we know for sure will remain constant.
+    // We raise the margin of error to 100%, since a gap for example 5 -> 10 is a 100% error gap
+    // but is not likely to be seen to the human eye.
+    assertEquals(0, model1.getWidth("square1")
+            - model1.getWidth("square2"));
+    assertEquals(0, model1.getHeight("square1")
+            - model1.getHeight("square2"));
+
+    assertEquals(255, (int) model1.getPixelInfo("square2", 1, 1)
+            .get(PixelProperty.MaxValue));
+
+
+    for (int i = 0; i < model1.getHeight("square2"); i++) {
+      for (int j = 0; j < model1.getWidth("square2"); j++) {
+        Map<PixelProperty, Integer> img1Values = model1.getPixelInfo("square1", i, j);
+        Map<PixelProperty, Integer> img2Values = model1.getPixelInfo("square2", i, j);
+
+        // We check that every pixel value is within 100%
+        for (PixelProperty p : img1Values.keySet()) {
+          assertEquals(true, (img1Values.get(p) - img2Values.get(p)
+                  * 1.0) / Math.max(img2Values.get(p), img1Values.get(p)) <= 1);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testSharpenJPG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.jpg square1 \n" +
+                    "load res/test-square-sharpen.jpg square2 \n" +
+                    "sharpen square1 square1 q"));
+    controller.start();
+
+    // since JPG uses lossy compression, some RGB components will be skewed/lost.
+    // to test JPG equivalence, we will assert what we know for sure will remain constant.
+    // We raise the margin of error to 100%, since a gap for example 5 -> 10 is a 100% error gap
+    // but is not likely to be seen to the human eye.
+    assertEquals(0, model1.getWidth("square1")
+            - model1.getWidth("square2"));
+    assertEquals(0, model1.getHeight("square1")
+            - model1.getHeight("square2"));
+
+    assertEquals(255, (int) model1.getPixelInfo("square2", 1, 1)
+            .get(PixelProperty.MaxValue));
+
+
+    for (int i = 0; i < model1.getHeight("square2"); i++) {
+      for (int j = 0; j < model1.getWidth("square2"); j++) {
+        Map<PixelProperty, Integer> img1Values = model1.getPixelInfo("square1", i, j);
+        Map<PixelProperty, Integer> img2Values = model1.getPixelInfo("square2", i, j);
+
+        // We check that every pixel value is within 100%
+        for (PixelProperty p : img1Values.keySet()) {
+          assertEquals(true, (img1Values.get(p) - img2Values.get(p)
+                  * 1.0) / Math.max(img2Values.get(p), img1Values.get(p)) <= 1);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testLumaTransformJPG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.jpg square1 \n" +
+                    "load res/test-square-luma.jpg square2 \n" +
+                    "color-transform-luma_grayscale square1 square1 q"));
+    controller.start();
+
+    // since JPG uses lossy compression, some RGB components will be skewed/lost.
+    // to test JPG equivalence, we will assert what we know for sure will remain constant.
+    // We raise the margin of error to 100%, since a gap for example 5 -> 10 is a 100% error gap
+    // but is not likely to be seen to the human eye.
+    assertEquals(0, model1.getWidth("square1")
+            - model1.getWidth("square2"));
+    assertEquals(0, model1.getHeight("square1")
+            - model1.getHeight("square2"));
+
+    assertEquals(255, (int) model1.getPixelInfo("square2", 1, 1)
+            .get(PixelProperty.MaxValue));
+
+
+    for (int i = 0; i < model1.getHeight("square2"); i++) {
+      for (int j = 0; j < model1.getWidth("square2"); j++) {
+        Map<PixelProperty, Integer> img1Values = model1.getPixelInfo("square1", i, j);
+        Map<PixelProperty, Integer> img2Values = model1.getPixelInfo("square2", i, j);
+
+        // We check that every pixel value is within 100%
+        for (PixelProperty p : img1Values.keySet()) {
+          assertEquals(true, (img1Values.get(p) - img2Values.get(p)
+                  * 1.0) / Math.max(img2Values.get(p), img1Values.get(p)) <= 1);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testSepiaTransformJPG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test-square.jpg square1 \n" +
+                    "load res/test-square-sepia.jpg square2 \n" +
+                    "sepia-tone square1 square1 q"));
+    controller.start();
+
+    // since JPG uses lossy compression, some RGB components will be skewed/lost.
+    // to test JPG equivalence, we will assert what we know for sure will remain constant.
+    assertEquals(0, model1.getWidth("square1")
+            - model1.getWidth("square2"));
+    assertEquals(0, model1.getHeight("square1")
+            - model1.getHeight("square2"));
+
+    assertEquals(255, (int) model1.getPixelInfo("square2", 1, 1)
+            .get(PixelProperty.MaxValue));
+
+
+    for (int i = 0; i < model1.getHeight("square2"); i++) {
+      for (int j = 0; j < model1.getWidth("square2"); j++) {
+        Map<PixelProperty, Integer> img1Values = model1.getPixelInfo("square1", i, j);
+        Map<PixelProperty, Integer> img2Values = model1.getPixelInfo("square2", i, j);
+
+        // We check that every pixel value is within 1%
+        for (PixelProperty p : img1Values.keySet()) {
+          assertEquals(true, (img1Values.get(p) - img2Values.get(p)
+                  * 1.0) / Math.max(img2Values.get(p), img1Values.get(p)) <= .01);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testBlurThenLumaPPM() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-solid-square.ppm square1 \n" +
+                    "load res/test-square-blur-luma.ppm square2 \n" +
+                    "blur square1 square1 \n" +
+                    "color-transform-luma_grayscale square1 square1 q"));
     controller.start();
 
     testTwoImagesAreTheSame(model1, "square1", "square2");
