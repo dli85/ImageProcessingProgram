@@ -31,7 +31,6 @@ public class SaveImagePPM implements ISaveFile {
       }
 
       try {
-
         out.write(("P3" + System.lineSeparator()).getBytes());
         out.write((model.getWidth(imageName) + " " + model.getHeight(imageName)).getBytes());
         out.write(System.lineSeparator().getBytes());
@@ -41,13 +40,17 @@ public class SaveImagePPM implements ISaveFile {
 
         for (int i = 0; i < model.getHeight(imageName); i++) {
           for (int j = 0; j < model.getWidth(imageName); j++) {
-            Map<ImageProcessingModelState.PixelProperty, Integer> colorVals = model.getPixelInfo(imageName, i, j);
+            Map<ImageProcessingModelState.PixelProperty, Integer> colorVals =
+                    model.getPixelInfo(imageName, i, j);
 
-            out.write(Integer.toString(colorVals.get(ImageProcessingModelState.PixelProperty.Red)).getBytes());
+            out.write(Integer.toString(colorVals.get(ImageProcessingModelState.PixelProperty.Red))
+                    .getBytes());
             out.write(System.lineSeparator().getBytes());
-            out.write(Integer.toString(colorVals.get(ImageProcessingModelState.PixelProperty.Green)).getBytes());
+            out.write(Integer.toString(colorVals.get(ImageProcessingModelState.PixelProperty.Green))
+                    .getBytes());
             out.write(System.lineSeparator().getBytes());
-            out.write(Integer.toString(colorVals.get(ImageProcessingModelState.PixelProperty.Blue)).getBytes());
+            out.write(Integer.toString(colorVals.get(ImageProcessingModelState.PixelProperty.Blue))
+                    .getBytes());
             out.write(System.lineSeparator().getBytes());
           }
         }

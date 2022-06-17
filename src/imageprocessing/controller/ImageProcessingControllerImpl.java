@@ -5,11 +5,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import imageprocessing.controller.commands.ApplyFilterCommand;
-import imageprocessing.controller.commands.BrightenCommand;
-import imageprocessing.controller.commands.ColorTransformationCommand;
-import imageprocessing.controller.commands.FlipCommand;
-import imageprocessing.controller.commands.GrayScaleCommand;
+import imageprocessing.model.FlipDirection;
 import imageprocessing.controller.commands.SimpleLoadCommand;
 import imageprocessing.controller.commands.SimpleSaveCommand;
 import imageprocessing.controller.commands.UserCommand;
@@ -74,94 +70,89 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
 
     userInput = userInput.toLowerCase();
 
-    String path;
-    String imageName;
-    String newName;
-    switch (userInput.toLowerCase()) {
-      /**
-       * Load and save commands have been refactored into separate Function objects to adhere to
-       * the command design pattern while allowing for more complicated load and save commands for
-       * complex images. (justification for changes from Assignment4)
-       */
-      case "load":
-        //First input: path, second input: imageName
-        command = new SimpleLoadCommand(readFromInput(scanner), readFromInput(scanner));
-        break;
-      case "save":
-        //First input: path, second input: imageName
-        transmitMessage("Please wait, your image is being saved \n");
-        command = new SimpleSaveCommand(readFromInput(scanner), readFromInput(scanner));
-        break;
-      case "brighten":
-        //First input: amount, second input: imageName, third input: new name
-        command = new BrightenCommand(readIntFromInput(scanner),
-                readFromInput(scanner), readFromInput(scanner));
-        break;
-      case "vertical-flip":
-        //First input: imageName, secondInput: newName
-        command = new FlipCommand(readFromInput(scanner), readFromInput(scanner),
-                FlipCommand.FlipDirection.Vertical);
-        break;
-      case "horizontal-flip":
-        //First input: imageName, secondInput: newName
-        command = new FlipCommand(readFromInput(scanner), readFromInput(scanner),
-                FlipCommand.FlipDirection.Horizontal);
-        break;
-      case "red-component":
-        //First input: imageName, second input: newName
-        command = new GrayScaleCommand(PixelProperty.Red, readFromInput(scanner),
-                readFromInput(scanner));
-        break;
-      case "green-component":
-        //First input: imageName, second input: newName
-        command = new GrayScaleCommand(PixelProperty.Green, readFromInput(scanner),
-                readFromInput(scanner));
-        break;
-      case "blue-component":
-
-        //First input: imageName, second input: newName
-        command = new GrayScaleCommand(PixelProperty.Blue, readFromInput(scanner),
-                readFromInput(scanner));
-        break;
-      case "intensity-component":
-        //First input: imageName, second input: newName
-        command = new GrayScaleCommand(PixelProperty.Intensity, readFromInput(scanner),
-                readFromInput(scanner));
-        break;
-      case "luma-component":
-        //First input: imageName, second input: newName
-        command = new GrayScaleCommand(PixelProperty.Luma, readFromInput(scanner),
-                readFromInput(scanner));
-        break;
-      case "value-component":
-        //First input: imageName, second input: newName
-        command = new GrayScaleCommand(PixelProperty.Value, readFromInput(scanner),
-                readFromInput(scanner));
-        break;
-      case "blur":
-        //First input: imageName, second input: newName
-        command = new ApplyFilterCommand(Utils.blurKernel, readFromInput(scanner),
-                readFromInput(scanner));
-        break;
-      case "sharpen":
-        //First input: imageName, second input: newName
-        command = new ApplyFilterCommand(Utils.sharpenKernel, readFromInput(scanner),
-                readFromInput(scanner));
-        break;
-      case "sepia-tone":
-        //First input: imageName, second input: newName
-        command = new ColorTransformationCommand(Utils.sepiaToneTransformation,
-                readFromInput(scanner), readFromInput(scanner));
-        break;
-      case "color-transform-luma_grayscale":
-        command = new ColorTransformationCommand(Utils.lumaTransformation,
-                readFromInput(scanner), readFromInput(scanner));
-        break;
-      case "menu":
-        this.displayMenu();
-        break;
-      default:
-        transmitMessage("Input not recognized, please enter again: \n");
+    try {
+      switch (userInput.toLowerCase()) {
+        case "load":
+          //First input: path, second input: imageName
+          command = new SimpleLoadCommand(readFromInput(scanner), readFromInput(scanner));
+          break;
+        case "save":
+          //First input: path, second input: imageName
+          transmitMessage("Please wait, your image is being saved \n");
+          command = new SimpleSaveCommand(readFromInput(scanner), readFromInput(scanner));
+          break;
+        case "brighten":
+          //First input: amount, second input: imageName, third input: new name
+          this.model.brighten(readIntFromInput(scanner),
+                  readFromInput(scanner), readFromInput(scanner));
+          break;
+        case "vertical-flip":
+          //First input: imageName, secondInput: newName
+          this.model.flip(FlipDirection.Vertical, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "horizontal-flip":
+          //First input: imageName, secondInput: newName
+          this.model.flip(FlipDirection.Horizontal, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "red-component":
+          //First input: imageName, second input: newName
+          this.model.grayscale(PixelProperty.Red, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "green-component":
+          //First input: imageName, second input: newName
+          this.model.grayscale(PixelProperty.Green, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "blue-component":
+          //First input: imageName, second input: newName
+          this.model.grayscale(PixelProperty.Blue, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "intensity-component":
+          //First input: imageName, second input: newName
+          this.model.grayscale(PixelProperty.Intensity, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "luma-component":
+          //First input: imageName, second input: newName
+          this.model.grayscale(PixelProperty.Luma, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "value-component":
+          //First input: imageName, second input: newName
+          this.model.grayscale(PixelProperty.Value, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "blur":
+          //First input: imageName, second input: newName
+          model.applyFilter(Utils.blurKernel, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "sharpen":
+          //First input: imageName, second input: newName
+          model.applyFilter(Utils.sharpenKernel, readFromInput(scanner),
+                  readFromInput(scanner));
+          break;
+        case "sepia-tone":
+          //First input: imageName, second input: newName
+          model.colorTransformation(Utils.sepiaToneTransformation,
+                  readFromInput(scanner), readFromInput(scanner));
+          break;
+        case "color-transform-luma_grayscale":
+          model.colorTransformation(Utils.lumaTransformation,
+                  readFromInput(scanner), readFromInput(scanner));
+          break;
+        case "menu":
+          this.displayMenu();
+          break;
+        default:
+          transmitMessage("Input not recognized, please enter again: \n");
+      }
+    } catch (IllegalArgumentException e) {
+      this.transmitMessage("Command failed to execute\n");
     }
 
     try {
@@ -170,8 +161,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         command.doCommand(this.model);
       }
     } catch (IllegalStateException e) {
-      this.transmitMessage("Command failed to execute");
-      this.transmitMessage(System.lineSeparator());
+      this.transmitMessage("Command failed to execute\n");
     }
   }
 

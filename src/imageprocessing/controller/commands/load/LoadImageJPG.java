@@ -35,6 +35,7 @@ public class LoadImageJPG implements ILoadFile {
       throw new IllegalStateException("File not able to be read");
     }
 
+
     Pixel[][] pixelGrid = new Pixel[image.getHeight()][image.getWidth()];
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
@@ -42,14 +43,8 @@ public class LoadImageJPG implements ILoadFile {
         int red = color.getRed();
         int green = color.getGreen();
         int blue = color.getBlue();
-        int max = color.getAlpha();
+        int max = 255;
 
-        /*
-        int color = image.getRGB(i, j);
-        int blue = color & 0xff;
-        int green = (color & 0xff00) >> 8;
-        int red = (color & 0xff0000) >> 16;
-        int max = (color & 0xff000000) >>> 24; */
 
         pixelGrid[i][j] = new Pixel(red, green, blue, max, max);
       }
