@@ -6,7 +6,6 @@ import java.util.Map;
 
 import imageprocessing.controller.commands.save.ISaveFile;
 import imageprocessing.controller.commands.save.SaveConventional;
-//import imageprocessing.controller.commands.save.SaveImagePNG;
 import imageprocessing.controller.commands.save.SaveImagePPM;
 import imageprocessing.model.ImageProcessingModel;
 
@@ -56,7 +55,7 @@ public class SimpleSaveCommand implements UserCommand {
 
     int biType;
 
-    if(fileExtension.equals(".png")) {
+    if (fileExtension.equals(".png")) {
       biType = BufferedImage.TYPE_INT_ARGB;
     } else {
       biType = BufferedImage.TYPE_INT_RGB;

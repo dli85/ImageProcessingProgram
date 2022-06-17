@@ -1657,4 +1657,36 @@ public class ImageProcessingControllerImplTest {
     testTwoImagesAreTheSame(model1, "square1", "square2");
     assertEquals(2, model1.getHeight("square1"));
   }
+
+  @Test
+  public void testDoubleBlur() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test2x2.ppm square \n" +
+                    "blur square square\n" +
+                    "blur square square\n" +
+                    "load res/doubleBlur2x2.bmp actual q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "actual", "square");
+    assertEquals(2, model1.getHeight("square"));
+  }
+
+  @Test
+  public void testDoubleSharpen() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/test2x2.ppm square \n" +
+                    "sharpen square square\n" +
+                    "sharpen square square\n" +
+                    "load res/doubleSharpen2x2.png actual q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "actual", "square");
+    assertEquals(2, model1.getHeight("square"));
+  }
 }

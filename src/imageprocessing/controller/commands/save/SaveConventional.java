@@ -1,7 +1,6 @@
 package imageprocessing.controller.commands.save;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -48,10 +47,10 @@ public class SaveConventional implements ISaveFile {
 
           int rgb;
 
-          if(biType == BufferedImage.TYPE_INT_ARGB) {
-             rgb = (alpha << 24) | (red << 16) | (green << 8) | blue;
-          } else if(biType == BufferedImage.TYPE_INT_RGB) {
-             rgb = (red << 16) | (green << 8) | blue;
+          if (biType == BufferedImage.TYPE_INT_ARGB) {
+            rgb = (alpha << 24) | (red << 16) | (green << 8) | blue;
+          } else if (biType == BufferedImage.TYPE_INT_RGB) {
+            rgb = (red << 16) | (green << 8) | blue;
           } else {
             throw new IllegalStateException("Unrecognized buffered image type");
           }
@@ -62,7 +61,6 @@ public class SaveConventional implements ISaveFile {
     } catch (IllegalArgumentException e) {
       throw new IllegalStateException("Command failed");
     }
-
 
 
     try {
