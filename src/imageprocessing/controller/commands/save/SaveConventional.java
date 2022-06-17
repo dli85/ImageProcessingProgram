@@ -2,6 +2,7 @@ package imageprocessing.controller.commands.save;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
@@ -11,28 +12,29 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
 /**
- * Represents a function that can save an image as a .png, or another similar image type
- * WHICH SUPPORTS TRANSPARENCY.
+ * Represents a function that saves an image as a .jpg, .jpeg, .png, or .bmp.
  */
-public class SaveImagePNG implements ISaveFile {
+public class SaveConventional implements ISaveFile {
 
   /**
    * Empty constructor, purposed solely to override default constructor.
    */
-  public SaveImagePNG() {
-    //Empty constructor. We only need to support saveFile
+  public SaveConventional() {
+    // empty constructor. We only need to support save file.
   }
 
   @Override
-  public void saveFile(ImageProcessingModel model, String path,
-                       String imageName, String extension) throws IllegalStateException {
+  public void saveFile(ImageProcessingModel model, String path, String imageName, String extension,
+                       int biType)
+          throws IllegalStateException {
+    int height;
+    int width;
     BufferedImage image;
-
     try {
-      int height = model.getHeight(imageName);
-      int width = model.getWidth(imageName);
+      height = model.getHeight(imageName);
+      width = model.getWidth(imageName);
 
-      image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+      image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
       for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -44,16 +46,27 @@ public class SaveImagePNG implements ISaveFile {
           int blue = properties.get(PixelProperty.Blue);
           int alpha = properties.get(PixelProperty.Alpha);
 
-          int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
-          image.setRGB(j, i, argb);
+          int rgb;
+
+          if(biType == BufferedImage.TYPE_INT_ARGB) {
+             rgb = (alpha << 24) | (red << 16) | (green << 8) | blue;
+          } else if(biType == BufferedImage.TYPE_INT_RGB) {
+             rgb = (red << 16) | (green << 8) | blue;
+          } else {
+            throw new IllegalStateException("Unrecognized buffered image type");
+          }
+
+          image.setRGB(j, i, rgb);
         }
       }
     } catch (IllegalArgumentException e) {
       throw new IllegalStateException("Command failed");
     }
-    File toBeWritten = new File(path);
+
+
 
     try {
+      FileOutputStream toBeWritten = new FileOutputStream(path);
       ImageIO.write(image, extension.toUpperCase(), toBeWritten);
     } catch (IOException e) {
       throw new IllegalStateException("File not able to be written");

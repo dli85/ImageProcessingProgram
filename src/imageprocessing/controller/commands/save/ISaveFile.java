@@ -16,6 +16,7 @@ public interface ISaveFile {
    * @param imageName the inputted imageName
    * @throws IllegalStateException If saving the file fails
    */
-  void saveFile(ImageProcessingModel model, String path, String imageName, String extension)
+  void saveFile(ImageProcessingModel model, String path, String imageName, String extension,
+                int biType)
           throws IllegalStateException;
 }

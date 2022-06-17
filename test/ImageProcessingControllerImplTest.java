@@ -1249,4 +1249,325 @@ public class ImageProcessingControllerImplTest {
     testTwoImagesAreTheSame(model1, "hamster1", "hamster2");
     assertEquals(model1.getHeight("hamster1"), model1.getHeight("hamster2"));
   }
+
+  //Load a ppm which does not exist
+  @Test
+  public void testLoadPPMError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/DOESNOTEXIST.ppm none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Load a jpg which does not exist
+  @Test
+  public void testLoadJPGError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/DOESNOTEXIST.jpg none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Load a jpg which does not exist
+  @Test
+  public void testLoadJPEGError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/DOESNOTEXIST.jpeg none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Load a png which does not exist
+  @Test
+  public void testLoadPNGError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/DOESNOTEXIST.png none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Load a bmp which does not exist
+  @Test
+  public void testLoadBMPError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/DOESNOTEXIST.bmp none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .ppm to a non-existent path
+  @Test
+  public void testSavePPMError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.ppm mudkip q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .ppm to a non-existent path
+  @Test
+  public void testSaveJPGError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.jpg mudkip q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .jpeg to a non-existent path
+  @Test
+  public void testSaveJPEGError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.jpeg mudkip q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .png to a non-existent path
+  @Test
+  public void testSavePNGError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.png mudkip q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .BMP to a non-existent path
+  @Test
+  public void testSaveBMPError() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.bmp mudkip q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .PPM of a non-existent image
+  @Test
+  public void testSavePPMErrorInvalidImage() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.ppm none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .JPG of a non-existent image
+  @Test
+  public void testSaveJPGErrorInvalidImage() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.jpg none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .PNG of a non-existent image
+  @Test
+  public void testSavePNGErrorInvalidImage() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.png none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
+
+  //Save a .bmp of a non-existent image
+  @Test
+  public void testSaveBMPErrorInvalidImage() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, log),
+            new StringReader("load res/mudkip.ppm mudkip \n" +
+                    "save DOESNOTEXIST/mudkip.bmp none q"));
+    controller.start();
+
+    String result = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
+            "Type your instruction:\n" +
+            "Type your instruction:\n" +
+            "Please wait, your image is being saved \n" +
+            "Command failed to execute\n" +
+            "Type your instruction:\n";
+
+    assertEquals(result, log.toString());
+  }
 }

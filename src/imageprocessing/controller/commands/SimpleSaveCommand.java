@@ -1,11 +1,12 @@
 package imageprocessing.controller.commands;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
 import imageprocessing.controller.commands.save.ISaveFile;
-import imageprocessing.controller.commands.save.SaveImageJPGandBMP;
-import imageprocessing.controller.commands.save.SaveImagePNG;
+import imageprocessing.controller.commands.save.SaveConventional;
+//import imageprocessing.controller.commands.save.SaveImagePNG;
 import imageprocessing.controller.commands.save.SaveImagePPM;
 import imageprocessing.model.ImageProcessingModel;
 
@@ -33,10 +34,10 @@ public class SimpleSaveCommand implements UserCommand {
   // Initializes the map.
   private void populateSaveCommands() {
     this.saveCommands.put(".ppm", new SaveImagePPM());
-    this.saveCommands.put(".jpg", new SaveImageJPGandBMP());
-    this.saveCommands.put(".jpeg", new SaveImageJPGandBMP());
-    this.saveCommands.put(".png", new SaveImagePNG());
-    this.saveCommands.put(".bmp", new SaveImageJPGandBMP());
+    this.saveCommands.put(".jpg", new SaveConventional());
+    this.saveCommands.put(".jpeg", new SaveConventional());
+    this.saveCommands.put(".png", new SaveConventional());
+    this.saveCommands.put(".bmp", new SaveConventional());
   }
 
   @Override
@@ -51,9 +52,19 @@ public class SimpleSaveCommand implements UserCommand {
       throw new IllegalStateException("Unrecognized file extension");
     }
 
+    fileExtension = fileExtension.toLowerCase();
+
+    int biType;
+
+    if(fileExtension.equals(".png")) {
+      biType = BufferedImage.TYPE_INT_ARGB;
+    } else {
+      biType = BufferedImage.TYPE_INT_RGB;
+    }
+
     if (this.saveCommands.containsKey(fileExtension)) {
       this.saveCommands.get(fileExtension).saveFile(model, this.path, this.imageName,
-              fileExtension.substring(1));
+              fileExtension.substring(1), biType);
     } else {
       throw new IllegalStateException("Unable to save file");
     }

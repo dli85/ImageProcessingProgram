@@ -5,6 +5,14 @@
 This is an application to process images. It supports many commands
 that can flip, brighten, or greyscale an image.
 
+The jar and script file are located in the /res folder. The jar is named assignment4.jar,
+and the script is name script.txt. To run the jar file, navigate to the res folder in
+command line and type "java -jar Assignment4.jar". To use the script file, add it as a comand line
+argument: "java -jar Assignment4.jar script.txt"
+
+NOTE: The script file is configured to run with the jar file. Due to relative paths, it
+will not work correctly if it is not used with the jar file.
+
 ## Design Overview
 
 ### Design changes (from assignment 4)

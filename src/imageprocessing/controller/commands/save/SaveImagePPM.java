@@ -22,7 +22,8 @@ public class SaveImagePPM implements ISaveFile {
   }
 
   @Override
-  public void saveFile(ImageProcessingModel model, String path, String imageName, String extension)
+  public void saveFile(ImageProcessingModel model, String path, String imageName, String extension,
+                       int biType)
           throws IllegalStateException {
     try {
       File output = new File(path);
