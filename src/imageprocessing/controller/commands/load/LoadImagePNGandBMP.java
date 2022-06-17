@@ -14,9 +14,9 @@ import imageprocessing.model.Pixel;
  * Represents a function object that loads a .png, .bmp or other similar image THAT SUPPORTS
  * TRANSPARENCY
  */
-public class LoadImagePNG implements ILoadFile {
+public class LoadImagePNGandBMP implements ILoadFile {
 
-  public LoadImagePNG() {
+  public LoadImagePNGandBMP() {
     //Empty constructor
   }
 

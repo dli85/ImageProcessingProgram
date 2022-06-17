@@ -174,7 +174,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
             "the specified path which should include the name of the file.\n\n");
     this.transmitMessage("red-component [image-name] [dest-image-name]: Create a greyscale image " +
             "with the red-component of the image with the given name,\n  and refer to it " +
-            "henceforth in the program by the given destination name. This command can also be" +
+            "henceforth in the program by the given destination name. This command can also be " +
             "done with the green component, \n  the blue component, the value component, the " +
             "intensity component, or the luma component (e.g. \"intensity-component\")\n\n");
     this.transmitMessage("horizontal-flip [image-name] [dest-image-name]: Flip an image " +

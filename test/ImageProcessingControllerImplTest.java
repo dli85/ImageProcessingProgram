@@ -122,7 +122,8 @@ public class ImageProcessingControllerImplTest {
 
     controller.start();
 
-    String expectedTransmission = "Welcome to the image processing program. Please input your command (type menu for a list of commands): \n" +
+    String expectedTransmission = "Welcome to the image processing program. " +
+            "Please input your command (type menu for a list of commands): \n" +
             "Type your instruction:\n" +
             "Type your instruction:\n" +
             "Command failed to execute\n" +
@@ -645,9 +646,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(82, 212, 120, 255, 255),
-                  new Pixel(199, 34, 187, 255, 255)},
+                    new Pixel(199, 34, 187, 255, 255)},
             {new Pixel(50, 241, 244, 255, 255),
-                  new Pixel(241, 222, 45, 255, 255)}};
+                    new Pixel(241, 222, 45, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -680,9 +681,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(213, 213, 213, 255, 255),
-                  new Pixel(201, 201, 201, 255, 255)},
+                    new Pixel(201, 201, 201, 255, 255)},
             {new Pixel(80, 80, 80, 255, 255),
-                  new Pixel(178, 178, 178, 255, 255)}};
+                    new Pixel(178, 178, 178, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
