@@ -6,6 +6,21 @@ This is an application to process images. It supports many commands
 that can flip, brighten, or greyscale an image.
 
 ## Design Overview
+
+### Design changes (from assignment 4)
+
+- Commands like blur and brighten have been refactored into SimpleImageProcessingModel methods. The 
+ImageProcessingModel interface has been updated accordingly. This is to create a more 
+appropriate MVC design pattern (due to feedback on assignment 4). The controller has also been 
+refactored appropriately.
+- The save/load methods have been moved from controller methods into their own command classes. 
+Additionally, the saving/loading functionality for .ppm files have been refactored into their own
+classes. This is so that support for other formats like .jpg can be more easily added. (the save
+load commands will delegate to the proper files).
+- The pixel class has been changed to allow support for alpha values (transparency). Alpha values
+are not used in any image calculations/modifications, they are merely preserved when saving/loading
+whenever possible.
+
 ### MVC Design
 This application follows the Model-View-Controller (MVC) design pattern. For clarification, images 
 are stored in code as 2d Pixel Arrays. The pixel class contains the information values about
@@ -17,9 +32,7 @@ every pixel. This class is stored in the model package.
    reading from the input or transmitting to the output fails.
    2. The controller has the ability to read user commands and transmit messages to the output. It
    processes user commands using the command design pattern.
-   3. This interface is implemented in ImageProcessingControllerImpl class. This class also contains
-   private methods for reading images from a .ppm file (into the model) and saving images 
-   to a .ppm file. 
+   3. This interface is implemented in ImageProcessingControllerImpl class. 
 2. ImageProcessingModelState interface
    1. This interface is one part of the model design. The ImageProcessingModelState interface 
    is the "parent" to the ImageProcessingView interface. Thus, the method headers in this interface
@@ -28,45 +41,15 @@ every pixel. This class is stored in the model package.
    throw IllegalArgumentExceptions if bad inputs are provided (image does not exist, etc.)
    2. This interface is extended by the ImageProcessingModel. 
 3. ImageProcessingModel interface
-   1. This interface is the second part of the model design. This interface only contains one 
-   method header, which adds a given image to the model to be referred to by a given name. An
-   existing image can be overwritten by adding a new image to the model with the same name as 
-   the image to be overwritten. This is the only way that images can be changed or added to the
-   model. This method also throws an IllegalArgumentException if the inputs are "bad" (like if
-   the provided image has any null pixels)
+   1. This interface is the second part of the model design. This interface contains the methods
+   needed to modify images. These methods include brightening, grayscaling, flipping, etc. These
+   methods are used by the controller when an appropriate user input is detected.
    2. This interface is implemented by the SimpleImageProcessingModel class. The collections of
    images (represented as a hashmap) is private.
 4. ImageProcessingView interface
    1. This interface contains all the method headers needed for the view. This includes
    the transmitMessage() method.
    2. This method is implemented in the ImageProcessingViewImpl class.
-
-### Command and Model Design Philosophy
-
-We have decided to design this application with the following philosophy: 
-When it comes to image modification, the model should only provide the bare
-minimum that is needed. In our case, the model only provides one method to add/modify images:
-addImageToLibrary(). 
-
-Thus, commands like brighten will obtain information about images from the model using
-methods like getWidth, getHeight, and getPixelInfo. The commands will create a new "image"
-and apply the appropriate operations. Finally, the command will add the new image to the model
-using the aforementioned method.
-
-We chose this design pattern to allow more flexibility for future 
-implementations. There may be many more macros beyond just brightening, grayscaling, etc.
-So by not hardcoding each macro into the model itself and instead by creating commands
-to carry them out, we can more easily allow for more expansion.
-
-
-### Command Design Pattern
-
-In order to process the user commands to apply the given effects on the images, the controller
-employs the command design pattern.
-
-The UserCommand interface contains the outline for each command. Each command has a constructor
-which takes in the necessary user inputs to needed to execute it. Each command only has one method:
-doCommand(). This takes in a ImageProcessingModel which the command attempts to execute itself on.
 
 ### Saving and Loading Images
 
@@ -105,8 +88,8 @@ that does not exist, the application should not crash. Instead, the fact that th
 failed to execute should be outputted, and the program should continue as normal. Thus, when 
 performing operations on images, many model methods are needed and there will be many places where
 an IllegalArgumentException could occur. Thus, larger try-catch statements that surround larger
-blocks of code are used to minimize code duplication. Some try-catch blocks (like in the 
-FlipCommand class) will have further documentation on this design choice.
+blocks of code are used to minimize code duplication. Some try-catch blocks will have further
+documentation on this design choice.
 
 The overall philosophy of this program's design when it comes to errors and exceptions
 is that in every method where a user error could occur (e.g. trying to save an image that
@@ -126,6 +109,12 @@ green arrow on the left side near the line numbers.
 Alternatively, you can create a run configuration to execute the program. 
 An example of said configuration is included in the res/ folder. 
 
+A .jar file has also been included in the /res folder. To use the jar file, simply
+navigate to the res folder in command line and type "java -jar Assignment4.jar"
+
+
+You may add the path to a script file that you may wish to run after:
+i.e: "java -jar Assignment4.jar script.txt"
 
 ### Commands
 This application currently supports the following commands:
@@ -139,8 +128,10 @@ This application currently supports the following commands:
    brighten {amount} {imageName} {newName}
 7. blur an image: blur {imageName} {newName}
 8. sharpen an image: sharpen {imageName} {newName}
+9. apply a color transformation: color-transform-{transformation} {imageName} {newName}. 
+Currently, the only supported color transformation is "luma_grayscale".
  
-For the specific syntax of each command, type "menu". imageName is the name of the image
+For the specific syntax of each command and more information, type "menu". imageName is the name of the image
 that was set in the application. newName is the name you want the new image to be referred to 
 as. If newName is the same as imageName,
 then the old image will be overwritten. The save path must include the name of the image
@@ -167,25 +158,12 @@ overwritten.
 ### The Script
 
 The /res folder has included a script.txt file which is a sample series of commands which will
-load an image (mudkip), grayscale it, brighten it, flip it horizontally, flip it vertically,
-and then save it. 
+load an image (mudkip) and save two version of it. The script.txt file contains examples
+of all types of commands.  
 
 To run this script, create a new run configuration that runs the main method in
 the ImageProcessingProgram and add the path to the script as a command line argument 
 (res/script.txt). An example of said configuration can be found in the res folder (run_config.PNG)
-
-NOTE: If you to run the script.txt file by adding it's path as a command line input, the program 
-will close after the script is done running. 
-
-TODO:
-1. Tests
-   1. Test all public methods in model
-   2. Test all exceptions in public methods
-      1. For applyFilter, test a kernel that is null and a kernel that 
-      is not an odd square matrix
-      2. For colorTransformation, test a kernel that is null and a kernel
-      that is not a 3x3 matrix
-4. Include new commands on the script
 
 # Image Sources
 

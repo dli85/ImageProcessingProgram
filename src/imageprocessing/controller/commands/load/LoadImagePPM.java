@@ -15,7 +15,7 @@ public class LoadImagePPM implements ILoadFile {
    * Empty constructor, purposed solely to override default constructor.
    */
   public LoadImagePPM() {
-    // empty constructor
+    // empty constructor: we only need to support loadFile.
   }
 
   @Override

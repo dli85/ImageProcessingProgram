@@ -160,7 +160,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
           throws IllegalArgumentException {
     this.checkInBounds(imageName, 0, 0);
 
-    if(kernel == null || kernel.length % 2 == 0 || kernel[0].length % 2 == 0) {
+    if (kernel == null || kernel.length % 2 == 0 || kernel[0].length % 2 == 0) {
       throw new IllegalArgumentException("Kernel must be an odd square matrix");
     }
 
@@ -186,7 +186,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
           throws IllegalArgumentException {
     this.checkInBounds(imageName, 0, 0);
 
-    if(transformation == null || transformation.length != 3 || transformation[0].length !=3) {
+    if (transformation == null || transformation.length != 3 || transformation[0].length != 3) {
       throw new IllegalArgumentException("Invalid transformation matrix");
     }
 

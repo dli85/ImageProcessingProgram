@@ -33,9 +33,9 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image1 = new Pixel[][]{
             {new Pixel(100, 100, 100, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(100, 100, 100, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)}};
+                new Pixel(100, 100, 100, 255, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     int width = model1.getWidth("testImage");
@@ -92,9 +92,9 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image2 = new Pixel[][]{
             {new Pixel(100, 100, 100, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(100, 100, 100, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)}};
+                new Pixel(100, 100, 100, 255, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     model1.addImageToLibrary("testImage2", image2);
@@ -119,13 +119,13 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image2 = new Pixel[][]{
             {new Pixel(100, 100, 100, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(100, 100, 100, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(100, 100, 100, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(100, 100, 100, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)}};
+                new Pixel(100, 100, 100, 255, 255)}};
 
     model1.addImageToLibrary("testImage", image1);
     model1.addImageToLibrary("testImage2", image2);
@@ -142,9 +142,9 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image = new Pixel[][]{
             {new Pixel(1, 2, 3, 255, 255),
-                    new Pixel(4, 5, 6, 255, 255)},
+                new Pixel(4, 5, 6, 255, 255)},
             {new Pixel(7, 8, 9, 255, 255),
-                    new Pixel(10, 11, 12, 255, 255)}};
+                new Pixel(10, 11, 12, 255, 255)}};
 
     model1.addImageToLibrary("test", image);
 
@@ -196,41 +196,41 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image1 = new Pixel[][]{
             {new Pixel(50, 50, 50, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(150, 150, 150, 255, 255),
-                    new Pixel(200, 200, 200, 255, 255)}};
+                new Pixel(200, 200, 200, 255, 255)}};
 
     this.model1.addImageToLibrary("test", image1);
     this.model1.flip(FlipDirection.Vertical, "test", "verticalTest");
     this.model1.flip(FlipDirection.Horizontal, "test", "horizontalTest");
 
-    Map<PixelProperty, Integer> Vpixel1Values =
+    Map<PixelProperty, Integer> vPixel1Values =
             this.model1.getPixelInfo("verticalTest", 0, 0);
-    Map<PixelProperty, Integer> Vpixel2Values =
+    Map<PixelProperty, Integer> vPixel2Values =
             this.model1.getPixelInfo("verticalTest", 0, 1);
-    Map<PixelProperty, Integer> Vpixel3Values =
+    Map<PixelProperty, Integer> vPixel3Values =
             this.model1.getPixelInfo("verticalTest", 1, 0);
-    Map<PixelProperty, Integer> Vpixel4Values =
+    Map<PixelProperty, Integer> vPixel4Values =
             this.model1.getPixelInfo("verticalTest", 1, 1);
 
-    Map<PixelProperty, Integer> Hpixel1Values =
+    Map<PixelProperty, Integer> hPixel1Values =
             this.model1.getPixelInfo("horizontalTest", 0, 0);
-    Map<PixelProperty, Integer> Hpixel2Values =
+    Map<PixelProperty, Integer> hPixel2Values =
             this.model1.getPixelInfo("horizontalTest", 0, 1);
-    Map<PixelProperty, Integer> Hpixel3Values =
+    Map<PixelProperty, Integer> hPixel3Values =
             this.model1.getPixelInfo("horizontalTest", 1, 0);
-    Map<PixelProperty, Integer> Hpixel4Values =
+    Map<PixelProperty, Integer> hPixel4Values =
             this.model1.getPixelInfo("horizontalTest", 1, 1);
 
-    assertEquals(150, (int) Vpixel1Values.get(PixelProperty.Red));
-    assertEquals(200, (int) Vpixel2Values.get(PixelProperty.Red));
-    assertEquals(50, (int) Vpixel3Values.get(PixelProperty.Red));
-    assertEquals(100, (int) Vpixel4Values.get(PixelProperty.Red));
+    assertEquals(150, (int) vPixel1Values.get(PixelProperty.Red));
+    assertEquals(200, (int) vPixel2Values.get(PixelProperty.Red));
+    assertEquals(50, (int) vPixel3Values.get(PixelProperty.Red));
+    assertEquals(100, (int) vPixel4Values.get(PixelProperty.Red));
 
-    assertEquals(100, (int) Hpixel1Values.get(PixelProperty.Red));
-    assertEquals(50, (int) Hpixel2Values.get(PixelProperty.Red));
-    assertEquals(200, (int) Hpixel3Values.get(PixelProperty.Red));
-    assertEquals(150, (int) Hpixel4Values.get(PixelProperty.Red));
+    assertEquals(100, (int) hPixel1Values.get(PixelProperty.Red));
+    assertEquals(50, (int) hPixel2Values.get(PixelProperty.Red));
+    assertEquals(200, (int) hPixel3Values.get(PixelProperty.Red));
+    assertEquals(150, (int) hPixel4Values.get(PixelProperty.Red));
   }
 
   @Test
@@ -239,41 +239,41 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image1 = new Pixel[][]{
             {new Pixel(50, 50, 50, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(150, 150, 150, 255, 255),
-                    new Pixel(200, 200, 200, 255, 255)}};
+                new Pixel(200, 200, 200, 255, 255)}};
 
     this.model1.addImageToLibrary("test", image1);
     this.model1.brighten(10, "test", "brightTest");
     this.model1.brighten(-10, "test", "darkTest");
 
-    Map<PixelProperty, Integer> Bpixel1Values =
+    Map<PixelProperty, Integer> bPixel1Values =
             this.model1.getPixelInfo("brightTest", 0, 0);
-    Map<PixelProperty, Integer> Bpixel2Values =
+    Map<PixelProperty, Integer> bPixel2Values =
             this.model1.getPixelInfo("brightTest", 0, 1);
-    Map<PixelProperty, Integer> Bpixel3Values =
+    Map<PixelProperty, Integer> bPixel3Values =
             this.model1.getPixelInfo("brightTest", 1, 0);
-    Map<PixelProperty, Integer> Bpixel4Values =
+    Map<PixelProperty, Integer> bPixel4Values =
             this.model1.getPixelInfo("brightTest", 1, 1);
 
-    Map<PixelProperty, Integer> Dpixel1Values =
+    Map<PixelProperty, Integer> dPixel1Values =
             this.model1.getPixelInfo("darkTest", 0, 0);
-    Map<PixelProperty, Integer> Dpixel2Values =
+    Map<PixelProperty, Integer> dPixel2Values =
             this.model1.getPixelInfo("darkTest", 0, 1);
-    Map<PixelProperty, Integer> Dpixel3Values =
+    Map<PixelProperty, Integer> dPixel3Values =
             this.model1.getPixelInfo("darkTest", 1, 0);
-    Map<PixelProperty, Integer> Dpixel4Values =
+    Map<PixelProperty, Integer> dPixel4Values =
             this.model1.getPixelInfo("darkTest", 1, 1);
 
-    assertEquals(60, (int) Bpixel1Values.get(PixelProperty.Red));
-    assertEquals(110, (int) Bpixel2Values.get(PixelProperty.Red));
-    assertEquals(160, (int) Bpixel3Values.get(PixelProperty.Red));
-    assertEquals(210, (int) Bpixel4Values.get(PixelProperty.Red));
+    assertEquals(60, (int) bPixel1Values.get(PixelProperty.Red));
+    assertEquals(110, (int) bPixel2Values.get(PixelProperty.Red));
+    assertEquals(160, (int) bPixel3Values.get(PixelProperty.Red));
+    assertEquals(210, (int) bPixel4Values.get(PixelProperty.Red));
 
-    assertEquals(40, (int) Dpixel1Values.get(PixelProperty.Red));
-    assertEquals(90, (int) Dpixel2Values.get(PixelProperty.Red));
-    assertEquals(140, (int) Dpixel3Values.get(PixelProperty.Red));
-    assertEquals(190, (int) Dpixel4Values.get(PixelProperty.Red));
+    assertEquals(40, (int) dPixel1Values.get(PixelProperty.Red));
+    assertEquals(90, (int) dPixel2Values.get(PixelProperty.Red));
+    assertEquals(140, (int) dPixel3Values.get(PixelProperty.Red));
+    assertEquals(190, (int) dPixel4Values.get(PixelProperty.Red));
   }
 
   @Test
@@ -282,9 +282,9 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image1 = new Pixel[][]{
             {new Pixel(50, 90, 50, 255, 255),
-                    new Pixel(100, 90, 100, 255, 255)},
+                new Pixel(100, 90, 100, 255, 255)},
             {new Pixel(150, 90, 150, 255, 255),
-                    new Pixel(200, 90, 200, 255, 255)}};
+                new Pixel(200, 90, 200, 255, 255)}};
 
     this.model1.addImageToLibrary("test", image1);
     this.model1.grayscale(PixelProperty.Green, "test", "greyTest");
@@ -324,41 +324,41 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image1 = new Pixel[][]{
             {new Pixel(50, 50, 50, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(150, 150, 150, 255, 255),
-                    new Pixel(200, 200, 200, 255, 255)}};
+                new Pixel(200, 200, 200, 255, 255)}};
 
     this.model1.addImageToLibrary("test", image1);
     this.model1.applyFilter(blurKernel, "test", "blurTest");
     this.model1.applyFilter(sharpenKernel, "test", "sharpenTest");
 
-    Map<PixelProperty, Integer> Bpixel1Values =
+    Map<PixelProperty, Integer> bPixel1Values =
             this.model1.getPixelInfo("blurTest", 0, 0);
-    Map<PixelProperty, Integer> Bpixel2Values =
+    Map<PixelProperty, Integer> bPixel2Values =
             this.model1.getPixelInfo("blurTest", 0, 1);
-    Map<PixelProperty, Integer> Bpixel3Values =
+    Map<PixelProperty, Integer> bPixel3Values =
             this.model1.getPixelInfo("blurTest", 1, 0);
-    Map<PixelProperty, Integer> Bpixel4Values =
+    Map<PixelProperty, Integer> bPixel4Values =
             this.model1.getPixelInfo("blurTest", 1, 1);
 
-    Map<PixelProperty, Integer> Spixel1Values =
+    Map<PixelProperty, Integer> sPixel1Values =
             this.model1.getPixelInfo("sharpenTest", 0, 0);
-    Map<PixelProperty, Integer> Spixel2Values =
+    Map<PixelProperty, Integer> sPixel2Values =
             this.model1.getPixelInfo("sharpenTest", 0, 1);
-    Map<PixelProperty, Integer> Spixel3Values =
+    Map<PixelProperty, Integer> sPixel3Values =
             this.model1.getPixelInfo("sharpenTest", 1, 0);
-    Map<PixelProperty, Integer> Spixel4Values =
+    Map<PixelProperty, Integer> sPixel4Values =
             this.model1.getPixelInfo("sharpenTest", 1, 1);
 
-    assertEquals(56, (int) Bpixel1Values.get(PixelProperty.Red));
-    assertEquals(66, (int) Bpixel2Values.get(PixelProperty.Red));
-    assertEquals(75, (int) Bpixel3Values.get(PixelProperty.Red));
-    assertEquals(84, (int) Bpixel4Values.get(PixelProperty.Red));
+    assertEquals(56, (int) bPixel1Values.get(PixelProperty.Red));
+    assertEquals(66, (int) bPixel2Values.get(PixelProperty.Red));
+    assertEquals(75, (int) bPixel3Values.get(PixelProperty.Red));
+    assertEquals(84, (int) bPixel4Values.get(PixelProperty.Red));
 
-    assertEquals(163, (int) Spixel1Values.get(PixelProperty.Red));
-    assertEquals(200, (int) Spixel2Values.get(PixelProperty.Red));
-    assertEquals(238, (int) Spixel3Values.get(PixelProperty.Red));
-    assertEquals(255, (int) Spixel4Values.get(PixelProperty.Red));
+    assertEquals(163, (int) sPixel1Values.get(PixelProperty.Red));
+    assertEquals(200, (int) sPixel2Values.get(PixelProperty.Red));
+    assertEquals(238, (int) sPixel3Values.get(PixelProperty.Red));
+    assertEquals(255, (int) sPixel4Values.get(PixelProperty.Red));
   }
 
   @Test
@@ -379,41 +379,41 @@ public class SimpleImageProcessingModelTest {
 
     Pixel[][] image1 = new Pixel[][]{
             {new Pixel(50, 50, 50, 255, 255),
-                    new Pixel(100, 100, 100, 255, 255)},
+                new Pixel(100, 100, 100, 255, 255)},
             {new Pixel(150, 150, 150, 255, 255),
-                    new Pixel(200, 200, 200, 255, 255)}};
+                new Pixel(200, 200, 200, 255, 255)}};
 
     this.model1.addImageToLibrary("test", image1);
     this.model1.applyFilter(lumaTransformation, "test", "lumaTest");
     this.model1.applyFilter(sepiaToneTransformation, "test", "sepiaTest");
 
-    Map<PixelProperty, Integer> Lpixel1Values =
+    Map<PixelProperty, Integer> lPixel1Values =
             this.model1.getPixelInfo("lumaTest", 0, 0);
-    Map<PixelProperty, Integer> Lpixel2Values =
+    Map<PixelProperty, Integer> lPixel2Values =
             this.model1.getPixelInfo("lumaTest", 0, 1);
-    Map<PixelProperty, Integer> Lpixel3Values =
+    Map<PixelProperty, Integer> lPixel3Values =
             this.model1.getPixelInfo("lumaTest", 1, 0);
-    Map<PixelProperty, Integer> Lpixel4Values =
+    Map<PixelProperty, Integer> lPixel4Values =
             this.model1.getPixelInfo("lumaTest", 1, 1);
 
-    Map<PixelProperty, Integer> Spixel1Values =
+    Map<PixelProperty, Integer> sPixel1Values =
             this.model1.getPixelInfo("sepiaTest", 0, 0);
-    Map<PixelProperty, Integer> Spixel2Values =
+    Map<PixelProperty, Integer> sPixel2Values =
             this.model1.getPixelInfo("sepiaTest", 0, 1);
-    Map<PixelProperty, Integer> Spixel3Values =
+    Map<PixelProperty, Integer> sPixel3Values =
             this.model1.getPixelInfo("sepiaTest", 1, 0);
-    Map<PixelProperty, Integer> Spixel4Values =
+    Map<PixelProperty, Integer> sPixel4Values =
             this.model1.getPixelInfo("sepiaTest", 1, 1);
 
-    assertEquals(165, (int) Lpixel1Values.get(PixelProperty.Red));
-    assertEquals(255, (int) Lpixel2Values.get(PixelProperty.Red));
-    assertEquals(165, (int) Lpixel3Values.get(PixelProperty.Red));
-    assertEquals(255, (int) Lpixel4Values.get(PixelProperty.Red));
+    assertEquals(165, (int) lPixel1Values.get(PixelProperty.Red));
+    assertEquals(255, (int) lPixel2Values.get(PixelProperty.Red));
+    assertEquals(165, (int) lPixel3Values.get(PixelProperty.Red));
+    assertEquals(255, (int) lPixel4Values.get(PixelProperty.Red));
 
-    assertEquals(157, (int) Spixel1Values.get(PixelProperty.Red));
-    assertEquals(234, (int) Spixel2Values.get(PixelProperty.Red));
-    assertEquals(194, (int) Spixel3Values.get(PixelProperty.Red));
-    assertEquals(255, (int) Spixel4Values.get(PixelProperty.Red));
+    assertEquals(157, (int) sPixel1Values.get(PixelProperty.Red));
+    assertEquals(234, (int) sPixel2Values.get(PixelProperty.Red));
+    assertEquals(194, (int) sPixel3Values.get(PixelProperty.Red));
+    assertEquals(255, (int) sPixel4Values.get(PixelProperty.Red));
   }
 
   /**

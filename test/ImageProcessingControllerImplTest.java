@@ -607,12 +607,41 @@ public class ImageProcessingControllerImplTest {
    */
   @Test
   public void testReadFromScript() {
-    String expected = "load res/mudkip.ppm mudkip" + System.lineSeparator() +
-            "green-component mudkip mudkipGray" + System.lineSeparator() +
-            "brighten 30 mudkipGray mudkipGrayBright" + System.lineSeparator() +
-            "horizontal-flip mudkipGrayBright mudkipGrayBrightFlip" + System.lineSeparator() +
-            "vertical-flip mudkipGrayBrightFlip mudkipGrayBrightFlip" + System.lineSeparator() +
-            "save res/mudkipGrayBrightFlip.ppm mudkipGrayBrightFlip q" + System.lineSeparator();
+    String expected = "load mudkip.ppm mudkip" + System.lineSeparator() +
+            "sharpen mudkip mudkipSharp" + System.lineSeparator() +
+            "sharpen mudkipSharp mudkipSharp" + System.lineSeparator() +
+            "red-component mudkip mudkipGrayRed" + System.lineSeparator() +
+            "green-component mudkip mudkipGrayGreen" + System.lineSeparator() +
+            "blue-component mudkip mudkipGrayBlue" + System.lineSeparator() +
+            "luma-component mudkip mudkipGrayLuma" + System.lineSeparator() +
+            "value-component mudkip mudkipGrayValue" + System.lineSeparator() +
+            "intensity-component mudkip mudkipGrayIntensity" + System.lineSeparator() +
+            System.lineSeparator() +
+            "brighten 50 mudkip mudkipBright" + System.lineSeparator() +
+            "horizontal-flip mudkip mudkipFlip1" + System.lineSeparator() +
+            "vertical-flip mudkip mudkipFlip2" + System.lineSeparator() +
+            System.lineSeparator() +
+            "blur mudkip mudkipBlur" + System.lineSeparator() +
+            "blur mudkipBlur mudkipBlur" + System.lineSeparator() +
+            "sepia-tone mudkip mudkipSepia" + System.lineSeparator() +
+            "color-transform-luma_grayscale mudkip mudkipGrayLuma2" + System.lineSeparator() +
+            System.lineSeparator() +
+            System.lineSeparator() +
+            "save mudkipSharp.png mudkipSharp" + System.lineSeparator() +
+            "save mudkipGrayRed.jpg mudkipGrayRed" + System.lineSeparator() +
+            "save mudkipGrayGreen.bmp mudkipGrayGreen" + System.lineSeparator() +
+            "save mudkipGrayBlue.ppm mudkipGrayBlue" + System.lineSeparator() +
+            "save mudkipGrayLuma.jpeg mudkipGrayLuma" + System.lineSeparator() +
+            "save mudkipGrayValue.png mudkipGrayValue" + System.lineSeparator() +
+            "save mudkipGrayIntensity.jpg mudkipGrayIntensity" + System.lineSeparator() +
+            "save mudkipBlur.png mudkipBlur" + System.lineSeparator() +
+            "save mudkipBright.bmp mudkipBright" + System.lineSeparator() +
+            "save mudkipFlip1.png mudkipFlip1" + System.lineSeparator() +
+            "save mudkipFlip2.png mudkipFlip2" + System.lineSeparator() +
+            "save mudkipSepia.jpg mudkipSepia" + System.lineSeparator() +
+            "save mudkipGrayLuma2.png mudkipGrayLuma2" + System.lineSeparator() +
+            System.lineSeparator() +
+            "q" + System.lineSeparator();
     String actual = ImageProcessingProgram.readScript("res/script.txt");
 
     assertEquals(expected, actual);
@@ -646,9 +675,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(82, 212, 120, 255, 255),
-                    new Pixel(199, 34, 187, 255, 255)},
+                new Pixel(199, 34, 187, 255, 255)},
             {new Pixel(50, 241, 244, 255, 255),
-                    new Pixel(241, 222, 45, 255, 255)}};
+                new Pixel(241, 222, 45, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -681,9 +710,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(213, 213, 213, 255, 255),
-                    new Pixel(201, 201, 201, 255, 255)},
+                new Pixel(201, 201, 201, 255, 255)},
             {new Pixel(80, 80, 80, 255, 255),
-                    new Pixel(178, 178, 178, 255, 255)}};
+                new Pixel(178, 178, 178, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 

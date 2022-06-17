@@ -1,6 +1,35 @@
-load res/mudkip.ppm mudkip
-green-component mudkip mudkipGray
-brighten 30 mudkipGray mudkipGrayBright
-horizontal-flip mudkipGrayBright mudkipGrayBrightFlip
-vertical-flip mudkipGrayBrightFlip mudkipGrayBrightFlip
-save res/mudkipGrayBrightFlip.ppm mudkipGrayBrightFlip q
+load mudkip.ppm mudkip
+sharpen mudkip mudkipSharp
+sharpen mudkipSharp mudkipSharp
+red-component mudkip mudkipGrayRed
+green-component mudkip mudkipGrayGreen
+blue-component mudkip mudkipGrayBlue
+luma-component mudkip mudkipGrayLuma
+value-component mudkip mudkipGrayValue
+intensity-component mudkip mudkipGrayIntensity
+
+brighten 50 mudkip mudkipBright
+horizontal-flip mudkip mudkipFlip1
+vertical-flip mudkip mudkipFlip2
+
+blur mudkip mudkipBlur
+blur mudkipBlur mudkipBlur
+sepia-tone mudkip mudkipSepia
+color-transform-luma_grayscale mudkip mudkipGrayLuma2
+
+
+save mudkipSharp.png mudkipSharp
+save mudkipGrayRed.jpg mudkipGrayRed
+save mudkipGrayGreen.bmp mudkipGrayGreen
+save mudkipGrayBlue.ppm mudkipGrayBlue
+save mudkipGrayLuma.jpeg mudkipGrayLuma
+save mudkipGrayValue.png mudkipGrayValue
+save mudkipGrayIntensity.jpg mudkipGrayIntensity
+save mudkipBlur.png mudkipBlur
+save mudkipBright.bmp mudkipBright
+save mudkipFlip1.png mudkipFlip1
+save mudkipFlip2.png mudkipFlip2
+save mudkipSepia.jpg mudkipSepia
+save mudkipGrayLuma2.png mudkipGrayLuma2
+
+q

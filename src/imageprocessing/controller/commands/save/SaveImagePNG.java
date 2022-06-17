@@ -11,11 +11,8 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
 /**
- * Represents a function that can save an image as a .png, .bmp, or another similar image type
+ * Represents a function that can save an image as a .png, or another similar image type
  * WHICH SUPPORTS TRANSPARENCY.
- * <p>
- * Note that this .bmp does not currently use this save method because transparancy is not
- * currently supported when saving .bmp images.
  */
 public class SaveImagePNG implements ISaveFile {
 

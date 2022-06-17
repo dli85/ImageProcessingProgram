@@ -20,16 +20,15 @@ public class Pixel {
   private int luma;
 
   /**
-   * The pixel constructor. Takes in the values and sets the red/green/blue/luma accordingly.
+   * Pixel constructor: Creates a pixel given argb and max values, calculates the other
+   * properties.
+   *
    * @param red The amount of red.
    * @param green The amount of green.
    * @param blue The amount of blue.
-   * @param maxVal The max amount.
+   * @param maxVal The max value for a color channel.
+   * @param alpha The transparency amount.
    */
-//  public Pixel(int red, int green, int blue, int maxVal) {
-//    this(red, green, blue, maxVal, maxVal);
-//  }
-
   public Pixel(int red, int green, int blue, int maxVal, int alpha) {
 
     this.red = red;

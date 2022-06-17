@@ -108,7 +108,7 @@ Example:
 
 ### Color Transformation
 
-color-transform-{luma_grayscale} [image-name] [dest-image-name]: Performs a color
+color-transform-{linear system} [image-name] [dest-image-name]: Performs a color
 transformation on an image using a linear system. Supported linear systems are
 luma_grayscale (e.g. color-transform-luma_grayscale).
 

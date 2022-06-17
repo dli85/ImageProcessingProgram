@@ -1,6 +1,6 @@
 package imageprocessing.controller.commands.load;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,9 +14,12 @@ import imageprocessing.model.Pixel;
  * Represents a function object that loads a .png, .bmp or other similar image THAT SUPPORTS
  * TRANSPARENCY
  */
-public class LoadImagePNGandBMP implements ILoadFile {
+public class LoadImagePNGAndBMP implements ILoadFile {
 
-  public LoadImagePNGandBMP() {
+  /**
+   * Empty constructor. We only need to support loadFile.
+   */
+  public LoadImagePNGAndBMP() {
     //Empty constructor
   }
 
