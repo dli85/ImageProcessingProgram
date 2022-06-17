@@ -179,12 +179,12 @@ will close after the script is done running.
 
 TODO:
 1. Tests
-   1. Test blur, sharpen, and all color transformation commands
-   2. Test loading from .jpg/.jpeg/.png/.bmp
-   3. Test saving to a .jpg/.jpeg/.png/.bmp
-   4. Combinations + tests from previous self eval
-2. Color transformation
-3. Saving
+   1. Test all public methods in model
+   2. Test all exceptions in public methods
+      1. For applyFilter, test a kernel that is null and a kernel that 
+      is not an odd square matrix
+      2. For colorTransformation, test a kernel that is null and a kernel
+      that is not a 3x3 matrix
 4. Include new commands on the script
 
 # Image Sources

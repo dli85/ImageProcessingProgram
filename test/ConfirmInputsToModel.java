@@ -1,5 +1,6 @@
 import java.util.Map;
 
+import imageprocessing.model.FlipDirection;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.Pixel;
 
@@ -19,6 +20,36 @@ public class ConfirmInputsToModel implements ImageProcessingModel {
           throws IllegalArgumentException {
     log.append(String.format("[imageName: %s, width: %d, height, %d]\n", imageName,
             imgGrid[0].length, imgGrid.length));
+  }
+
+  @Override
+  public void flip(FlipDirection f, String imageName, String newName)
+          throws IllegalArgumentException {
+    //Do nothing, this is a mock.
+  }
+
+  @Override
+  public void brighten(int amount, String imageName, String newName)
+          throws IllegalArgumentException {
+    //Do nothing, this is a mock.
+  }
+
+  @Override
+  public void grayscale(PixelProperty p, String imageName, String newName)
+          throws IllegalArgumentException {
+    //Do nothing, this is a mock.
+  }
+
+  @Override
+  public void applyFilter(double[][] kernel, String imageName, String newName)
+          throws IllegalArgumentException {
+    //Do nothing, this is a mock.
+  }
+
+  @Override
+  public void colorTransformation(double[][] transformation, String imageName, String newName)
+          throws IllegalArgumentException {
+    //Do nothing, this is a mock.
   }
 
   @Override

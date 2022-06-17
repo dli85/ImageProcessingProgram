@@ -29,26 +29,31 @@ public class SaveImagePNG implements ISaveFile {
   @Override
   public void saveFile(ImageProcessingModel model, String path,
                        String imageName, String extension) throws IllegalStateException {
-    int height = model.getHeight(imageName);
-    int width = model.getWidth(imageName);
+    BufferedImage image;
 
-    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    try {
+      int height = model.getHeight(imageName);
+      int width = model.getWidth(imageName);
 
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        Map<PixelProperty, Integer> properties =
-                model.getPixelInfo(imageName, i, j);
+      image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        int red = properties.get(PixelProperty.Red);
-        int green = properties.get(PixelProperty.Green);
-        int blue = properties.get(PixelProperty.Blue);
-        int alpha = properties.get(PixelProperty.Alpha);
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+          Map<PixelProperty, Integer> properties =
+                  model.getPixelInfo(imageName, i, j);
 
-        int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
-        image.setRGB(j, i, argb);
+          int red = properties.get(PixelProperty.Red);
+          int green = properties.get(PixelProperty.Green);
+          int blue = properties.get(PixelProperty.Blue);
+          int alpha = properties.get(PixelProperty.Alpha);
+
+          int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
+          image.setRGB(j, i, argb);
+        }
       }
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException("Command failed");
     }
-
     File toBeWritten = new File(path);
 
     try {

@@ -1,7 +1,8 @@
 package imageprocessing.controller;
 
 /**
- * Represents a utils class. Contains predefined constants and variables
+ * Represents a utils class. Contains predefined constants and variables. This interface is
+ * package private.
  */
 interface Utils {
 
