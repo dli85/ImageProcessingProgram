@@ -13,6 +13,9 @@ import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 /**
  * Represents a function that can save an image as a .png, .bmp, or another similar image type
  * WHICH SUPPORTS TRANSPARENCY.
+ * <p>
+ * Note that this .bmp does not currently use this save method because transparancy is not
+ * currently supported when saving .bmp images.
  */
 public class SaveImagePNG implements ISaveFile {
 
@@ -22,6 +25,7 @@ public class SaveImagePNG implements ISaveFile {
   public SaveImagePNG() {
     //Empty constructor. We only need to support saveFile
   }
+
   @Override
   public void saveFile(ImageProcessingModel model, String path,
                        String imageName, String extension) throws IllegalStateException {

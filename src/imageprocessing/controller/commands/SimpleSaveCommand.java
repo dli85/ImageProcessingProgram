@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import imageprocessing.controller.commands.save.ISaveFile;
-import imageprocessing.controller.commands.save.SaveImageJPG;
+import imageprocessing.controller.commands.save.SaveImageJPGandBMP;
 import imageprocessing.controller.commands.save.SaveImagePNG;
 import imageprocessing.controller.commands.save.SaveImagePPM;
 import imageprocessing.model.ImageProcessingModel;
@@ -33,10 +33,10 @@ public class SimpleSaveCommand implements UserCommand {
   // Initializes the map.
   private void populateSaveCommands() {
     this.saveCommands.put(".ppm", new SaveImagePPM());
-    this.saveCommands.put(".jpg", new SaveImageJPG());
-    this.saveCommands.put(".jpeg", new SaveImageJPG());
+    this.saveCommands.put(".jpg", new SaveImageJPGandBMP());
+    this.saveCommands.put(".jpeg", new SaveImageJPGandBMP());
     this.saveCommands.put(".png", new SaveImagePNG());
-    this.saveCommands.put(".bmp", new SaveImageJPG());
+    this.saveCommands.put(".bmp", new SaveImageJPGandBMP());
   }
 
   @Override
