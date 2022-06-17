@@ -175,5 +175,11 @@ https://oyster.ignimgs.com/mediawiki/apis.ign.com/pokedex/c/ce/Brock_Mudkip.png?
 
 https://www.ign.com/wikis/pokedex/Mudkip
 
+Our cute Hamster:
+
+![image](https://user-images.githubusercontent.com/91173669/174334902-ad430eed-bcb6-49f1-90fb-7992cf82da9f.png)
+
+https://www.vexels.com/png-svg/preview/230686/cute-hamster-flat
+
 
 Our solid-square and 2x2 square images are self-made using gimp and intended for testing.
