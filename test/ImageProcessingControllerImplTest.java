@@ -675,9 +675,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(82, 212, 120, 255, 255),
-                new Pixel(199, 34, 187, 255, 255)},
+                    new Pixel(199, 34, 187, 255, 255)},
             {new Pixel(50, 241, 244, 255, 255),
-                new Pixel(241, 222, 45, 255, 255)}};
+                    new Pixel(241, 222, 45, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -710,9 +710,9 @@ public class ImageProcessingControllerImplTest {
 
     Pixel[][] expectedImage = new Pixel[][]{
             {new Pixel(213, 213, 213, 255, 255),
-                new Pixel(201, 201, 201, 255, 255)},
+                    new Pixel(201, 201, 201, 255, 255)},
             {new Pixel(80, 80, 80, 255, 255),
-                new Pixel(178, 178, 178, 255, 255)}};
+                    new Pixel(178, 178, 178, 255, 255)}};
 
     model1.addImageToLibrary("expected", expectedImage);
 
@@ -1569,5 +1569,92 @@ public class ImageProcessingControllerImplTest {
             "Type your instruction:\n";
 
     assertEquals(result, log.toString());
+  }
+
+  @Test
+  public void testSaveBMPAsJPG() { // saves bmp as a jpg
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.bmp square1 \n" +
+                    "save res/gimp-2x2-test.jpg square1 \n" +
+                    "load res/gimp-2x2-test.jpg square2 q"));
+    controller.start();
+
+    // since JPG uses lossy compression, some RGB components will be skewed/lost.
+    // to test JPG equivalence, we will assert what we know for sure will remain constant.
+    assertEquals(0, model1.getWidth("square1")
+            - model1.getWidth("square2"));
+    assertEquals(0, model1.getHeight("square1")
+            - model1.getHeight("square2"));
+
+    assertEquals(255, (int) model1.getPixelInfo("square2", 1, 1)
+            .get(PixelProperty.MaxValue));
+
+
+    for (int i = 0; i < model1.getHeight("square2"); i++) {
+      for (int j = 0; j < model1.getWidth("square2"); j++) {
+        Map<PixelProperty, Integer> img1Values = model1.getPixelInfo("square1", i, j);
+        Map<PixelProperty, Integer> img2Values = model1.getPixelInfo("square2", i, j);
+
+        // We check that every pixel value is within 20%
+        for (PixelProperty p : img1Values.keySet()) {
+          assertEquals(true, (img1Values.get(p) - img2Values.get(p)
+                  * 1.0) / Math.max(img2Values.get(p), img1Values.get(p)) <= .2);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testSaveJPGAsPNG() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.jpg square1 \n" +
+                    "save res/gimp-2x2-test.png square1 \n" +
+                    "load res/gimp-2x2-test.png square2 q"));
+    controller.start();
+
+    // since JPG uses lossy compression, some RGB components will be skewed/lost.
+    // to test JPG equivalence, we will assert what we know for sure will remain constant.
+    assertEquals(0, model1.getWidth("square1")
+            - model1.getWidth("square2"));
+    assertEquals(0, model1.getHeight("square1")
+            - model1.getHeight("square2"));
+
+    assertEquals(255, (int) model1.getPixelInfo("square2", 1, 1)
+            .get(PixelProperty.MaxValue));
+
+
+    for (int i = 0; i < model1.getHeight("square2"); i++) {
+      for (int j = 0; j < model1.getWidth("square2"); j++) {
+        Map<PixelProperty, Integer> img1Values = model1.getPixelInfo("square1", i, j);
+        Map<PixelProperty, Integer> img2Values = model1.getPixelInfo("square2", i, j);
+
+        // We check that every pixel value is within 20%
+        for (PixelProperty p : img1Values.keySet()) {
+          assertEquals(true, (img1Values.get(p) - img2Values.get(p)
+                  * 1.0) / Math.max(img2Values.get(p), img1Values.get(p)) <= .2);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testSavePNGAsPPM() {
+    SimpleImageProcessingModel model1 = new SimpleImageProcessingModel();
+
+    ImageProcessingController controller = new ImageProcessingControllerImpl(
+            model1, new ImageProcessingViewImpl(model1, new StringBuilder()),
+            new StringReader("load res/gimp-2x2.png square1 \n" +
+                    "save res/gimp-2x2-test.ppm square1 \n" +
+                    "load res/gimp-2x2-test.ppm square2 q"));
+    controller.start();
+
+    testTwoImagesAreTheSame(model1, "square1", "square2");
+    assertEquals(2, model1.getHeight("square1"));
   }
 }
