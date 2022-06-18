@@ -14,6 +14,8 @@ public interface ISaveFile {
    * @param model     the inputted Image Processing model
    * @param path      the inputted path name
    * @param imageName the inputted imageName
+   * @param extension The file extension
+   * @param biType    The BufferedImage type to use, if applicable.
    * @throws IllegalStateException If saving the file fails
    */
   void saveFile(ImageProcessingModel model, String path, String imageName, String extension,

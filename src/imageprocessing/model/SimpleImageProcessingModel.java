@@ -11,7 +11,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
   private final Map<String, Pixel[][]> imageCollection;
 
   /**
-   * Default constructor: Creates a default model. The image collection is initalized.
+   * Default constructor: Creates a default model. The image collection is initialized.
    */
   public SimpleImageProcessingModel() {
     imageCollection = new HashMap<String, Pixel[][]>();
@@ -235,8 +235,6 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
 
   //Creates a copy of certain image. Assumes the image is valid.
   private Pixel[][] getCopy(String imageName) {
-
-    //Pixel[][] og = this.imageCollection.get(imageName);
     Pixel[][] result = new Pixel[this.getHeight(imageName)][this.getWidth(imageName)];
 
     for (int i = 0; i < result.length; i++) {
@@ -255,6 +253,8 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     return result;
   }
 
+  //Applies a filter on one pixel's specific color channel using its neighbors. If the filter
+  // overlaps non-existent pixels, those are ignored.
   private int applyFilterAtPosition(PixelProperty p, double[][] kernel,
                                     Pixel[][] imgGrid, String imageName,
                                     int row, int col) {
@@ -278,7 +278,8 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     return result < 0 ? 0 : Math.min(255, result);
   }
 
-
+  //Applies a transformation on rgb values and returns a new pixel containg the result.
+  // Assumes the double[][] is 3x3.
   private Pixel applyTransformation(double[][] transformation,
                                     int red, int green, int blue, int max, int alpha) {
 

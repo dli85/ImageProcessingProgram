@@ -15,7 +15,7 @@ import imageprocessing.model.ImageProcessingModel;
 public class SimpleSaveCommand implements UserCommand {
   private String path;
   private String imageName;
-  private Map<String, ISaveFile> saveCommands;
+  private final Map<String, ISaveFile> saveCommands;
 
   /**
    * Save command constructor. Initializes the necessary fields.
