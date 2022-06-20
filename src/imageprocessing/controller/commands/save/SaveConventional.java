@@ -59,7 +59,7 @@ public class SaveConventional implements ISaveFile {
         }
       }
     } catch (IllegalArgumentException e) {
-      throw new IllegalStateException("Command failed");
+      throw new IllegalStateException(e.getMessage());
     }
 
 

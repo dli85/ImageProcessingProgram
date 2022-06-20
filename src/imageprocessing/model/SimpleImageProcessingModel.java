@@ -32,7 +32,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
       for (int j = 0; j < imgGrid[i].length; j++) {
 
         if (imgGrid[i][j] == null) {
-          throw new IllegalArgumentException("imgGrid cannot contain null pixels");
+          throw new IllegalArgumentException("The pixel grid cannot contain null pixels");
         } else {
           Map<PixelProperty, Integer> values = imgGrid[i][j].getPixelInfo();
           temp[i][j] = new Pixel(values.get(PixelProperty.Red), values.get(PixelProperty.Green),
@@ -221,8 +221,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
   // Checks if an image and row or col is valid, throws IllegalArgumentException otherwise.
   private void checkInBounds(String imageName, int row, int col) throws IllegalArgumentException {
     if (!this.imageCollection.containsKey(imageName.toLowerCase())) {
-
-      throw new IllegalArgumentException("Image not found");
+      throw new IllegalArgumentException("Model does not contain this image");
     }
 
     //This will NOT throw an exception if row and col == 0. So we use row, col = 0 when

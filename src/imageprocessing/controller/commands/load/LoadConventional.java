@@ -31,7 +31,7 @@ public class LoadConventional implements ILoadFile {
     try {
       image = ImageIO.read(new FileInputStream(path));
     } catch (IOException e) {
-      throw new IllegalStateException("File not able to be read");
+      throw new IllegalStateException("The specified file was not found");
     }
 
 

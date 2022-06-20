@@ -26,7 +26,7 @@ public class LoadImagePPM implements ILoadFile {
       try {
         scanner = new Scanner(new FileInputStream(path));
       } catch (FileNotFoundException e) {
-        throw new IllegalArgumentException("Unable to read from file");
+        throw new IllegalArgumentException("The specified file was not found");
       }
 
       StringBuilder builder = new StringBuilder();
@@ -44,7 +44,7 @@ public class LoadImagePPM implements ILoadFile {
       token = scanner.next();
 
       if (!token.equals("P3")) {
-        throw new IllegalArgumentException("Unable to read from file");
+        throw new IllegalArgumentException("Invalid .ppm file");
       }
 
       int width = scanner.nextInt();
@@ -71,7 +71,7 @@ public class LoadImagePPM implements ILoadFile {
 
       model.addImageToLibrary(imageName, pixelGrid);
     } catch (IllegalArgumentException e) {
-      throw new IllegalStateException("Command was not able to be executed");
+      throw new IllegalStateException(e.getMessage());
     }
   }
 }

@@ -31,7 +31,7 @@ public class SaveImagePPM implements ISaveFile {
       try {
         out = new FileOutputStream(output);
       } catch (FileNotFoundException e) {
-        throw new IllegalArgumentException("Failed to save file");
+        throw new IllegalArgumentException("Specified file was not found");
       }
 
       try {
@@ -64,7 +64,7 @@ public class SaveImagePPM implements ISaveFile {
         throw new IllegalArgumentException("Failed to write to output");
       }
     } catch (IllegalArgumentException e) {
-      throw new IllegalStateException("Command was not able to be executed");
+      throw new IllegalStateException(e.getMessage());
     }
   }
 }
