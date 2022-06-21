@@ -63,4 +63,10 @@ public interface IGraphicalView {
    * @return The path that the user chose.
    */
   String showSaveFileChooser();
+
+  /**
+   * Updates the histogram to display data about an image.
+   * @param imageName The name of the image who's data should be displayed.
+   */
+  void updateHistogram(String imageName);
 }

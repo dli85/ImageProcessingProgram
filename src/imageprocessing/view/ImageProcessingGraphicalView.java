@@ -5,12 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import imageprocessing.model.ImageProcessingModelState;
+import imageprocessing.model.ImageProcessingModelState.PixelProperty;
+
 
 /**
  * Represents the graphical view (GUI) implementation for a image processing program.
@@ -19,12 +22,13 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
 
   private final ImageProcessingModelState model;
   private final ImagePanel imagePanel;
-  private final JPanel bottomPanel;
   private final JButton commandButton;
   private final JTextField inputTextField;
+  private final JPanel topPanel;
   private final JButton quitButton;
   private final JButton loadFileButton;
   private final JButton saveFileButton;
+  private final HistogramPanel histogramPanel;
 
   /**
    * Constructor for a gui view. Takes in a model state to get info about the images.
@@ -42,39 +46,53 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     this.model = model;
 
     this.setTitle("Image Processing Program");
-    this.setSize(580, 580);
+    this.setSize(1075, 560);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
     this.setLayout(new BorderLayout());
 
+    this.topPanel = new JPanel();
+    this.topPanel.setPreferredSize(new Dimension(this.getWidth(), 400));
+    this.topPanel.setLayout(new GridLayout(1, 0));
+
     this.imagePanel = new ImagePanel();
     this.imagePanel.setLayout(new GridLayout());
-    this.imagePanel.setPreferredSize(new Dimension(480, 420));
-    this.add(this.imagePanel);
+    //this.imagePanel.setPreferredSize(new Dimension(480, 420));
+    //this.add(this.imagePanel);
 
-    this.bottomPanel = new JPanel();
-    this.bottomPanel.setLayout(new FlowLayout());
-    this.add(this.bottomPanel, BorderLayout.SOUTH);
+    this.histogramPanel = new HistogramPanel(525, 480);
+    this.histogramPanel.setPreferredSize(new Dimension(525, 480));
+
+    topPanel.add(this.imagePanel);
+    JScrollPane histogramScroll = new JScrollPane(this.histogramPanel);
+    //histogramScroll.setPreferredSize(new Dimension(600, 580));
+    topPanel.add(histogramScroll);
+    topPanel.setVisible(true);
+    this.add(this.topPanel);
+
+    JPanel bottomPanel = new JPanel();
+    bottomPanel.setLayout(new FlowLayout());
+    this.add(bottomPanel, BorderLayout.SOUTH);
 
     this.inputTextField = new JTextField(18);
-    this.bottomPanel.add(inputTextField);
+    bottomPanel.add(inputTextField);
 
     this.commandButton = new JButton("Execute");
-    this.bottomPanel.add(this.commandButton);
+    bottomPanel.add(this.commandButton);
 
     this.loadFileButton = new JButton("Load file");
-    this.bottomPanel.add(this.loadFileButton);
+    bottomPanel.add(this.loadFileButton);
 
     this.saveFileButton = new JButton(("Save file"));
-    this.bottomPanel.add(this.saveFileButton);
+    bottomPanel.add(this.saveFileButton);
 
 
     this.quitButton = new JButton("Quit");
     this.quitButton.addActionListener((ActionEvent e) -> {
       System.exit(0);
     });
-    this.bottomPanel.add(this.quitButton);
+    bottomPanel.add(this.quitButton);
 
   }
 
@@ -83,6 +101,8 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
   public void makeVisible() {
     this.setVisible(true);
     this.imagePanel.setVisible(true);
+    this.histogramPanel.setVisible(true);
+
   }
 
   @Override
@@ -105,7 +125,7 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     int width = this.model.getWidth(name);
     int height = this.model.getHeight(name);
 
-    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 
     for(int i = 0; i < height; i++) {
       for(int j = 0; j < width; j++) {
@@ -171,6 +191,36 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     } else {
       return "";
     }
+
+  }
+
+  @Override
+  public void updateHistogram(String imageName) {
+    this.histogramPanel.reset();
+
+    Map<Integer, Integer> redComponents = new HashMap<Integer, Integer>();
+    Map<Integer, Integer> greenComponents = new HashMap<Integer, Integer>();
+    Map<Integer, Integer> blueComponents = new HashMap<Integer, Integer>();
+    Map<Integer, Integer> intensityComponents = new HashMap<Integer, Integer>();
+
+    int width = model.getWidth(imageName);
+    int height = model.getHeight(imageName);
+
+    for(int i = 0; i < height; i++) {
+      for(int j = 0; j < width; j++) {
+        Map<PixelProperty, Integer> values =
+                this.model.getPixelInfo(imageName, i, j);
+
+        //Increment the value in the map by 1 if it exists, otherwise set it to 1.
+        redComponents.merge(values.get(PixelProperty.Red), 1, Integer::sum);
+        greenComponents.merge(values.get(PixelProperty.Green), 1, Integer::sum);
+        blueComponents.merge(values.get(PixelProperty.Blue), 1, Integer::sum);
+        intensityComponents.merge(values.get(PixelProperty.Intensity), 1, Integer::sum);
+      }
+    }
+
+    this.histogramPanel.addCounts(redComponents, greenComponents, blueComponents,
+            intensityComponents);
 
   }
 

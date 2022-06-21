@@ -18,7 +18,6 @@ import imageprocessing.view.IGraphicalView;
 public class GraphicalController implements ImageProcessingController, ActionListener {
   private final ImageProcessingModel model;
   private final IGraphicalView view;
-
   private String currentImage;
 
 
@@ -55,16 +54,21 @@ public class GraphicalController implements ImageProcessingController, ActionLis
 
         try {
           this.currentImage = this.processCommand(command);
+
         } catch (IllegalStateException | IllegalArgumentException ex) {
           this.view.showMessageWindow("Input error",
                   "The command failed for the following" +
                           " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
 
-        if (this.currentImage != null) {
+        //If the current image was updated, it should be a valid image as the try-catch must have
+        //passed to get to this point.
+        if(!this.currentImage.equals("")) {
           this.view.setImage(this.currentImage);
+          this.view.updateHistogram(this.currentImage);
           this.view.refresh();
         }
+
         break;
       case "load file":
         this.view.showLoadFileChooser();
@@ -175,7 +179,7 @@ public class GraphicalController implements ImageProcessingController, ActionLis
         case "sepia-tone":
           imageName = readFromInput(scanner);
           newName = readFromInput(scanner);
-          this.model.applyFilter(Utils.sepiaToneTransformation, imageName, newName);
+          this.model.colorTransformation(Utils.sepiaToneTransformation, imageName, newName);
           break;
         case "color-transformation-luma_grayscale":
           imageName = readFromInput(scanner);

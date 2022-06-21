@@ -476,7 +476,7 @@ public class SimpleImageProcessingModelTest {
     try {
       this.model1.addImageToLibrary("test", new Pixel[10][10]);
     } catch (IllegalArgumentException e) {
-      assertEquals("imgGrid cannot contain null pixels", e.getMessage());
+      assertEquals("The pixel grid cannot contain null pixels", e.getMessage());
 
     }
 

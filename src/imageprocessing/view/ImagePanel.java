@@ -2,14 +2,9 @@ package imageprocessing.view;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import imageprocessing.model.Pixel;
 
 /**
  *
@@ -45,12 +40,6 @@ public class ImagePanel extends JPanel {
    * Sets an image to the ImagePanel. Uses a bi.
    */
   public void setImage(BufferedImage bi) {
-//    try  {
-//      FileOutputStream toBeWritten = new FileOutputStream("res/guiTest.png");
-//      ImageIO.write(bi, "PNG", toBeWritten);
-//    } catch (IOException e) {
-//      //now
-//    }
 
     ImageIcon imageIcon = new ImageIcon(bi);
     this.imageLabel.setIcon(imageIcon);

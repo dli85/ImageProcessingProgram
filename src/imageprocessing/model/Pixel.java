@@ -39,7 +39,7 @@ public class Pixel {
     this.alpha = alpha;
 
     this.value = Math.max(this.red, Math.max(this.green, this.blue));
-    this.intensity = (this.red + this.green + this.blue) / 3;
+    this.intensity = (int) Math.round((this.red + this.green + this.blue) / 3.0);
     this.luma = (int) Math.round(0.2126 * this.red + 0.7152 * this.green + 0.0722 * this.blue);
 
   }
