@@ -13,6 +13,7 @@ import imageprocessing.controller.commands.UserCommand;
 import imageprocessing.model.FlipDirection;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
+import imageprocessing.view.ChooserState;
 import imageprocessing.view.IGraphicalView;
 
 public class GraphicalController implements ImageProcessingController, ActionListener {
@@ -37,6 +38,7 @@ public class GraphicalController implements ImageProcessingController, ActionLis
 
     this.view = view;
     this.model = model;
+    this.currentImage = "";
   }
 
   @Override
@@ -50,37 +52,46 @@ public class GraphicalController implements ImageProcessingController, ActionLis
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand().toLowerCase()) {
       case "execute":
-        String command = view.getCommand();
-
-        try {
-          this.currentImage = this.processCommand(command);
-
-        } catch (IllegalStateException | IllegalArgumentException ex) {
-          this.view.showMessageWindow("Input error",
-                  "The command failed for the following" +
-                          " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+        String option = view.getOption();
+        if (!this.currentImage.equals("")) {
+          try {
+            this.processCommand(option);
+            System.out.println(this.currentImage);
+            updateGUI();
+          } catch (IllegalStateException | IllegalArgumentException ex) {
+            this.view.showMessageWindow("Input error",
+                    "The operation failed for the following" +
+                            " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+          }
+        } else {
+          this.view.showMessageWindow("Operation failed",
+                  "The operation failed for the following" +
+                          " reason:\nNo image loaded", JOptionPane.ERROR_MESSAGE);
         }
-
-        //If the current image was updated, it should be a valid image as the try-catch must have
-        //passed to get to this point.
-        if(!this.currentImage.equals("")) {
-          this.view.setImage(this.currentImage);
-          this.view.updateHistogram(this.currentImage);
-          this.view.refresh();
-        }
-
         break;
       case "load file":
-        this.view.showLoadFileChooser();
+        String path = this.view.showFileChooser(ChooserState.Open);
+        if (!path.equals("")) {
+          String imageName = path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf("."));
+          try {
+            UserCommand load = new SimpleLoadCommand(path, imageName);
+            load.doCommand(this.model);
+            this.currentImage = imageName;
+            updateGUI();
+          } catch (IllegalStateException ex) {
+            this.view.showMessageWindow("Loading error",
+                    "The command failed for the following" +
+                            " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+          }
+        }
         break;
       case "save file":
-
-        if(this.currentImage == null) {
+        if (this.currentImage == null) {
           this.view.showMessageWindow("Saving error",
                   "There is no current image to save right now",
                   JOptionPane.WARNING_MESSAGE);
         } else {
-          String savePath = this.view.showSaveFileChooser();
+          String savePath = this.view.showFileChooser(ChooserState.Save);
           if (!savePath.equals("")) {
             UserCommand save = new SimpleSaveCommand(savePath, this.currentImage);
             try {
@@ -102,105 +113,72 @@ public class GraphicalController implements ImageProcessingController, ActionLis
 
   //Processes a command and does the appropriate action
   //Returns the name of the image that should be shown.
-  private String processCommand(String input) throws IllegalArgumentException {
-    Scanner scanner = new Scanner(input);
-    UserCommand command = null;
-    String path;
-    String imageName = "";
-    String newName = null; //New name also functions as what image should be shown
+  private void processCommand(String option) throws IllegalArgumentException {
 
-    while (scanner.hasNext()) {
 
-      String next = scanner.next().toLowerCase();
+    //String next = scanner.next().toLowerCase();
 
-      switch (next) {
-        case "load":
-          path = readFromInput(scanner);
-          imageName = readFromInput(scanner);
-          newName = imageName;
-          command = new SimpleLoadCommand(path, imageName);
-          break;
-        case "brighten":
-          int amount = readIntFromInput(scanner);
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.brighten(amount, imageName, newName);
-          break;
-        case "red-component":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.grayscale(PixelProperty.Red, imageName, newName);
-          break;
-        case "green-component":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.grayscale(PixelProperty.Green, imageName, newName);
-          break;
-        case "blue-component":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.grayscale(PixelProperty.Blue, imageName, newName);
-          break;
-        case "value-component":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.grayscale(PixelProperty.Value, imageName, newName);
-          break;
-        case "intensity-component":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.grayscale(PixelProperty.Intensity, imageName, newName);
-          break;
-        case "luma-component":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.grayscale(PixelProperty.Luma, imageName, newName);
-          break;
-        case "horizontal-flip":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.flip(FlipDirection.Horizontal, imageName, newName);
-          break;
-        case "vertical-flip":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.flip(FlipDirection.Vertical, imageName, newName);
-          break;
-        case "blur":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.applyFilter(Utils.blurKernel, imageName, newName);
-          break;
-        case "sharpen":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.applyFilter(Utils.sharpenKernel, imageName, newName);
-          break;
-        case "sepia-tone":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.colorTransformation(Utils.sepiaToneTransformation, imageName, newName);
-          break;
-        case "color-transformation-luma_grayscale":
-          imageName = readFromInput(scanner);
-          newName = readFromInput(scanner);
-          this.model.colorTransformation(Utils.lumaTransformation, imageName, newName);
-          break;
-        default:
-          throw new IllegalArgumentException("Unrecognized command");
-      }
+    switch (option) {
+      case "brighten":
+        String userInput = this.view.showInputDialogue("Enter an amount to brighten by:");
+        int amount;
+        try {
+          amount = Integer.parseInt(userInput);
+        } catch (NumberFormatException e) {
+          throw new IllegalArgumentException("Unrecognized input");
+        }
+        this.model.brighten(amount, this.currentImage, this.currentImage);
+        break;
+      case "red-component":
+        this.model.grayscale(PixelProperty.Red, this.currentImage, this.currentImage);
+        break;
+      case "green-component":
+        this.model.grayscale(PixelProperty.Green, this.currentImage, this.currentImage);
+        break;
+      case "blue-component":
+        this.model.grayscale(PixelProperty.Blue, this.currentImage, this.currentImage);
+        break;
+      case "value-component":
+        this.model.grayscale(PixelProperty.Value, this.currentImage, this.currentImage);
+        break;
+      case "intensity-component":
+        this.model.grayscale(PixelProperty.Intensity, this.currentImage, this.currentImage);
+        break;
+      case "luma-component":
+        this.model.grayscale(PixelProperty.Luma, this.currentImage, this.currentImage);
+        break;
+      case "horizontal-flip":
+        this.model.flip(FlipDirection.Horizontal, this.currentImage, this.currentImage);
+        break;
+      case "vertical-flip":
+        this.model.flip(FlipDirection.Vertical, this.currentImage, this.currentImage);
+        break;
+      case "blur":
+        this.model.applyFilter(Utils.blurKernel, this.currentImage, this.currentImage);
+        break;
+      case "sharpen":
+        this.model.applyFilter(Utils.sharpenKernel, this.currentImage, this.currentImage);
+        break;
+      case "sepia-tone":
+        this.model.colorTransformation(Utils.sepiaToneTransformation,
+                this.currentImage, this.currentImage);
+        break;
+      case "color-transformation-luma_grayscale":
+        this.model.colorTransformation(Utils.lumaTransformation,
+                this.currentImage, this.currentImage);
+        break;
+      default:
+        throw new IllegalArgumentException("Unrecognized command");
     }
 
-    if (command != null) {
-      command.doCommand(this.model);
-    }
 
-    if (newName == null) {
-      return imageName;
-    } else {
-      return newName;
-    }
+  }
 
+  //Updates the gui's image and histogram and refreshes.
+  private void updateGUI() {
+    this.view.setImage(this.currentImage);
+    this.view.updateHistogram(this.currentImage);
+    this.view.refresh();
   }
 
   //Reads the next input from the scanner, throws an error if there is not one (we expect there

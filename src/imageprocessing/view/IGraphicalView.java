@@ -1,6 +1,7 @@
 package imageprocessing.view;
 
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Represents a graphical view. Contains methods to graphically display the program.
@@ -21,11 +22,11 @@ public interface IGraphicalView {
   void setAllButtonListeners(ActionListener actionEvent);
 
   /**
-   * Returns the command that the user has inputted. This will also clear the input field.
+   * Gets the option that the user has chosen.
    *
-   * @return The command as a string.
+   * @return The option as a string.
    */
-  String getCommand();
+  String getOption();
 
   /**
    * Sets the image to be shown.
@@ -49,21 +50,19 @@ public interface IGraphicalView {
   void showMessageWindow(String title, String bodyMessage, int messageType);
 
   /**
-   * Opens a window to let the user choose a file. After a user has chosen a file, it will paste
-   * the corresponding load command into the text box. As default, the name of the image will be
-   * the file name (excluding the extension). The user can edit the command and change the name
-   * of the file if they wish.
+   * Opens a window to let the user choose a file. Returns the absolute path of that file.
+   *
+   * @return The absolute path of the file as a string.
    */
-  void showLoadFileChooser();
+  String showFileChooser(ChooserState state);
 
   /**
-   * Opens a window to let the user save a file. Returns the path that the user chose. Returns
-   * an empty string if the user chose not to save.
+   * Opens a window and asks the user for an input.
    *
-   * @return The path that the user chose.
+   * @param prompt The prompt to give the user.
+   * @return The user's input.
    */
-  String showSaveFileChooser();
-
+  String showInputDialogue(String prompt);
   /**
    * Updates the histogram to display data about an image.
    * @param imageName The name of the image who's data should be displayed.

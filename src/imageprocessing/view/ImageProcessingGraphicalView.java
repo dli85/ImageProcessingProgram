@@ -24,6 +24,7 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
   private final ImagePanel imagePanel;
   private final JButton commandButton;
   private final JTextField inputTextField;
+  private final JComboBox<String> commandOptionsBox;
   private final JPanel topPanel;
   private final JButton quitButton;
   private final JButton loadFileButton;
@@ -75,8 +76,20 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     bottomPanel.setLayout(new FlowLayout());
     this.add(bottomPanel, BorderLayout.SOUTH);
 
+    String[] options = new String[]{
+            "brighten", "horizontal-flip", "vertical-flip", "blur", "sharpen",
+            "sepia-tone", "color-transform-luma_grayscale",
+            "red-grayscale", "blue-grayscale", "green-grayscale", "value-grayscale",
+            "intensity-grayscale", "luma-grayscale",
+    };
+    this.commandOptionsBox = new JComboBox<String>();
+    for(String option : options) {
+      this.commandOptionsBox.addItem(option);
+    }
+    bottomPanel.add(this.commandOptionsBox);
+
     this.inputTextField = new JTextField(18);
-    bottomPanel.add(inputTextField);
+//    bottomPanel.add(inputTextField);
 
     this.commandButton = new JButton("Execute");
     bottomPanel.add(this.commandButton);
@@ -113,10 +126,8 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
   }
 
   @Override
-  public String getCommand() {
-    String command = this.inputTextField.getText();
-    this.inputTextField.setText("");
-    return command;
+  public String getOption() {
+    return (String) this.commandOptionsBox.getSelectedItem();
   }
 
   @Override
@@ -159,39 +170,32 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
   }
 
   @Override
-  public void showLoadFileChooser() {
+  public String showFileChooser(ChooserState state) {
     final JFileChooser chooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
             "JPG, PPM, PNG & BMP Images", "ppm", "jpg", "jpeg", "png", "bmp");
     chooser.setFileFilter(filter);
-    int outcome = chooser.showOpenDialog(ImageProcessingGraphicalView.this);
+    int outcome;
+    if(state.equals(ChooserState.Open)) {
+      outcome = chooser.showOpenDialog(ImageProcessingGraphicalView.this);
+    } else {
+      outcome = chooser.showSaveDialog(ImageProcessingGraphicalView.this);
+    }
     File f = null;
     if(outcome == JFileChooser.APPROVE_OPTION) {
       f = chooser.getSelectedFile();
     }
 
     if(f != null) {
-      String path = f.getAbsolutePath();
-      String fileName = f.getName();
-      int lastPeriod = fileName.lastIndexOf(".");
-      String shortName = fileName.substring(0, lastPeriod);
-      this.inputTextField.setText("load " + path + " " + shortName);
+      return f.getAbsolutePath();
+    } else {
+      return "";
     }
   }
 
   @Override
-  public String showSaveFileChooser() {
-    final JFileChooser chooser = new JFileChooser(".");
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "JPG, PPM, PNG & BMP Images", "ppm", "jpg", "jpeg", "png", "bmp");
-    chooser.setFileFilter(filter);
-    int outcome = chooser.showSaveDialog(ImageProcessingGraphicalView.this);
-    if(outcome == JFileChooser.APPROVE_OPTION) {
-      return chooser.getSelectedFile().getAbsolutePath();
-    } else {
-      return "";
-    }
-
+  public String showInputDialogue(String prompt) {
+    return JOptionPane.showInputDialog(prompt);
   }
 
   @Override
