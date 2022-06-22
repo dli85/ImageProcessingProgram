@@ -1,6 +1,8 @@
 package imageprocessing.view;
 
-import java.awt.*;
+import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.Set;
 import javax.swing.*;
 
 /**
- * Represents the histogram panel in the image processing gui.
+ * Represents the histogram panel in the image processing GUI.
  */
 public class HistogramPanel extends JPanel {
 

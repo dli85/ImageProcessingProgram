@@ -7,7 +7,7 @@ that can flip, brighten, or greyscale an image.
 
 The jar and script file are located in the /res folder. The jar is named assignment4.jar,
 and the script is name script.txt. To run the jar file, navigate to the res folder in
-command line and type "java -jar Assignment4.jar". To use the script file, add it as a comand line
+command line and type "java -jar Assignment4.jar". To use the script file, add it as a command line
 argument: "java -jar Assignment4.jar script.txt"
 
 NOTE: The script file is configured to run with the jar file. Due to relative paths, it
@@ -111,20 +111,22 @@ the already existing fields of the class (which the user inputted).
 
 ### Running the program
 
-To execute the program, open the ImageProcessingProgram file and press the
-green arrow on the left side near the line numbers. 
+To run the program in GUI mode, run either the jar file or the ImageProcessingProgram 
+class with no command line arguments.
 
-Alternatively, you can create a run configuration to execute the program. 
-An example of said configuration is included in the res/ folder. 
+To run the program in text mode, you must run either the jar file or the 
+ImageProcessingProgram class and add "-text" as a command line argument. To run
+the ImageProcessingProgram class with a command line argument, create a new run 
+configuration.
 
-A .jar file has also been included in the /res folder. To use the jar file, simply
+To run the program with a script, run either the jar file or the ImageProcessingProgram
+class with "-file {path to script file}" as a command line argument.
+
+
+The .jar file has also been included in the /res folder. To use the jar file, simply
 navigate to the res folder in command line and type "java -jar Assignment4.jar"
 
-
-You may add the path to a script file that you may wish to run after:
-i.e: "java -jar Assignment4.jar script.txt"
-
-### Commands
+### Commands (text version)
 This application currently supports the following commands:
 1. Loading images: load {image-path} {imageName} 
 2. Saving images: save {save-path} {imageName}
@@ -145,7 +147,7 @@ as. If newName is the same as imageName,
 then the old image will be overwritten. The save path must include the name of the image
 that you want to save it as. For example, res/imageName.ppm
 
-### Inputs
+### Inputs (text version)
 
 Inputs should be separated by spaces or newlines. You can enter multiple
 commands at once on the same line, and assuming the syntax is correct for all
@@ -166,14 +168,18 @@ overwritten.
 ### The Script
 
 The /res folder has included a script.txt file which is a sample series of commands which will
-load an image (mudkip) and save two version of it. The script.txt file contains examples
-of all types of commands.  
+load an image (mudkip) and save multiple versions. The script.txt file contains examples
+of all types of commands. 
 
-To run this script, create a new run configuration that runs the main method in
-the ImageProcessingProgram and add the path to the script as a command line argument 
-(res/script.txt). An example of said configuration can be found in the res folder (run_config.PNG)
+See above for how to run the program with the script file.
 
 # Image Sources
+
+TODO:
+1. README: 
+   1. Update design description for new gui classes
+   2. Write description on how to use the GUI
+
 
 Our cute Mudkip:
    

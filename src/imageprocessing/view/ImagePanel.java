@@ -7,10 +7,10 @@ import javax.swing.*;
 
 
 /**
- *
+ * Represents the image panel of the GUI where the image the user is currently working on is
+ * displayed.
  */
 public class ImagePanel extends JPanel {
-
   private final JScrollPane scrollPlane;
   private final JLabel imageLabel;
 

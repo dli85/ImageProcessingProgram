@@ -1,7 +1,6 @@
 package imageprocessing.view;
 
 import java.awt.event.ActionListener;
-import java.io.File;
 
 /**
  * Represents a graphical view. Contains methods to graphically display the program.
@@ -29,7 +28,7 @@ public interface IGraphicalView {
   String getOption();
 
   /**
-   * Sets the image to be shown.
+   * Sets the image to be shown in the GUI.
    *
    * @param name The image to be shown.
    */
@@ -41,7 +40,7 @@ public interface IGraphicalView {
   void refresh();
 
   /**
-   * Displays a message window.
+   * Displays a message window with some title, message, and type.
    *
    * @param title The title of the window.
    * @param bodyMessage The body of the message in the window.
@@ -63,9 +62,11 @@ public interface IGraphicalView {
    * @return The user's input.
    */
   String showInputDialogue(String prompt);
+
   /**
    * Updates the histogram to display data about an image.
-   * @param imageName The name of the image who's data should be displayed.
+   *
+   * @param imageName The name of the image whose data should be displayed.
    */
   void updateHistogram(String imageName);
 }

@@ -2,8 +2,6 @@ package imageprocessing.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -16,6 +14,9 @@ import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.view.ChooserState;
 import imageprocessing.view.IGraphicalView;
 
+/**
+ * Represents a controller for the GUI version of the image processing program.
+ */
 public class GraphicalController implements ImageProcessingController, ActionListener {
   private final ImageProcessingModel model;
   private final IGraphicalView view;
@@ -72,7 +73,8 @@ public class GraphicalController implements ImageProcessingController, ActionLis
       case "load file":
         String path = this.view.showFileChooser(ChooserState.Open);
         if (!path.equals("")) {
-          String imageName = path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf("."));
+          String imageName = path.substring(path.lastIndexOf("\\") + 1,
+                  path.lastIndexOf("."));
           try {
             UserCommand load = new SimpleLoadCommand(path, imageName);
             load.doCommand(this.model);
@@ -111,40 +113,40 @@ public class GraphicalController implements ImageProcessingController, ActionLis
 
   }
 
-  //Processes a command and does the appropriate action
-  //Returns the name of the image that should be shown.
+  //Processes the selected option and does the appropriate action
   private void processCommand(String option) throws IllegalArgumentException {
 
-
-    //String next = scanner.next().toLowerCase();
 
     switch (option) {
       case "brighten":
         String userInput = this.view.showInputDialogue("Enter an amount to brighten by:");
-        int amount;
-        try {
-          amount = Integer.parseInt(userInput);
-        } catch (NumberFormatException e) {
-          throw new IllegalArgumentException("Unrecognized input");
+        //Don't show an error message if the user pressed cancel.
+        if(userInput != null) {
+          try {
+            int amount = Integer.parseInt(userInput);
+            this.model.brighten(amount, this.currentImage, this.currentImage);
+
+          } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("A valid integer was not detected");
+          }
         }
-        this.model.brighten(amount, this.currentImage, this.currentImage);
         break;
-      case "red-component":
+      case "red-grayscale":
         this.model.grayscale(PixelProperty.Red, this.currentImage, this.currentImage);
         break;
-      case "green-component":
+      case "green-grayscale":
         this.model.grayscale(PixelProperty.Green, this.currentImage, this.currentImage);
         break;
-      case "blue-component":
+      case "blue-grayscale":
         this.model.grayscale(PixelProperty.Blue, this.currentImage, this.currentImage);
         break;
-      case "value-component":
+      case "value-grayscale":
         this.model.grayscale(PixelProperty.Value, this.currentImage, this.currentImage);
         break;
-      case "intensity-component":
+      case "intensity-grayscale":
         this.model.grayscale(PixelProperty.Intensity, this.currentImage, this.currentImage);
         break;
-      case "luma-component":
+      case "luma-grayscale":
         this.model.grayscale(PixelProperty.Luma, this.currentImage, this.currentImage);
         break;
       case "horizontal-flip":
@@ -163,7 +165,7 @@ public class GraphicalController implements ImageProcessingController, ActionLis
         this.model.colorTransformation(Utils.sepiaToneTransformation,
                 this.currentImage, this.currentImage);
         break;
-      case "color-transformation-luma_grayscale":
+      case "color-transform-luma_grayscale":
         this.model.colorTransformation(Utils.lumaTransformation,
                 this.currentImage, this.currentImage);
         break;
@@ -174,28 +176,10 @@ public class GraphicalController implements ImageProcessingController, ActionLis
 
   }
 
-  //Updates the gui's image and histogram and refreshes.
+  //Updates the gui's image, histogram, and refreshes.
   private void updateGUI() {
     this.view.setImage(this.currentImage);
     this.view.updateHistogram(this.currentImage);
     this.view.refresh();
-  }
-
-  //Reads the next input from the scanner, throws an error if there is not one (we expect there
-  // to be an input)
-  private String readFromInput(Scanner scanner) throws IllegalArgumentException {
-    try {
-      return scanner.next();
-    } catch (NoSuchElementException e) {
-      throw new IllegalStateException("Incomplete command");
-    }
-  }
-
-  private int readIntFromInput(Scanner scanner) throws IllegalArgumentException {
-    try {
-      return scanner.nextInt();
-    } catch (NoSuchElementException e) {
-      throw new IllegalStateException("Incomplete command");
-    }
   }
 }
