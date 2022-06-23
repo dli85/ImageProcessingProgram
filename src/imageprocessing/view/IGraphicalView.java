@@ -1,7 +1,5 @@
 package imageprocessing.view;
 
-import java.awt.event.ActionListener;
-
 import imageprocessing.controller.Features;
 
 /**

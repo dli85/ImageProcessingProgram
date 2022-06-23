@@ -1,5 +1,8 @@
 package imageprocessing.controller;
 
+/**
+ * The features interface of the gui design: exposes application specific events.
+ */
 public interface Features {
 
   void setView();
@@ -16,7 +19,7 @@ public interface Features {
 
 
   /**
-   * Loads a file into the model.
+   * Loads a file into the model to be referred to as imageName.
    *
    * @param path The path to the image.
    * @param imageName The name of the image.
@@ -36,7 +39,8 @@ public interface Features {
 
 
   /**
-   * Updates the image that is shown and also updates the histogram to display data for that image.
+   * Tells the view to update
+   * the image that is shown and also updates the histogram to display data for that image.
    *
    * @throws IllegalStateException If there is no image currently being shown (The user has not
    *                               loaded an image yet)

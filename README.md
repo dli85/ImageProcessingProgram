@@ -15,6 +15,15 @@ will not work correctly if it is not used with the jar file.
 
 ## Design Overview
 
+### Design changes (from assignment 5)
+- The main method (in the ImageProcessingProgram) was updated to support the updated command line arguments
+(-text and -file, no arguments = gui mode) and also support the GUI mode of the application
+- A new controller and feature interface was added (For the GUI)
+- A new view and IGraphicalView interface was added (For the GUI)
+- No design changes were made to the model or its interfaces
+- No design changes were made to the original controller or its interfaces
+- No design changes were made to the original view or its interface
+
 ### Design changes (from assignment 4)
 
 - Commands like blur and brighten have been refactored into SimpleImageProcessingModel methods. The 
@@ -29,6 +38,23 @@ load commands will delegate to the proper files).
 are not used in any image calculations/modifications, they are merely preserved when saving/loading
 whenever possible.
 
+### GUI and View design
+
+The GUI design still follows the model-view-controller design pattern. The GUI still uses the exact
+same model interfaces and implementation as the text based version. 
+
+1. Features interface
+   1. The features interface is used to represent high level features/abilities that we can
+   perform such as saving/loading files and executing image operations. The Features interface and 
+   its implementation (GraphicalController) only expose application specific events. 
+   2. This interface is implemented in the GraphicalController interface
+2. IGraphicalView interface
+   1. This view interface is used to display and draw the actual GUI. It contains methods
+   to update the GUI and also methods to get information from the GUI. 
+   2. This interface is implemented in the ImageProcessingGraphicalView class. This class
+   extends the JFrame class and is able to set up the GUI and display the neccessary components
+   like the image and the corresponding histogram.
+
 ### MVC Design
 This application follows the Model-View-Controller (MVC) design pattern. For clarification, images 
 are stored in code as 2d Pixel Arrays. The pixel class contains the information values about
@@ -41,6 +67,9 @@ every pixel. This class is stored in the model package.
    2. The controller has the ability to read user commands and transmit messages to the output. It
    processes user commands using the command design pattern.
    3. This interface is implemented in ImageProcessingControllerImpl class. 
+   4. Saving and loading are treated as their own commands. They also delegate the saving/loading
+   to conventional or PPM classes depending on what type of file the user wants to save or load.
+   The code for saving and loading is contained in the commands package.
 2. ImageProcessingModelState interface
    1. This interface is one part of the model design. The ImageProcessingModelState interface 
    is the "parent" to the ImageProcessingView interface. Thus, the method headers in this interface

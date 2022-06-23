@@ -165,7 +165,7 @@ public class HistogramPanel extends JPanel {
   }
 
   /**
-   * Represents a bar in the histogram with some color, width, and height
+   * Represents a bar in the histogram with some color, width, and height.
    */
   private class Bar {
     private final Color color;
