@@ -33,12 +33,7 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
 
   private final ImageProcessingModelState model;
   private final ImagePanel imagePanel;
-  private final JButton commandButton;
   private final JComboBox<String> commandOptionsBox;
-  private final JPanel topPanel;
-  private final JButton quitButton;
-  private final JButton loadFileButton;
-  private final JButton saveFileButton;
   private final HistogramPanel histogramPanel;
   private Features features;
 
@@ -58,26 +53,26 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     this.model = model;
 
     this.setTitle("Image Processing Program");
-    this.setSize(1080, 560);
+    this.setSize(1160, 560);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
     this.setLayout(new BorderLayout());
 
-    this.topPanel = new JPanel();
+    JPanel topPanel = new JPanel();
     //this.topPanel.setPreferredSize(new Dimension(this.getWidth(), 400));
-    this.topPanel.setLayout(new GridLayout(1, 0));
+    topPanel.setLayout(new GridLayout(1, 0));
 
     this.imagePanel = new ImagePanel();
     this.imagePanel.setLayout(new GridLayout());
 
-    this.histogramPanel = new HistogramPanel(530, 480);
-    this.histogramPanel.setPreferredSize(new Dimension(530, 480));
+    this.histogramPanel = new HistogramPanel(570, 480);
+    this.histogramPanel.setPreferredSize(new Dimension(570, 480));
 
     topPanel.add(this.imagePanel);
     JScrollPane histogramScroll = new JScrollPane(this.histogramPanel);
     topPanel.add(histogramScroll);
-    this.add(this.topPanel);
+    this.add(topPanel);
 
     JPanel bottomPanel = new JPanel();
     bottomPanel.setLayout(new FlowLayout());
@@ -97,24 +92,23 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     }
     bottomPanel.add(this.commandOptionsBox);
 
-    this.commandButton = new JButton("Execute");
-    bottomPanel.add(this.commandButton);
+    JButton commandButton = new JButton("Execute");
+    bottomPanel.add(commandButton);
 
-    this.loadFileButton = new JButton("Load file");
-    bottomPanel.add(this.loadFileButton);
+    JButton loadFileButton = new JButton("Load file");
+    bottomPanel.add(loadFileButton);
 
-    this.saveFileButton = new JButton(("Save file"));
-    bottomPanel.add(this.saveFileButton);
+    JButton saveFileButton = new JButton(("Save file"));
+    bottomPanel.add(saveFileButton);
+
+    JButton quitButton = new JButton("Quit");
+    bottomPanel.add(quitButton);
 
 
-    this.quitButton = new JButton("Quit");
-    bottomPanel.add(this.quitButton);
-
-
-    this.commandButton.addActionListener(this);
-    this.loadFileButton.addActionListener(this);
-    this.saveFileButton.addActionListener(this);
-    this.quitButton.addActionListener(this);
+    commandButton.addActionListener(this);
+    loadFileButton.addActionListener(this);
+    saveFileButton.addActionListener(this);
+    quitButton.addActionListener(this);
   }
 
 
@@ -267,10 +261,10 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
         break;
       case "execute":
         try {
-          if(this.getOption().equalsIgnoreCase("brighten")) {
+          if (this.getOption().equalsIgnoreCase("brighten")) {
             String userInput = this.showInputDialogue("Enter an amount to brighten by:");
             //Don't show an error message if the user pressed cancel.
-            if(userInput != null) {
+            if (userInput != null) {
               try {
                 int amount = Integer.parseInt(userInput);
                 this.features.processSelectedOption(this.getOption(), amount);
@@ -290,6 +284,11 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
         break;
       case "quit":
         this.features.exitProgram();
+        break;
+      default:
+        //Default statement
+        break;
+
     }
   }
 }

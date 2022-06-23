@@ -1,8 +1,7 @@
 package imageprocessing.view;
 
-import java.awt.GridLayout;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class HistogramPanel extends JPanel {
    * Constructor for the histogram panel. Sets the initialHeight and initialWidth and initializes
    * the bar lists.
    *
-   * @param initialWidth The initial width of the panel.
+   * @param initialWidth  The initial width of the panel.
    * @param initialHeight The initial height of the panel.
    */
   public HistogramPanel(int initialWidth, int initialHeight) {
@@ -119,35 +118,62 @@ public class HistogramPanel extends JPanel {
 
   @Override
   public void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g;
 
-    for (int i = 0; i < redBars.size(); i++) {
-      int valueX = i * redBars.get(i).width + 5;
-      int top = this.initialHeight - 25 - redBars.get(i).height - this.initialHeight / 2;
-      g.setColor(redBars.get(i).color);
-      g.fillRect(valueX, top, redBars.get(i).width, redBars.get(i).height);
+    //We only draw the axis when the histograms are drawn.
+    if (this.redBars.size() > 0 && this.blueBars.size() > 0 && this.greenBars.size() > 0
+            && this.intensityBars.size() > 0) {
+
+
+      g2.drawLine(27, this.initialHeight / 2 - 25, 566, this.initialHeight / 2 - 25);
+      g2.drawLine(27, this.initialHeight / 2 - 25, 27, this.initialHeight / 6 - 25);
+
+      g2.drawString("Red channel values", 28,
+              this.initialHeight / 2 - 10);
+      g2.drawString("Green channel values", 28 + this.initialWidth / 2,
+              this.initialHeight / 2 - 10);
+
+
+      g2.drawLine(27, this.initialHeight - 25, 566, this.initialHeight - 25);
+      g2.drawLine(27, this.initialHeight - 25, 27, this.initialHeight * 2 / 3 - 25);
+
+      g2.drawString("Blue channel values", 28,
+              this.initialHeight - 10);
+      g2.drawString("Intensity channel values", 28 + this.initialWidth / 2,
+              this.initialHeight - 10);
 
     }
 
+
+    for (int i = 0; i < redBars.size(); i++) {
+      int x = i * redBars.get(i).width + 28;
+      int y = this.initialHeight - 25 - redBars.get(i).height - this.initialHeight / 2;
+      g2.setColor(redBars.get(i).color);
+      g2.fillRect(x, y, redBars.get(i).width, redBars.get(i).height);
+
+    }
+
+
     for (int i = 0; i < greenBars.size(); i++) {
-      int valueX = i * greenBars.get(i).width + 5 + this.initialWidth / 2;
-      int top = this.initialHeight - 25 - greenBars.get(i).height - this.initialHeight / 2;
-      g.setColor(greenBars.get(i).color);
-      g.fillRect(valueX, top, greenBars.get(i).width, greenBars.get(i).height);
+      int x = i * greenBars.get(i).width + 28 + this.initialWidth / 2;
+      int y = this.initialHeight - 25 - greenBars.get(i).height - this.initialHeight / 2;
+      g2.setColor(greenBars.get(i).color);
+      g2.fillRect(x, y, greenBars.get(i).width, greenBars.get(i).height);
 
     }
 
     for (int i = 0; i < blueBars.size(); i++) {
-      int valueX = i * blueBars.get(i).width + 5;
-      int top = this.initialHeight - 25 - blueBars.get(i).height;
-      g.setColor(blueBars.get(i).color);
-      g.fillRect(valueX, top, blueBars.get(i).width, blueBars.get(i).height);
+      int x = i * blueBars.get(i).width + 28;
+      int y = this.initialHeight - 25 - blueBars.get(i).height;
+      g2.setColor(blueBars.get(i).color);
+      g2.fillRect(x, y, blueBars.get(i).width, blueBars.get(i).height);
     }
 
     for (int i = 0; i < intensityBars.size(); i++) {
-      int valueX = i * intensityBars.get(i).width + 5 + this.initialWidth / 2;
-      int top = this.initialHeight - 25 - intensityBars.get(i).height;
-      g.setColor(intensityBars.get(i).color);
-      g.fillRect(valueX, top, intensityBars.get(i).width, intensityBars.get(i).height);
+      int x = i * intensityBars.get(i).width + 28 + this.initialWidth / 2;
+      int y = this.initialHeight - 25 - intensityBars.get(i).height;
+      g2.setColor(intensityBars.get(i).color);
+      g2.fillRect(x, y, intensityBars.get(i).width, intensityBars.get(i).height);
     }
   }
 
@@ -165,7 +191,8 @@ public class HistogramPanel extends JPanel {
   }
 
   /**
-   * Represents a bar in the histogram with some color, width, and height
+   * Represents a bar in the histogram with some color, width, and height. The bar class is only
+   * ever used in the histogram and thus is private.
    */
   private class Bar {
     private final Color color;
@@ -175,8 +202,8 @@ public class HistogramPanel extends JPanel {
     /**
      * The bar constructor, sets all the fields for a bar.
      *
-     * @param color The color of the bar.
-     * @param width The width of the bar.
+     * @param color  The color of the bar.
+     * @param width  The width of the bar.
      * @param height The height of the bar.
      */
     protected Bar(Color color, int width, int height) {

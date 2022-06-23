@@ -31,19 +31,18 @@ public class ImageProcessingProgram {
     Readable input = new InputStreamReader(System.in);
     ImageProcessingModel model = new SimpleImageProcessingModel();
 
-    if(args.length == 0) {
+    if (args.length == 0) {
       IGraphicalView guiView = new ImageProcessingGraphicalView(model);
       GraphicalController controller = new GraphicalController(model, guiView);
       controller.setView();
-    }
-    else {
+    } else {
       ImageProcessingView view = new ImageProcessingViewImpl(model, System.out);
       ImageProcessingController controller = null;
 
-      if(Objects.equals(args[0], "-text")) {
+      if (Objects.equals(args[0], "-text")) {
         controller =
                 new ImageProcessingControllerImpl(model, view, new InputStreamReader(System.in));
-      } else if(args[0].equals("-file") && args.length >= 2) {
+      } else if (args[0].equals("-file") && args.length >= 2) {
         try {
           String scriptCommands = readScript(args[1]);
           input = new StringReader(scriptCommands);
@@ -54,7 +53,7 @@ public class ImageProcessingProgram {
 
       }
 
-      if(controller != null) {
+      if (controller != null) {
         controller.start();
       }
 

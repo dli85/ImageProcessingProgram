@@ -1,9 +1,14 @@
 package imageprocessing.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 
 /**
