@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 /**
  * Represents the histogram panel in the image processing GUI.
@@ -49,7 +49,8 @@ public class HistogramPanel extends JPanel {
   }
 
   /**
-   * Adds counts for each component. Each map's key represents the amount of that color (0 to 255)
+   * Adds counts for each pixel component.
+   * Each map's key represents the amount of that color (0 to 255)
    * and the value represents the frequency. Also initializes the bar lists for every component.
    *
    * @param redAdd       Red values and their frequencies
@@ -57,8 +58,8 @@ public class HistogramPanel extends JPanel {
    * @param blueAdd      Blue values and their frequencies
    * @param intensityAdd Intensity/average values and their frequencies
    */
-  public void addCounts(Map<Integer, Integer> redAdd, Map<Integer, Integer> greenAdd,
-                        Map<Integer, Integer> blueAdd, Map<Integer, Integer> intensityAdd) {
+  public void addColorData(Map<Integer, Integer> redAdd, Map<Integer, Integer> greenAdd,
+                           Map<Integer, Integer> blueAdd, Map<Integer, Integer> intensityAdd) {
 
     Set<Integer> allValues = new HashSet<Integer>();
     allValues.addAll(redAdd.values());
@@ -79,8 +80,6 @@ public class HistogramPanel extends JPanel {
       if (redAdd.containsKey(i)) {
         barHeight = (redAdd.get(i) * (this.initialHeight / 3)) / maxValue;
       }
-
-      //System.out.println(barHeight);
 
       Bar b = new Bar(Color.RED, 1, barHeight);
       this.redBars.add(b);
@@ -112,7 +111,7 @@ public class HistogramPanel extends JPanel {
       if (intensityAdd.containsKey(i)) {
         barHeight = (intensityAdd.get(i) * (this.initialHeight / 3)) / maxValue;
       }
-      Bar b = new Bar(new Color(i, i, i), 1, barHeight);
+      Bar b = new Bar(Color.GRAY, 1, barHeight);
       this.intensityBars.add(b);
     }
 
@@ -165,12 +164,22 @@ public class HistogramPanel extends JPanel {
 
   }
 
+  /**
+   * Represents a bar in the histogram with some color, width, and height
+   */
   private class Bar {
     private final Color color;
     private final int width;
     private final int height;
 
-    public Bar(Color color, int width, int height) {
+    /**
+     * The bar constructor, sets all the fields for a bar.
+     *
+     * @param color The color of the bar.
+     * @param width The width of the bar.
+     * @param height The height of the bar.
+     */
+    protected Bar(Color color, int width, int height) {
       this.color = color;
       this.width = width;
       this.height = height;

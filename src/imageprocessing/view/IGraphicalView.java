@@ -2,6 +2,8 @@ package imageprocessing.view;
 
 import java.awt.event.ActionListener;
 
+import imageprocessing.controller.Features;
+
 /**
  * Represents a graphical view. Contains methods to graphically display the program.
  */
@@ -11,14 +13,6 @@ public interface IGraphicalView {
    * Makes the view visible, should be called after the view is constructed.
    */
   void makeVisible();
-
-  /**
-   * Gives the view an action listener for all the appropriate buttons: execute, load file, and
-   * save file.
-   *
-   * @param actionEvent The action listener to use.
-   */
-  void setAllButtonListeners(ActionListener actionEvent);
 
   /**
    * Gets the option that the user has chosen.
@@ -69,4 +63,11 @@ public interface IGraphicalView {
    * @param imageName The name of the image whose data should be displayed.
    */
   void updateHistogram(String imageName);
+
+  /**
+   * Adds features to this view and sets the appropriate callbacks.
+   *
+   * @param features The features.
+   */
+  void addFeatures(Features features);
 }

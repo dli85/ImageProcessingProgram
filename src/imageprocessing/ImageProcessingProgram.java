@@ -30,14 +30,15 @@ public class ImageProcessingProgram {
     //The default input is system.in unless a suitable script path was found and read.
     Readable input = new InputStreamReader(System.in);
     ImageProcessingModel model = new SimpleImageProcessingModel();
-    ImageProcessingController controller = null;
 
     if(args.length == 0) {
       IGraphicalView guiView = new ImageProcessingGraphicalView(model);
-      controller = new GraphicalController(model, guiView);
+      GraphicalController controller = new GraphicalController(model, guiView);
+      controller.setView();
     }
     else {
       ImageProcessingView view = new ImageProcessingViewImpl(model, System.out);
+      ImageProcessingController controller = null;
 
       if(Objects.equals(args[0], "-text")) {
         controller =
@@ -53,11 +54,12 @@ public class ImageProcessingProgram {
 
       }
 
+      if(controller != null) {
+        controller.start();
+      }
+
     }
 
-    if(controller != null) {
-      controller.start();
-    }
   }
 
   /**

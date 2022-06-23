@@ -1,6 +1,9 @@
 package imageprocessing.view;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -8,9 +11,17 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import imageprocessing.controller.Features;
 import imageprocessing.model.ImageProcessingModelState;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
@@ -18,18 +29,18 @@ import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 /**
  * Represents the graphical view (GUI) implementation for a image processing program.
  */
-public class ImageProcessingGraphicalView extends JFrame implements IGraphicalView {
+public class ImageProcessingGraphicalView extends JFrame implements IGraphicalView, ActionListener {
 
   private final ImageProcessingModelState model;
   private final ImagePanel imagePanel;
   private final JButton commandButton;
-  private final JTextField inputTextField;
   private final JComboBox<String> commandOptionsBox;
   private final JPanel topPanel;
   private final JButton quitButton;
   private final JButton loadFileButton;
   private final JButton saveFileButton;
   private final HistogramPanel histogramPanel;
+  private Features features;
 
   /**
    * Constructor for a gui view. Takes in a model state to get info about the images.
@@ -41,55 +52,50 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
   public ImageProcessingGraphicalView(ImageProcessingModelState model)
           throws IllegalArgumentException {
     super();
-    if(model == null) {
+    if (model == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
     this.model = model;
 
     this.setTitle("Image Processing Program");
-    this.setSize(1075, 560);
+    this.setSize(1080, 560);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
     this.setLayout(new BorderLayout());
 
     this.topPanel = new JPanel();
-    this.topPanel.setPreferredSize(new Dimension(this.getWidth(), 400));
+    //this.topPanel.setPreferredSize(new Dimension(this.getWidth(), 400));
     this.topPanel.setLayout(new GridLayout(1, 0));
 
     this.imagePanel = new ImagePanel();
     this.imagePanel.setLayout(new GridLayout());
-    //this.imagePanel.setPreferredSize(new Dimension(480, 420));
-    //this.add(this.imagePanel);
 
-    this.histogramPanel = new HistogramPanel(525, 480);
-    this.histogramPanel.setPreferredSize(new Dimension(525, 480));
+    this.histogramPanel = new HistogramPanel(530, 480);
+    this.histogramPanel.setPreferredSize(new Dimension(530, 480));
 
     topPanel.add(this.imagePanel);
     JScrollPane histogramScroll = new JScrollPane(this.histogramPanel);
-    //histogramScroll.setPreferredSize(new Dimension(600, 580));
     topPanel.add(histogramScroll);
-    topPanel.setVisible(true);
     this.add(this.topPanel);
 
     JPanel bottomPanel = new JPanel();
     bottomPanel.setLayout(new FlowLayout());
     this.add(bottomPanel, BorderLayout.SOUTH);
 
+    //Image operation options for the user.
     String[] options = new String[]{
             "brighten", "horizontal-flip", "vertical-flip", "blur", "sharpen",
             "sepia-tone", "color-transform-luma_grayscale",
             "red-grayscale", "blue-grayscale", "green-grayscale", "value-grayscale",
             "intensity-grayscale", "luma-grayscale",
     };
+
     this.commandOptionsBox = new JComboBox<String>();
-    for(String option : options) {
+    for (String option : options) {
       this.commandOptionsBox.addItem(option);
     }
     bottomPanel.add(this.commandOptionsBox);
-
-    this.inputTextField = new JTextField(18);
-//    bottomPanel.add(inputTextField);
 
     this.commandButton = new JButton("Execute");
     bottomPanel.add(this.commandButton);
@@ -102,11 +108,13 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
 
 
     this.quitButton = new JButton("Quit");
-    this.quitButton.addActionListener((ActionEvent e) -> {
-      System.exit(0);
-    });
     bottomPanel.add(this.quitButton);
 
+
+    this.commandButton.addActionListener(this);
+    this.loadFileButton.addActionListener(this);
+    this.saveFileButton.addActionListener(this);
+    this.quitButton.addActionListener(this);
   }
 
 
@@ -115,14 +123,6 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     this.setVisible(true);
     this.imagePanel.setVisible(true);
     this.histogramPanel.setVisible(true);
-
-  }
-
-  @Override
-  public void setAllButtonListeners(ActionListener actionEvent) {
-    this.commandButton.addActionListener(actionEvent);
-    this.loadFileButton.addActionListener(actionEvent);
-    this.saveFileButton.addActionListener(actionEvent);
   }
 
   @Override
@@ -138,8 +138,8 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
 
     BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 
-    for(int i = 0; i < height; i++) {
-      for(int j = 0; j < width; j++) {
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         Map<ImageProcessingModelState.PixelProperty, Integer> values =
                 this.model.getPixelInfo(name, i, j);
 
@@ -176,17 +176,17 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
             "JPG, PPM, PNG & BMP Images", "ppm", "jpg", "jpeg", "png", "bmp");
     chooser.setFileFilter(filter);
     int outcome;
-    if(state.equals(ChooserState.Open)) {
+    if (state.equals(ChooserState.Open)) {
       outcome = chooser.showOpenDialog(ImageProcessingGraphicalView.this);
     } else {
       outcome = chooser.showSaveDialog(ImageProcessingGraphicalView.this);
     }
     File f = null;
-    if(outcome == JFileChooser.APPROVE_OPTION) {
+    if (outcome == JFileChooser.APPROVE_OPTION) {
       f = chooser.getSelectedFile();
     }
 
-    if(f != null) {
+    if (f != null) {
       return f.getAbsolutePath();
     } else {
       return "";
@@ -210,8 +210,8 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     int width = model.getWidth(imageName);
     int height = model.getHeight(imageName);
 
-    for(int i = 0; i < height; i++) {
-      for(int j = 0; j < width; j++) {
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         Map<PixelProperty, Integer> values =
                 this.model.getPixelInfo(imageName, i, j);
 
@@ -223,9 +223,73 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
       }
     }
 
-    this.histogramPanel.addCounts(redComponents, greenComponents, blueComponents,
+    this.histogramPanel.addColorData(redComponents, greenComponents, blueComponents,
             intensityComponents);
-
   }
 
+  @Override
+  public void addFeatures(Features features) {
+    this.features = features;
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    switch (e.getActionCommand().toLowerCase()) {
+      case "load file":
+        String path = this.showFileChooser(ChooserState.Open);
+        if (!path.equals("")) {
+          String imageName = path.substring(path.lastIndexOf("\\") + 1,
+                  path.lastIndexOf("."));
+          try {
+            this.features.loadFileIntoModel(path, imageName);
+            this.features.updateDisplay();
+          } catch (IllegalArgumentException | IllegalStateException ex) {
+            this.showMessageWindow("Loading error",
+                    "The command failed for the following" +
+                            " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+          }
+        }
+        break;
+      case "save file":
+        String savePath = this.showFileChooser(ChooserState.Save);
+        if (!savePath.equals("")) {
+          try {
+            this.features.saveImage(savePath);
+            this.showMessageWindow("Success!",
+                    "The image was saved successfully!",
+                    JOptionPane.INFORMATION_MESSAGE);
+          } catch (IllegalArgumentException ex) {
+            this.showMessageWindow("Saving error",
+                    "The command failed for the following" +
+                            " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+          }
+        }
+        break;
+      case "execute":
+        try {
+          if(this.getOption().equalsIgnoreCase("brighten")) {
+            String userInput = this.showInputDialogue("Enter an amount to brighten by:");
+            //Don't show an error message if the user pressed cancel.
+            if(userInput != null) {
+              try {
+                int amount = Integer.parseInt(userInput);
+                this.features.processSelectedOption(this.getOption(), amount);
+              } catch (NumberFormatException ex) {
+                throw new IllegalArgumentException("A valid integer was not detected");
+              }
+            }
+          } else {
+            this.features.processSelectedOption(this.getOption(), 0);
+          }
+          this.features.updateDisplay();
+        } catch (IllegalArgumentException | IllegalStateException ex) {
+          this.showMessageWindow("Saving error",
+                  "The command failed for the following" +
+                          " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }
+        break;
+      case "quit":
+        this.features.exitProgram();
+    }
+  }
 }

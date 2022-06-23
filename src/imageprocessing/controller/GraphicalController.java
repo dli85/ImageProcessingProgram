@@ -1,9 +1,5 @@
 package imageprocessing.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
 
 import imageprocessing.controller.commands.SimpleLoadCommand;
 import imageprocessing.controller.commands.SimpleSaveCommand;
@@ -11,13 +7,12 @@ import imageprocessing.controller.commands.UserCommand;
 import imageprocessing.model.FlipDirection;
 import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
-import imageprocessing.view.ChooserState;
 import imageprocessing.view.IGraphicalView;
 
 /**
  * Represents a controller for the GUI version of the image processing program.
  */
-public class GraphicalController implements ImageProcessingController, ActionListener {
+public class GraphicalController implements Features {
   private final ImageProcessingModel model;
   private final IGraphicalView view;
   private String currentImage;
@@ -43,93 +38,16 @@ public class GraphicalController implements ImageProcessingController, ActionLis
   }
 
   @Override
-  public void start() throws IllegalStateException {
-    this.view.setAllButtonListeners(this);
+  public void setView() throws IllegalStateException {
+    this.view.addFeatures(this);
     this.view.makeVisible();
   }
 
-
   @Override
-  public void actionPerformed(ActionEvent e) {
-    switch (e.getActionCommand().toLowerCase()) {
-      case "execute":
-        String option = view.getOption();
-        if (!this.currentImage.equals("")) {
-          try {
-            this.processCommand(option);
-            System.out.println(this.currentImage);
-            updateGUI();
-          } catch (IllegalStateException | IllegalArgumentException ex) {
-            this.view.showMessageWindow("Input error",
-                    "The operation failed for the following" +
-                            " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-          }
-        } else {
-          this.view.showMessageWindow("Operation failed",
-                  "The operation failed for the following" +
-                          " reason:\nNo image loaded", JOptionPane.ERROR_MESSAGE);
-        }
-        break;
-      case "load file":
-        String path = this.view.showFileChooser(ChooserState.Open);
-        if (!path.equals("")) {
-          String imageName = path.substring(path.lastIndexOf("\\") + 1,
-                  path.lastIndexOf("."));
-          try {
-            UserCommand load = new SimpleLoadCommand(path, imageName);
-            load.doCommand(this.model);
-            this.currentImage = imageName;
-            updateGUI();
-          } catch (IllegalStateException ex) {
-            this.view.showMessageWindow("Loading error",
-                    "The command failed for the following" +
-                            " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-          }
-        }
-        break;
-      case "save file":
-        if (this.currentImage == null) {
-          this.view.showMessageWindow("Saving error",
-                  "There is no current image to save right now",
-                  JOptionPane.WARNING_MESSAGE);
-        } else {
-          String savePath = this.view.showFileChooser(ChooserState.Save);
-          if (!savePath.equals("")) {
-            UserCommand save = new SimpleSaveCommand(savePath, this.currentImage);
-            try {
-              save.doCommand(this.model);
-              this.view.showMessageWindow("Success!",
-                      "The image was saved successfully!",
-                      JOptionPane.INFORMATION_MESSAGE);
-            } catch (IllegalStateException ex) {
-              this.view.showMessageWindow("Saving error",
-                      "The command failed for the following" +
-                              " reason:\n" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-            }
-          }
-        }
-        break;
-    }
-
-  }
-
-  //Processes the selected option and does the appropriate action
-  private void processCommand(String option) throws IllegalArgumentException {
-
-
+  public void processSelectedOption(String option, int value) throws IllegalArgumentException {
     switch (option) {
       case "brighten":
-        String userInput = this.view.showInputDialogue("Enter an amount to brighten by:");
-        //Don't show an error message if the user pressed cancel.
-        if(userInput != null) {
-          try {
-            int amount = Integer.parseInt(userInput);
-            this.model.brighten(amount, this.currentImage, this.currentImage);
-
-          } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("A valid integer was not detected");
-          }
-        }
+        this.model.brighten(value, this.currentImage, this.currentImage);
         break;
       case "red-grayscale":
         this.model.grayscale(PixelProperty.Red, this.currentImage, this.currentImage);
@@ -172,14 +90,44 @@ public class GraphicalController implements ImageProcessingController, ActionLis
       default:
         throw new IllegalArgumentException("Unrecognized command");
     }
-
-
   }
 
-  //Updates the gui's image, histogram, and refreshes.
-  private void updateGUI() {
+  @Override
+  public void loadFileIntoModel(String path, String imageName) throws IllegalArgumentException {
+    UserCommand command = new SimpleLoadCommand(path, imageName);
+    try {
+      command.doCommand(this.model);
+      this.currentImage = imageName;
+    } catch (IllegalStateException e) {
+      throw new IllegalArgumentException(e.getMessage());
+    }
+  }
+
+  @Override
+  public void saveImage(String path) throws IllegalArgumentException {
+
+    if (this.currentImage.equals("")) {
+      throw new IllegalArgumentException("There is no loaded image");
+    }
+
+    UserCommand command = new SimpleSaveCommand(path, this.currentImage);
+    try {
+      command.doCommand(this.model);
+    } catch (IllegalStateException e) {
+      throw new IllegalArgumentException(e.getMessage());
+    }
+  }
+
+  @Override
+  public void updateDisplay() throws IllegalStateException {
+
     this.view.setImage(this.currentImage);
     this.view.updateHistogram(this.currentImage);
     this.view.refresh();
+  }
+
+  @Override
+  public void exitProgram() {
+    System.exit(0);
   }
 }

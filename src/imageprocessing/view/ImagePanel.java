@@ -29,8 +29,6 @@ public class ImagePanel extends JPanel {
 
     //MAKE THE IMAGE SCROLLABLE BY ADDING IT TO A scrollPlane
     this.scrollPlane = new JScrollPane(this.imageLabel);
-    //original dimension 480, 420
-    this.scrollPlane.setPreferredSize(new Dimension(480, 420));
 
     //Add the scrollplane to the panel.
     this.add(this.scrollPlane, BorderLayout.CENTER);
@@ -42,7 +40,32 @@ public class ImagePanel extends JPanel {
   public void setImage(BufferedImage bi) {
 
     ImageIcon imageIcon = new ImageIcon(bi);
+    imageIcon = this.scale(imageIcon, imageIcon.getIconWidth(), imageIcon.getIconHeight());
     this.imageLabel.setIcon(imageIcon);
+
+  }
+
+  private ImageIcon scale(ImageIcon image, int imageWidth, int imageHeight) {
+
+    //The width and height of every image should be at least this much.
+    int width = 250;
+    int height = 220;
+
+    int newWidth = imageWidth;
+    int newHeight = imageHeight;
+
+    if(image.getIconWidth() < width) {
+      newWidth = width;
+      newHeight = (width / imageWidth) * imageHeight;
+    }
+
+    if(image.getIconHeight() < height) {
+      newHeight = height;
+      newWidth = (newHeight / imageHeight) * imageWidth;
+    }
+
+    return new ImageIcon(image.getImage()
+            .getScaledInstance(newWidth, newHeight, Image.SCALE_DEFAULT));
 
   }
 }
