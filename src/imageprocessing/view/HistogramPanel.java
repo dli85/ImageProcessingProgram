@@ -142,6 +142,18 @@ public class HistogramPanel extends JPanel {
       g2.drawString("Intensity channel values", 28 + this.initialWidth / 2,
               this.initialHeight - 10);
 
+
+
+      Font defaultFont = this.getFont();
+      Font font = new Font(null, Font.PLAIN, 12);
+      AffineTransform rotation = new AffineTransform();
+      rotation.rotate(Math.toRadians(-90), 0, 0);
+      Font rotated = font.deriveFont(rotation);
+      g2.setFont(rotated);
+      g2.drawString("Frequency", 20, this.initialHeight - 100);
+      g2.drawString("Frequency", 20, this.initialHeight / 2 - 100);
+      g2.setFont(defaultFont);
+
     }
 
 

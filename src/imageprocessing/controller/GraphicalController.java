@@ -45,6 +45,11 @@ public class GraphicalController implements Features {
 
   @Override
   public void processSelectedOption(String option, int value) throws IllegalArgumentException {
+
+    if(this.currentImage.equals("")) {
+      throw new IllegalArgumentException("No image is loaded");
+    }
+
     switch (option) {
       case "brighten":
         this.model.brighten(value, this.currentImage, this.currentImage);
