@@ -179,6 +179,11 @@ TODO:
 1. README: 
    1. Update design description for new gui classes
    2. Write description on how to use the GUI
+2. Test:
+   1. HistogramPanel
+   2. ImagePanel
+   3. GraphicalView
+   4. GraphicalController
 
 
 Our cute Mudkip:
