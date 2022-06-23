@@ -141,7 +141,6 @@ public class HistogramPanel extends JPanel {
               this.initialHeight - 10);
       g2.drawString("Intensity channel values", 28 + this.initialWidth / 2,
               this.initialHeight - 10);
-
     }
 
 

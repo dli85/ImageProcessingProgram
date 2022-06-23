@@ -120,6 +120,9 @@ public class GraphicalController implements Features {
 
   @Override
   public void updateDisplay() throws IllegalStateException {
+    if (this.currentImage.equals("")) {
+      throw new IllegalStateException("No image loaded");
+    }
 
     this.view.setImage(this.currentImage);
     this.view.updateHistogram(this.currentImage);
