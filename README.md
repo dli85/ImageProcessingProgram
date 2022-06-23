@@ -52,8 +52,9 @@ same model interfaces and implementation as the text based version.
    1. This view interface is used to display and draw the actual GUI. It contains methods
    to update the GUI and also methods to get information from the GUI. 
    2. This interface is implemented in the ImageProcessingGraphicalView class. This class
-   extends the JFrame class and is able to set up the GUI and display the neccessary components
-   like the image and the corresponding histogram.
+   extends the JFrame class and is able to set up the GUI and display the necessary components
+   like the image and the corresponding histogram. Given that they are complex components,
+   the histogram and image display are separated into their own unique classes.
 
 ### MVC Design
 This application follows the Model-View-Controller (MVC) design pattern. For clarification, images 
@@ -206,7 +207,6 @@ See above for how to run the program with the script file.
 
 TODO:
 1. README: 
-   1. Update design description for new gui classes
    2. Write description on how to use the GUI
 
 

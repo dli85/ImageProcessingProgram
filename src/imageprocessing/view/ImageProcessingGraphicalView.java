@@ -53,7 +53,7 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     this.model = model;
 
     this.setTitle("Image Processing Program");
-    this.setSize(1080, 560);
+    this.setSize(1160, 560);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -66,8 +66,8 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     this.imagePanel = new ImagePanel();
     this.imagePanel.setLayout(new GridLayout());
 
-    this.histogramPanel = new HistogramPanel(530, 480);
-    this.histogramPanel.setPreferredSize(new Dimension(530, 480));
+    this.histogramPanel = new HistogramPanel(570, 480);
+    this.histogramPanel.setPreferredSize(new Dimension(570, 480));
 
     topPanel.add(this.imagePanel);
     JScrollPane histogramScroll = new JScrollPane(this.histogramPanel);
