@@ -153,7 +153,6 @@ public class HistogramPanel extends JPanel {
       g2.drawString("Frequency", 20, this.initialHeight - 100);
       g2.drawString("Frequency", 20, this.initialHeight / 2 - 100);
       g2.setFont(defaultFont);
-
     }
 
 

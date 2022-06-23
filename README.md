@@ -208,6 +208,11 @@ See above for how to run the program with the script file.
 TODO:
 1. README: 
    2. Write description on how to use the GUI
+2. Test:
+   1. HistogramPanel
+   2. ImagePanel
+   3. GraphicalView
+   4. GraphicalController
 
 
 Our cute Mudkip:
