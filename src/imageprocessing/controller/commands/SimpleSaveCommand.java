@@ -61,11 +61,11 @@ public class SimpleSaveCommand implements UserCommand {
       biType = BufferedImage.TYPE_INT_RGB;
     }
 
-    if (this.saveCommands.containsKey(fileExtension)) {
-      this.saveCommands.get(fileExtension).saveFile(model, this.path, this.imageName,
+    if (this.saveCommands.containsKey(fileExtension.toLowerCase())) {
+      this.saveCommands.get(fileExtension.toLowerCase()).saveFile(model, this.path, this.imageName,
               fileExtension.substring(1), biType);
     } else {
-      throw new IllegalStateException("Unable to save file");
+      throw new IllegalStateException("Unrecognized file extension");
     }
   }
 }

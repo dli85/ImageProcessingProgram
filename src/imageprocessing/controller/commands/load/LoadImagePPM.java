@@ -65,7 +65,6 @@ public class LoadImagePPM implements ILoadFile {
 
           pixelGrid[i][j] = new Pixel(r, g, b, maxValue, maxValue);
 
-          //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
         }
       }
 

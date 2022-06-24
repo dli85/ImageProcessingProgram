@@ -27,10 +27,9 @@ import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
 
 /**
- * Represents the graphical view (GUI) implementation for a image processing program.
+ * Represents the graphical view (GUI) implementation for an image processing program.
  */
 public class ImageProcessingGraphicalView extends JFrame implements IGraphicalView, ActionListener {
-
   private final ImageProcessingModelState model;
   private final ImagePanel imagePanel;
   private final JComboBox<String> commandOptionsBox;
@@ -55,7 +54,6 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     this.setTitle("Image Processing Program");
     this.setSize(1160, 560);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
     this.setLayout(new BorderLayout());
 
@@ -85,23 +83,27 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
             "red-grayscale", "blue-grayscale", "green-grayscale", "value-grayscale",
             "intensity-grayscale", "luma-grayscale",
     };
-
     this.commandOptionsBox = new JComboBox<String>();
     for (String option : options) {
       this.commandOptionsBox.addItem(option);
     }
     bottomPanel.add(this.commandOptionsBox);
 
+
     JButton commandButton = new JButton("Execute");
+    commandButton.setActionCommand("execute");
     bottomPanel.add(commandButton);
 
     JButton loadFileButton = new JButton("Load file");
+    loadFileButton.setActionCommand("load file");
     bottomPanel.add(loadFileButton);
 
     JButton saveFileButton = new JButton(("Save file"));
+    saveFileButton.setActionCommand("save file");
     bottomPanel.add(saveFileButton);
 
     JButton quitButton = new JButton("Quit");
+    quitButton.setActionCommand("quit");
     bottomPanel.add(quitButton);
 
 

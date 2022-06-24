@@ -31,7 +31,7 @@ public class SaveImagePPM implements ISaveFile {
       try {
         out = new FileOutputStream(output);
       } catch (FileNotFoundException e) {
-        throw new IllegalArgumentException("Specified file was not found");
+        throw new IllegalArgumentException("The Specified file was not found");
       }
 
       try {

@@ -641,7 +641,8 @@ public class ImageProcessingControllerImplTest {
             "save mudkipSepia.jpg mudkipSepia" + System.lineSeparator() +
             "save mudkipGrayLuma2.png mudkipGrayLuma2" + System.lineSeparator() +
             System.lineSeparator() +
-            "q" + System.lineSeparator();
+            "q" + System.lineSeparator() +
+            " q";
     String actual = ImageProcessingProgram.readScript("res/script.txt");
 
     assertEquals(expected, actual);

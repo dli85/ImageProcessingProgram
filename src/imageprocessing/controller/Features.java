@@ -5,6 +5,9 @@ package imageprocessing.controller;
  */
 public interface Features {
 
+  /**
+   * Attaches this controller as the Features listener.
+   */
   void setView();
 
   /**

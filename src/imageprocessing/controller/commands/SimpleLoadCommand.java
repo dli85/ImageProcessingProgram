@@ -52,6 +52,8 @@ public class SimpleLoadCommand implements UserCommand {
       throw new IllegalStateException("Unrecognized file extension");
     }
 
+    fileExtension = fileExtension.toLowerCase();
+
     if (this.loadCommands.containsKey(fileExtension)) {
       this.loadCommands.get(fileExtension).loadFile(model, this.path, this.imageName);
     } else {

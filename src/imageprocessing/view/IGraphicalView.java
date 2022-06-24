@@ -63,7 +63,7 @@ public interface IGraphicalView {
   void updateHistogram(String imageName);
 
   /**
-   * Adds features to this view and sets the appropriate callbacks.
+   * Adds a Features controller to this view and sets the featuers.
    *
    * @param features The features.
    */

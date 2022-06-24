@@ -66,6 +66,7 @@ public class SaveConventional implements ISaveFile {
     try {
       FileOutputStream toBeWritten = new FileOutputStream(path);
       ImageIO.write(image, extension.toUpperCase(), toBeWritten);
+      toBeWritten.close();
     } catch (IOException e) {
       throw new IllegalStateException("File not able to be written");
     }
