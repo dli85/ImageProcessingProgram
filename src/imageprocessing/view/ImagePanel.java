@@ -40,7 +40,7 @@ public class ImagePanel extends JPanel {
   }
 
   /**
-   * Sets an image to the ImagePanel. Uses a bi.
+   * Sets an image to the ImagePanel. Uses a buffered image.
    */
   public void setImage(BufferedImage bi) {
 
@@ -50,6 +50,7 @@ public class ImagePanel extends JPanel {
 
   }
 
+  //Scales an image icon.
   private ImageIcon scale(ImageIcon image, int imageWidth, int imageHeight) {
 
     //The width and height of every image should be at least this much.

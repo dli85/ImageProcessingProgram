@@ -2,6 +2,10 @@
 
 ## Program Description
 
+### Overview
+
+See the usage section for a GUI usage guide.
+
 This is an application to process images. It supports many commands
 that can flip, brighten, or greyscale an image.
 
@@ -53,8 +57,11 @@ same model interfaces and implementation as the text based version.
    to update the GUI and also methods to get information from the GUI. 
    2. This interface is implemented in the ImageProcessingGraphicalView class. This class
    extends the JFrame class and is able to set up the GUI and display the necessary components
-   like the image and the corresponding histogram. Given that they are complex components,
-   the histogram and image display are separated into their own unique classes.
+   like the image and the corresponding histogram and the buttons.
+   3. The more complex components like the histogram and image display are separated into their 
+   own unique classes (HistogramPanel and ImagePanel respectively). These classes extend the 
+   JPanel class and contain methods and code needed to initialize, update, and display their
+   respective components.
 
 ### MVC Design
 This application follows the Model-View-Controller (MVC) design pattern. For clarification, images 
@@ -141,7 +148,7 @@ the already existing fields of the class (which the user inputted).
 
 ### Running the program
 
-To run the program in GUI mode, run either the jar file or the ImageProcessingProgram 
+To run the program in GUI mode, run either the jar file or the main method in the ImageProcessingProgram 
 class with no command line arguments.
 
 To run the program in text mode, you must run either the jar file or the 
@@ -150,14 +157,64 @@ the ImageProcessingProgram class with a command line argument, create a new run
 configuration.
 
 To run the program with a script, run either the jar file or the ImageProcessingProgram
-class with "-file {path to script file}" as a command line argument.
+class with "-file {path to script file}" as a command line argument. 
 
 
 The .jar file has also been included in the /res folder. To use the jar file, simply
 navigate to the res folder in command line and type "java -jar Assignment4.jar"
 
+
+### GUI Usage
+
+#### Overview
+The GUI Consists of two upper panels and a bottom bar with one combo box and four
+buttons. The upper left panel is where images will be displayed. 
+The upper right panel is where the histogram will be shown. Both these panels will start out
+as empty as there is initially no image that is being shown. 
+
+
+#### Scaling and scrolling
+The image that is currently being shown will be scaled if it is too small. Specifically, the image will be enlarged so that it's width is
+at least 250 pixels, and it's height is at least 220 pixels. The aspect ratio of the image is kept
+intact. Scaling does not affect load, saving, or any image operations in any way. It is merely a way
+for smaller images to become more visible.
+
+If the image is too big to fit on the upper right panel, it will become scrollable.
+
+#### Loading
+
+Before the user can do any image operations or saving, the user will need to load an image. This
+can be done by pressing the load file button on the bottom. This will open a file chooser so 
+the user can easily navigate and select the file of their choice. If any errors occur during
+the loading process, the program will display an error window with the error reason. 
+
+NOTE:
+the program does not support operating on multiple images at a time. If the user loads
+image A, then loads Image B, then wants to go back to image A, they will need to re-load image
+A using the load file button. Any image operations done will essentially be "lost" when you load
+another image.
+
+#### Image operations
+
+Once the user has loaded a file, they can perform image operations on it. This is done
+by selecting the image operation of their choice using the combo box, then pressing the 
+execute button. This will execute the specified image operation on the current image. The displayed
+image and the histogram will be updated to reflect the new image. If the user decides to use the
+brighten operation, a text box will pop up asking for the user to enter an integer to brighten by.
+Brighten is currently the only operation which requires the user to input something. For a full list
+of all the image operations, see the USEME.md file.
+
+#### Saving
+
+If the user decides to save the image, they can simply press the save file button which will open
+a file chooser. The user can then navigate to the location where they want to save it and also 
+specify the name that they want to image to be saved as. Saving will save the image that is 
+currently being shown. The user must also specify the file format that the image should be saved as
+(either .ppm, .png, .jpg, .jpeg, or .bmp). 
+
+
 ### Commands (text version)
-This application currently supports the following commands:
+While in text mode, application currently supports the following commands:
 1. Loading images: load {image-path} {imageName} 
 2. Saving images: save {save-path} {imageName}
 3. Converting to grayscale using a pixel component (red, green blue, value, luma, intensity):
