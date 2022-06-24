@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.util.Objects;
 import java.util.Scanner;
 
 import imageprocessing.controller.GraphicalController;
@@ -28,7 +27,6 @@ public class ImageProcessingProgram {
    * @param args Command line arguments.
    */
   public static void main(String[] args) {
-    //The default input is system.in unless a suitable script path was found and read.
     Readable input = new InputStreamReader(System.in);
     ImageProcessingModel model = new SimpleImageProcessingModel();
 
@@ -40,23 +38,29 @@ public class ImageProcessingProgram {
       ImageProcessingView view = new ImageProcessingViewImpl(model, System.out);
       ImageProcessingController controller = null;
 
-      if (Objects.equals(args[0], "-text")) {
+      if (args[0].equalsIgnoreCase("-text")) {
         controller =
                 new ImageProcessingControllerImpl(model, view, new InputStreamReader(System.in));
-      } else if (args[0].equals("-file") && args.length >= 2) {
+      } else if(args[0].equalsIgnoreCase("-file") && args.length == 1) {
+        System.out.println("No script file was entered, exiting now");
+        System.exit(0);
+      } else if (args[0].equalsIgnoreCase("-file") && args.length >= 2) {
         try {
           String scriptCommands = readScript(args[1]);
           input = new StringReader(scriptCommands);
         } catch (IllegalArgumentException e) {
-          System.out.println("Reading from script failed, readable set to System.in");
+          System.out.println("Failed to read from the script file, exiting now");
+          System.exit(0);
         }
         controller = new ImageProcessingControllerImpl(model, view, input);
 
+      } else {
+        System.out.println("Unrecognized command line argument, exiting now");
+        System.exit(0);
       }
 
-      if (controller != null) {
-        controller.start();
-      }
+      controller.start();
+
 
     }
 
