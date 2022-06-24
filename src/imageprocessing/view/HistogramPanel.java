@@ -110,7 +110,6 @@ public class HistogramPanel extends JPanel {
       Bar b = new Bar(Color.GRAY, 1, barHeight);
       this.intensityBars.add(b);
     }
-
   }
 
   @Override
@@ -140,7 +139,6 @@ public class HistogramPanel extends JPanel {
               this.initialHeight - 10);
       g2.drawString("Intensity channel values", 25 + this.initialWidth / 2,
               this.initialHeight - 10);
-
 
 
       Font defaultFont = this.getFont();

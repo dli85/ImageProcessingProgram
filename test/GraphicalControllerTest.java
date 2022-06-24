@@ -220,6 +220,7 @@ public class GraphicalControllerTest {
     IGraphicalView view = new GraphicalViewMock(out);
     GraphicalController controller = new GraphicalController(model, view);
 
+    // try to update display when no image has been loaded
     try {
       controller.updateDisplay();
       fail("Exception should have been thrown");
