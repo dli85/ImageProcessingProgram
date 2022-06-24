@@ -1,11 +1,9 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import imageprocessing.controller.Features;
 import imageprocessing.view.HistogramPanel;
 
 import static org.junit.Assert.assertEquals;

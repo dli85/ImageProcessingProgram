@@ -5,7 +5,6 @@ import java.util.Map;
 import imageprocessing.controller.Features;
 import imageprocessing.controller.GraphicalController;
 import imageprocessing.model.ImageProcessingModelState;
-import imageprocessing.model.Pixel;
 import imageprocessing.model.SimpleImageProcessingModel;
 import imageprocessing.view.ChooserState;
 import imageprocessing.view.IGraphicalView;
