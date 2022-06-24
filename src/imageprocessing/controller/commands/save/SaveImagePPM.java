@@ -10,7 +10,7 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState;
 
 /**
- * Functionality to save a .ppm file.
+ * Represents functionality to save a .ppm file.
  */
 public class SaveImagePPM implements ISaveFile {
 

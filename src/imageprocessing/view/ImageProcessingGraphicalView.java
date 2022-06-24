@@ -1,9 +1,6 @@
 package imageprocessing.view;
 
-import java.awt.Dimension;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -61,14 +58,12 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
     //this.topPanel.setPreferredSize(new Dimension(this.getWidth(), 400));
     topPanel.setLayout(new GridLayout(1, 0));
 
-    this.imagePanel = new ImagePanel();
-    this.imagePanel.setLayout(new GridLayout());
+    this.imagePanel = new ImagePanelImpl();
 
-    this.histogramPanel = new HistogramPanel(570, 480);
-    this.histogramPanel.setPreferredSize(new Dimension(570, 480));
+    this.histogramPanel = new HistogramPanelImpl(570, 480);
 
-    topPanel.add(this.imagePanel);
-    JScrollPane histogramScroll = new JScrollPane(this.histogramPanel);
+    topPanel.add((Component) this.imagePanel);
+    JScrollPane histogramScroll = new JScrollPane((Component) this.histogramPanel);
     topPanel.add(histogramScroll);
     this.add(topPanel);
 
@@ -117,8 +112,6 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
   @Override
   public void makeVisible() {
     this.setVisible(true);
-    this.imagePanel.setVisible(true);
-    this.histogramPanel.setVisible(true);
   }
 
   @Override

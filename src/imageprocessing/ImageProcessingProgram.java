@@ -18,7 +18,8 @@ import imageprocessing.view.ImageProcessingView;
 import imageprocessing.view.ImageProcessingViewImpl;
 
 /**
- * A class for running the application.
+ * A class for running the image processing program. It can run the program in either gui mode,
+ * text mode, or with a script file.
  */
 public class ImageProcessingProgram {
   /**

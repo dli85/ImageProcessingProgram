@@ -3,7 +3,7 @@ package imageprocessing.controller.commands;
 import imageprocessing.model.ImageProcessingModel;
 
 /**
- * Represents a command that a user can execute.
+ * Represents a command that can be executed on a given model.
  */
 public interface UserCommand {
   /**

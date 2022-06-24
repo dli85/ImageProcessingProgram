@@ -3,7 +3,7 @@ package imageprocessing.controller.commands.save;
 import imageprocessing.model.ImageProcessingModel;
 
 /**
- * Represents the functionality to save files from the Image Processing Model.
+ * Represents the functionality to save images from the Image Processing Model into external files.
  */
 public interface ISaveFile {
 

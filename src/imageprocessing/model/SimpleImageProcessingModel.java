@@ -277,7 +277,7 @@ public class SimpleImageProcessingModel implements ImageProcessingModel {
     return result < 0 ? 0 : Math.min(255, result);
   }
 
-  //Applies a transformation on rgb values and returns a new pixel containg the result.
+  //Applies a transformation on rgb values and returns a new pixel that contain the result.
   // Assumes the double[][] is 3x3.
   private Pixel applyTransformation(double[][] transformation,
                                     int red, int green, int blue, int max, int alpha) {

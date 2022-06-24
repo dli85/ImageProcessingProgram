@@ -202,7 +202,7 @@ execute button. This will execute the specified image operation on the current i
 image and the histogram will be updated to reflect the new image. If the user decides to use the
 brighten operation, a text box will pop up asking for the user to enter an integer to brighten by.
 Brighten is currently the only operation which requires the user to input something. For a full list
-of all the image operations, see the USEME.md file.
+of all the image operations and their usages, see the USEME.md file.
 
 #### Saving
 

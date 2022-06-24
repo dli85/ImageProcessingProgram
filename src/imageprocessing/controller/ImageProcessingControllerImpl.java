@@ -14,8 +14,8 @@ import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 import imageprocessing.view.ImageProcessingView;
 
 /**
- * A controller for the image processing program. Has the capabilities to take in user
- * commands.
+ * A controller for the text based version of the image processing program.
+ * Has the capabilities to take in user commands.
  */
 public class ImageProcessingControllerImpl implements ImageProcessingController {
   private final ImageProcessingModel model;

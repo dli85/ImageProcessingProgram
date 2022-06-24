@@ -55,7 +55,7 @@ Text Example:
 Graphical Example:
 
 - Select [load file] button, then select image from specified directory to load
-- Select one of {red, green, blue, value, intensity, luma}-component from the dropdown, then execute
+- Select one of {red, green, blue, value, intensity, luma}-grayscale from the dropdown, then execute
 
 ### Flipping
 
