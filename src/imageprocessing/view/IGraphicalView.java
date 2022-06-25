@@ -13,7 +13,7 @@ public interface IGraphicalView {
   void makeVisible();
 
   /**
-   * Gets the option from that the user has chosen.
+   * Gets the option that the user has chosen.
    *
    * @return The option as a string.
    */
@@ -36,7 +36,7 @@ public interface IGraphicalView {
    *
    * @param title The title of the window.
    * @param bodyMessage The body of the message in the window.
-   * @param messageType The type of message that should be shown.
+   * @param messageType The type of message that should be shown (error, warning, etc.).
    */
   void showMessageWindow(String title, String bodyMessage, int messageType);
 

@@ -17,6 +17,12 @@ argument: "java -jar Program.jar -file script.txt"
 NOTE: The script file is configured to run with the jar file. Due to relative paths, it
 will not work correctly if it is not used with the jar file.
 
+The screenshot of the program with an image loaded is located in the root folder as 
+"PROGRAM_SCREENSHOT.jpg"
+
+The res folder contains sample images that can be loaded and operated on (like mudkip.ppm
+which is the image that is loaded in the screenshot).
+
 ## Design Overview
 
 ### Design changes (from assignment 5)
@@ -162,7 +168,7 @@ class with no command line arguments.
 To run the program in text mode, you must run either the jar file or the
 ImageProcessingProgram class and add "-text" as a command line argument. To run
 the ImageProcessingProgram class with a command line argument, create a new run
-configuration.
+configuration. (i.e. "java -jar Program.jar -text" while in the res folder).
 
 To run the program with a script, run either the jar file or the ImageProcessingProgram
 class with "-file {path to script file}" as a command line argument.
@@ -223,6 +229,7 @@ currently being shown. The user must also specify the file format that the image
 
 ### Commands (text version)
 
+To run the program in text mode, add "-text" as a command line argument.
 While in text mode, application currently supports the following commands:
 
 1. Loading images: load {image-path} {imageName}

@@ -41,7 +41,7 @@ public class ImageProcessingProgram {
       if (args[0].equalsIgnoreCase("-text")) {
         controller =
                 new ImageProcessingControllerImpl(model, view, new InputStreamReader(System.in));
-      } else if(args[0].equalsIgnoreCase("-file") && args.length == 1) {
+      } else if (args[0].equalsIgnoreCase("-file") && args.length == 1) {
         System.out.println("No script file was entered, exiting now");
         System.exit(0);
       } else if (args[0].equalsIgnoreCase("-file") && args.length >= 2) {

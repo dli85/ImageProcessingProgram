@@ -89,8 +89,10 @@ public class GraphicalControllerTest {
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        Map<ImageProcessingModelState.PixelProperty, Integer> img1Values = model.getPixelInfo(image1Name, i, j);
-        Map<ImageProcessingModelState.PixelProperty, Integer> img2Values = model.getPixelInfo(image2Name, i, j);
+        Map<ImageProcessingModelState.PixelProperty, Integer> img1Values =
+                model.getPixelInfo(image1Name, i, j);
+        Map<ImageProcessingModelState.PixelProperty, Integer> img2Values =
+                model.getPixelInfo(image2Name, i, j);
 
         //We check that every pixel value is the same.
         for (ImageProcessingModelState.PixelProperty p : img1Values.keySet()) {

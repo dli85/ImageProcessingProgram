@@ -20,7 +20,7 @@ public class ImageProcessingGraphicalViewTest {
     }
   }
 
-  /**
+  /*
    * The GUI code, that uses all of Java's inbuilt classes
    * and listeners sits in the view and does not need to be tested.
    */

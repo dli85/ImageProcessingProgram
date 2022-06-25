@@ -23,7 +23,7 @@ public class HistogramPanelTest {
   }
 
   @Test
-  public void testAddColorData() {
+  public void testAddColorDataAndReset() {
     Map<Integer, Integer> reds = new HashMap<Integer, Integer>();
     Map<Integer, Integer> greens = new HashMap<Integer, Integer>();
     Map<Integer, Integer> blues = new HashMap<Integer, Integer>();
@@ -37,10 +37,7 @@ public class HistogramPanelTest {
 
     this.histo.addColorData(reds, greens, blues, intensities);
     assertEquals(0, (int) reds.get(0));
-  }
 
-  @Test
-  public void testReset() {
     this.histo.reset();
   }
 }

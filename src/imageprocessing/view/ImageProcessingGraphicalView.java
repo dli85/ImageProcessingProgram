@@ -1,6 +1,9 @@
 package imageprocessing.view;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -73,10 +76,10 @@ public class ImageProcessingGraphicalView extends JFrame implements IGraphicalVi
 
     //Image operation options for the user.
     String[] options = new String[]{
-            "brighten", "horizontal-flip", "vertical-flip", "blur", "sharpen",
-            "sepia-tone", "color-transform-luma_grayscale",
-            "red-grayscale", "blue-grayscale", "green-grayscale", "value-grayscale",
-            "intensity-grayscale", "luma-grayscale",
+        "brighten", "horizontal-flip", "vertical-flip", "blur", "sharpen",
+        "sepia-tone", "color-transform-luma_grayscale",
+        "red-grayscale", "blue-grayscale", "green-grayscale", "value-grayscale",
+        "intensity-grayscale", "luma-grayscale",
     };
     this.commandOptionsBox = new JComboBox<String>();
     for (String option : options) {

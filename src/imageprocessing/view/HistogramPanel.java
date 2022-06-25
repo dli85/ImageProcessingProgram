@@ -1,11 +1,10 @@
 package imageprocessing.view;
 
-import java.awt.*;
 import java.util.Map;
 
 
 /**
- * Represents the interface for a histogram which display information about the 4 color channels
+ * Represents the interface for a histogram which displays information about the 4 color channels
  * (red, green, blue, intensity/average) of an image and their frequencies.
  */
 public interface HistogramPanel {
@@ -25,7 +24,7 @@ public interface HistogramPanel {
 
 
   /**
-   * Resets the histogram data.
+   * Resets the histogram color data.
    */
   void reset();
 }

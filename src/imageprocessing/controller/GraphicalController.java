@@ -46,7 +46,7 @@ public class GraphicalController implements Features {
   @Override
   public void processSelectedOption(String option, int value) throws IllegalArgumentException {
 
-    if(this.currentImage.equals("")) {
+    if (this.currentImage.equals("")) {
       throw new IllegalArgumentException("No image is loaded");
     }
 

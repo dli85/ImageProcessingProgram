@@ -1,6 +1,9 @@
 package imageprocessing.view;
 
-import java.awt.*;
+import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -47,7 +50,7 @@ public class ImagePanelImpl extends JPanel implements ImagePanel {
 
   }
 
-  //Scales an image icon.
+  //Scales an image icon so that the width and height are at least some amount.
   private ImageIcon scale(ImageIcon image, int imageWidth, int imageHeight) {
 
     //The width and height of every image should be at least this much.
@@ -57,12 +60,12 @@ public class ImagePanelImpl extends JPanel implements ImagePanel {
     int newWidth = imageWidth;
     int newHeight = imageHeight;
 
-    if(image.getIconWidth() < width) {
+    if (image.getIconWidth() < width) {
       newWidth = width;
       newHeight = (width / imageWidth) * imageHeight;
     }
 
-    if(image.getIconHeight() < height) {
+    if (image.getIconHeight() < height) {
       newHeight = height;
       newWidth = (newHeight / imageHeight) * imageWidth;
     }
