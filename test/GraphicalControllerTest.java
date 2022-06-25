@@ -21,7 +21,7 @@ public class GraphicalControllerTest {
   /**
    * Mock class for testing purposes.
    */
-  class GraphicalViewMock implements IGraphicalView {
+  private class GraphicalViewMock implements IGraphicalView {
     private StringBuilder out;
 
     public GraphicalViewMock(StringBuilder out) {
