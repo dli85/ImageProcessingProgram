@@ -10,7 +10,7 @@ import imageprocessing.controller.commands.save.SaveImagePPM;
 import imageprocessing.model.ImageProcessingModel;
 
 /**
- * Represents a command to save an image to a specified location.
+ * Represents a command to save a specified image to a selected location.
  */
 public class SimpleSaveCommand implements UserCommand {
   private String path;

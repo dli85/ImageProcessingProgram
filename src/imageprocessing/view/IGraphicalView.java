@@ -3,7 +3,7 @@ package imageprocessing.view;
 import imageprocessing.controller.Features;
 
 /**
- * Represents a graphical view. Contains methods to graphically display the program.
+ * Represents a graphical view. Contains methods to render the GUI to the user.
  */
 public interface IGraphicalView {
 
@@ -13,7 +13,7 @@ public interface IGraphicalView {
   void makeVisible();
 
   /**
-   * Gets the option that the user has chosen.
+   * Gets the option from that the user has chosen.
    *
    * @return The option as a string.
    */
@@ -22,12 +22,12 @@ public interface IGraphicalView {
   /**
    * Sets the image to be shown in the GUI.
    *
-   * @param name The image to be shown.
+   * @param name The name of image to be shown.
    */
   void setImage(String name);
 
   /**
-   * Refreshes the gui.
+   * Refreshes the GUI.
    */
   void refresh();
 
@@ -43,6 +43,7 @@ public interface IGraphicalView {
   /**
    * Opens a window to let the user choose a file. Returns the absolute path of that file.
    *
+   * @param state Whether the file chooser should ask the user to load a file or save a file.
    * @return The absolute path of the file as a string.
    */
   String showFileChooser(ChooserState state);
@@ -63,7 +64,7 @@ public interface IGraphicalView {
   void updateHistogram(String imageName);
 
   /**
-   * Adds a Features controller to this view and sets the featuers.
+   * Adds a Features controller to this view and sets the features.
    *
    * @param features The features.
    */

@@ -1,7 +1,8 @@
 package imageprocessing.controller;
 
 /**
- * Represents a controller for an ImageProcessing program.
+ * Represents a controller for an ImageProcessing program with the ability to read and
+ * process text-based scripts/inputs while also communicating with the view and utilizing the model.
  */
 public interface ImageProcessingController {
 

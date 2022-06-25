@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import imageprocessing.view.HistogramPanel;
+import imageprocessing.view.HistogramPanelImpl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,7 +19,7 @@ public class HistogramPanelTest {
 
   @Before
   public void testConstructor() {
-    histo = new HistogramPanel(10, 10);
+    histo = new HistogramPanelImpl(10, 10);
   }
 
   @Test

@@ -5,7 +5,7 @@ import java.io.IOException;
 import imageprocessing.model.ImageProcessingModelState;
 
 /**
- * Represents an implementation for an view.
+ * Represents an implementation for a text-based vew.
  */
 public class ImageProcessingViewImpl implements ImageProcessingView {
 

@@ -3,7 +3,8 @@ package imageprocessing.model;
 import java.util.Map;
 
 /**
- * Represents the model state for an image processing model. These methods cannot modify the model.
+ * Represents the model state for an image processing model. Only contains methods that can access
+ * information about images, none of these methods can modify or mutate the model or its images.
  */
 public interface ImageProcessingModelState {
 

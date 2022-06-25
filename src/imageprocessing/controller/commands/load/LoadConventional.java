@@ -11,7 +11,8 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.Pixel;
 
 /**
- * Represents a function object that loads a .jpg, .jpeg, .png, or .bmp.
+ * Represents a function object that loads a .jpg, .jpeg, .png, or .bmp file into the image
+ * processing program.
  */
 public class LoadConventional implements ILoadFile {
 

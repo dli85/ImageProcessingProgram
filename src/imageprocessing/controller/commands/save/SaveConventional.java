@@ -11,7 +11,7 @@ import imageprocessing.model.ImageProcessingModel;
 import imageprocessing.model.ImageProcessingModelState.PixelProperty;
 
 /**
- * Represents a function that saves an image as a .jpg, .jpeg, .png, or .bmp.
+ * Represents a function that saves an image as a .jpg, .jpeg, .png, or .bmp file.
  */
 public class SaveConventional implements ISaveFile {
 

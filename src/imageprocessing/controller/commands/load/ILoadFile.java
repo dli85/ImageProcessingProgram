@@ -3,7 +3,7 @@ package imageprocessing.controller.commands.load;
 import imageprocessing.model.ImageProcessingModel;
 
 /**
- * Represents the functionality to load files into the Image Processing Model.
+ * Represents the functionality to load files (from a path) into the Image Processing Model.
  */
 public interface ILoadFile {
 

@@ -1,7 +1,8 @@
 package imageprocessing.controller;
 
 /**
- * The features interface of the gui design: exposes application specific events.
+ * The features interface of the gui design that represents high level abilities of the
+ * application.
  */
 public interface Features {
 

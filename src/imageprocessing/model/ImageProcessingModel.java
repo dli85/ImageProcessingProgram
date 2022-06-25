@@ -1,7 +1,8 @@
 package imageprocessing.model;
 
 /**
- * Represents a model to perform actions on an image.
+ * Represents a model to perform actions on an image. Contains methods needed to add images and
+ * perform operations on them.
  */
 public interface ImageProcessingModel extends ImageProcessingModelState {
 
